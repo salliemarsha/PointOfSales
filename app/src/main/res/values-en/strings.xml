@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PointOfSales</string>
+    <string name="selamat_pagi">Good Morning, %1$s</string>
+    <string name="tgl_bln_thn">Date/Month/Year</string>
+    <string name="komitmen2">Don\'t disappoint customers!</string>
+    <string name="akun">Account</string>
+    <string name="kategori">Addition</string>
+    <string name="pegawai">Employee</string>
+    <string name="cabang">Branch</string>
+    <string name="cetak">Print</string>
+    <string name="estimasi">Today\'s estimate</string>
+    <string name="rp0">Rp0</string>
+    <string name="transaksi">Transaction</string>
+    <string name="laporan">Report</string>
+    <string name="komitmen1">Ready to serve customers wholeheartedly...</string>
+    <string name="produk">Service</string>
+    <string name="produk">Product</string>
+    <string name="kategori">Categories</string>
+</resources>

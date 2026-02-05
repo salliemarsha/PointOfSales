@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">PointOfSales</string>
+    <string name="selamat_pagi">Selamat Pagi, %1$s</string>
+    <string name="tgl_bln_thn">Tanggal/Bulan/Tahun</string>
+    <string name="estimasi">Estimasi hari ini</string>
+    <string name="rp0">Rp0</string>
+    <string name="transaksi">Transaksi</string>
+    <string name="laporan">Laporan</string>
+    <string name="komitmen1">Siap melayani pelanggan dengan sepenuh hati...</string>
+    <string name="komitmen2">Jangan kecewakan pelanggan!</string>
+    <string name="akun">Akun</string>
+    <string name="produk">Layanan</string>
+    <string name="kategori">Tambahan</string>
+    <string name="pegawai">Pegawai</string>
+    <string name="cabang">Cabang</string>
+    <string name="cetak">Cetak</string>
+    <string name="produk">Produk</string>
+    <string name="produk">Produk</string>
+    <string name="produk">Produk</string>
+    <string name="produk">Produk</string>
+    <string name="produk">Produk</string>
+    <string name="kategori">Kategori</string>
 </resources>

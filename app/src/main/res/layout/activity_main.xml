@@ -18,232 +18,248 @@
             android:id="@+id/tvGreetings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Selamat Pagi, %1$s"
+            android:text="@string/selamat_pagi"
             android:textSize="25sp"
             android:textColor="@color/color2"
             android:fontFamily="@font/raleway_bold"
             android:layout_marginTop="45dp"
-            android:layout_marginStart="15dp"/>
+            android:layout_marginBottom="15dp"
+            android:layout_marginStart="16dp" />
 
         <TextView
             android:id="@+id/tvDate"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tanggal/Bulan/Tahun"
+            android:text="@string/tgl_bln_thn"
             android:textSize="17sp"
             android:textColor="@color/color4"
             android:fontFamily="@font/raleway_regular"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginStart="200dp"/>
+            android:gravity="end"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="20dp" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cvPlace1"
             android:layout_width="match_parent"
-            android:layout_height="225dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
             android:backgroundTint="@color/card"
-            android:layout_marginTop="-0dp"
-            android:layout_marginBottom="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             app:cardCornerRadius="30dp">
 
-            <TextView
-                android:id="@+id/tvEstimasi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Estimasi hari ini"
-                android:textSize="17sp"
-                android:textColor="@color/color3"
-                android:fontFamily="@font/raleway_bold"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="17dp"/>
-
-            <TextView
-                android:id="@+id/tvRP"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Rp0"
-                android:textSize="17sp"
-                android:textColor="@color/color5"
-                android:fontFamily="@font/raleway_regular"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="315dp"/>
-
-            <View
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/color2"
-                android:layout_marginTop="50dp"/>
-
-            <ImageView
-                android:id="@+id/ivTransaksi"
-                android:layout_width="83dp"
-                android:layout_height="83dp"
-                android:src="@drawable/transaksi"
-                android:layout_marginTop="75dp"
-                android:layout_marginStart="45dp"
-                android:background="@color/card"/>
-
-            <TextView
-                android:id="@+id/tvTransaction"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Transaksi"
-                android:textSize="20sp"
-                android:textColor="@color/color3"
-                android:fontFamily="@font/lato_regular"
-                android:layout_marginTop="165dp"
-                android:layout_marginStart="50dp"/>
+                android:orientation="vertical"
+                android:padding="16dp">
 
-            <ImageView
-                android:id="@+id/ivLaporan"
-                android:layout_width="83dp"
-                android:layout_height="83dp"
-                android:src="@drawable/laporan"
-                android:layout_marginTop="75dp"
-                android:layout_marginStart="265dp"
-                android:background="@color/card"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tvReport"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Laporan"
-                android:textSize="20sp"
-                android:textColor="@color/color3"
-                android:fontFamily="@font/lato_regular"
-                android:layout_marginTop="165dp"
-                android:layout_marginStart="275dp"/>
+                    <TextView
+                        android:id="@+id/tvEstimasi"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/estimasi"
+                        android:textSize="17sp"
+                        android:textColor="@color/color3"
+                        android:fontFamily="@font/raleway_bold" />
 
+                    <TextView
+                        android:id="@+id/tvRP"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rp0"
+                        android:textSize="17sp"
+                        android:textColor="@color/color5"
+                        android:fontFamily="@font/raleway_regular" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/color2"
+                    android:layout_marginVertical="12dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/ivTransaksi"
+                            android:layout_width="83dp"
+                            android:layout_height="83dp"
+                            android:src="@drawable/transaksi" />
+
+                        <TextView
+                            android:id="@+id/tvTransaction"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/transaksi"
+                            android:textSize="18sp"
+                            android:textColor="@color/color3"
+                            android:fontFamily="@font/lato_regular" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/ivLaporan"
+                            android:layout_width="83dp"
+                            android:layout_height="83dp"
+                            android:src="@drawable/laporan" />
+
+                        <TextView
+                            android:id="@+id/tvReport"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/laporan"
+                            android:textSize="18sp"
+                            android:textColor="@color/color3"
+                            android:fontFamily="@font/lato_regular" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/tvGreetings2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Siap melayani pelanggan dengan sepenuh\nhati..."
+            android:text="@string/komitmen1"
             android:textSize="17sp"
             android:textColor="@color/color2"
             android:fontFamily="@font/raleway_bold"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="15dp"/>
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp" />
 
         <TextView
             android:id="@+id/tvGreetings3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Jangan kecewakan pelanggan!"
+            android:text="@string/komitmen2"
             android:textSize="17sp"
             android:textColor="@color/color4"
             android:fontFamily="@font/raleway_medium"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="25dp"
-            android:layout_marginStart="15dp"/>
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="25dp" />
 
         <LinearLayout
             android:id="@+id/llPOS2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="25dp">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvAccount"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
+                android:layout_margin="8dp"
                 android:backgroundTint="@color/akun"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 app:cardCornerRadius="30dp">
 
-                <ImageView
-                    android:id="@+id/ivAccount"
-                    android:layout_width="68dp"
-                    android:layout_height="68dp"
-                    android:src="@drawable/akun"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="25dp"
-                    android:background="@color/akun"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center">
 
-                <TextView
-                    android:id="@+id/tvAccount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Akun"
-                    android:textSize="20sp"
-                    android:textColor="@color/color2"
-                    android:fontFamily="@font/lato_regular"
-                    android:layout_marginStart="37dp"
-                    android:layout_marginTop="85dp"/>
+                    <ImageView
+                        android:id="@+id/ivAccount"
+                        android:layout_width="68dp"
+                        android:layout_height="68dp"
+                        android:src="@drawable/akun" />
 
+                    <TextView
+                        android:id="@+id/tvAccount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/akun"
+                        android:textSize="18sp"
+                        android:textColor="@color/color2"
+                        android:fontFamily="@font/lato_regular" />
+                </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvSupport"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
+                android:layout_margin="8dp"
                 android:backgroundTint="@color/layanan"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="16dp"
-                android:layout_marginEnd="16dp"
                 app:cardCornerRadius="30dp">
 
-                <ImageView
-                    android:id="@+id/ivSupport"
-                    android:layout_width="68dp"
-                    android:layout_height="68dp"
-                    android:src="@drawable/layanan"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="25dp"
-                    android:background="@color/layanan"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center">
 
-                <TextView
-                    android:id="@+id/tvSupport"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Layanan"
-                    android:textSize="20sp"
-                    android:textColor="@color/color2"
-                    android:fontFamily="@font/lato_regular"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginTop="85dp"/>
+                    <ImageView
+                        android:id="@+id/ivProduct"
+                        android:layout_width="68dp"
+                        android:layout_height="68dp"
+                        android:src="@drawable/produk" />
 
+                    <TextView
+                        android:id="@+id/tvSupport"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/produk"
+                        android:textSize="18sp"
+                        android:textColor="@color/color2"
+                        android:fontFamily="@font/lato_regular" />
+                </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvPlus"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
+                android:layout_margin="8dp"
                 android:backgroundTint="@color/tambahan"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="16dp"
-                android:layout_marginEnd="16dp"
                 app:cardCornerRadius="30dp">
 
-                <ImageView
-                    android:id="@+id/ivPlus"
-                    android:layout_width="68dp"
-                    android:layout_height="68dp"
-                    android:src="@drawable/tambahan"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="25dp"
-                    android:background="@color/tambahan"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center">
 
-                <TextView
-                    android:id="@+id/tvPlus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tambahan"
-                    android:textSize="20sp"
-                    android:textColor="@color/color2"
-                    android:fontFamily="@font/lato_regular"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="85dp"/>
+                    <ImageView
+                        android:id="@+id/ivCategories"
+                        android:layout_width="68dp"
+                        android:layout_height="68dp"
+                        android:src="@drawable/kategori" />
 
+                    <TextView
+                        android:id="@+id/tvCategories"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/kategori"
+                        android:textSize="18sp"
+                        android:textColor="@color/color2"
+                        android:fontFamily="@font/lato_regular" />
+                </LinearLayout>
             </androidx.cardview.widget.CardView>
 
         </LinearLayout>
@@ -251,104 +267,101 @@
         <LinearLayout
             android:id="@+id/llPOS3"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvEmployee"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
+                android:layout_margin="8dp"
                 android:backgroundTint="@color/pegawai"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 app:cardCornerRadius="30dp">
 
-                <ImageView
-                    android:id="@+id/ivEmployee"
-                    android:layout_width="68dp"
-                    android:layout_height="68dp"
-                    android:src="@drawable/pegawai"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="25dp"
-                    android:background="@color/pegawai"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center">
 
-                <TextView
-                    android:id="@+id/tvEmployee"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pegawai"
-                    android:textSize="20sp"
-                    android:textColor="@color/color2"
-                    android:fontFamily="@font/lato_regular"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginTop="85dp"/>
+                    <ImageView
+                        android:id="@+id/ivEmployee"
+                        android:layout_width="68dp"
+                        android:layout_height="68dp"
+                        android:src="@drawable/pegawai" />
 
+                    <TextView
+                        android:id="@+id/tvEmployee"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pegawai"
+                        android:textSize="18sp"
+                        android:textColor="@color/color2"
+                        android:fontFamily="@font/lato_regular" />
+                </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvBranch"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
+                android:layout_margin="8dp"
                 android:backgroundTint="@color/cabang"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="16dp"
-                android:layout_marginEnd="16dp"
                 app:cardCornerRadius="30dp">
 
-                <ImageView
-                    android:id="@+id/ivBranch"
-                    android:layout_width="68dp"
-                    android:layout_height="68dp"
-                    android:src="@drawable/cabang"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="25dp"
-                    android:background="@color/cabang"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center">
 
-                <TextView
-                    android:id="@+id/tvBranch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cabang"
-                    android:textSize="20sp"
-                    android:textColor="@color/color2"
-                    android:fontFamily="@font/lato_regular"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="85dp"/>
+                    <ImageView
+                        android:id="@+id/ivBranch"
+                        android:layout_width="68dp"
+                        android:layout_height="68dp"
+                        android:src="@drawable/cabang" />
 
+                    <TextView
+                        android:id="@+id/tvBranch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/cabang"
+                        android:textSize="18sp"
+                        android:textColor="@color/color2"
+                        android:fontFamily="@font/lato_regular" />
+                </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvPrint"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
+                android:layout_margin="8dp"
                 android:backgroundTint="@color/cetak"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="16dp"
-                android:layout_marginEnd="16dp"
                 app:cardCornerRadius="30dp">
 
-                <ImageView
-                    android:id="@+id/ivPrint"
-                    android:layout_width="68dp"
-                    android:layout_height="68dp"
-                    android:src="@drawable/cetak"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="25dp"
-                    android:background="@color/cetak"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center">
 
-                <TextView
-                    android:id="@+id/tvPrint"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cetak"
-                    android:textSize="20sp"
-                    android:textColor="@color/color2"
-                    android:fontFamily="@font/lato_regular"
-                    android:layout_marginStart="33dp"
-                    android:layout_marginTop="85dp"/>
+                    <ImageView
+                        android:id="@+id/ivPrint"
+                        android:layout_width="68dp"
+                        android:layout_height="68dp"
+                        android:src="@drawable/cetak" />
 
+                    <TextView
+                        android:id="@+id/tvPrint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/cetak"
+                        android:textSize="18sp"
+                        android:textColor="@color/color2"
+                        android:fontFamily="@font/lato_regular" />
+                </LinearLayout>
             </androidx.cardview.widget.CardView>
 
         </LinearLayout>

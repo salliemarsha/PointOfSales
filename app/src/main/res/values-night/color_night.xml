@@ -5,11 +5,13 @@
     <color name="color3">#1E1E1E</color>
     <color name="color4">#B0B0B0</color>
     <color name="color5">#2D2D2D</color>
+    <color name="color6">#8A8A8A</color>
     <color name="akun">#0F172A</color>
     <color name="layanan">#1E293B</color>
     <color name="tambahan">#334155</color>
     <color name="pegawai">#475569</color>
     <color name="cabang">#64748B</color>
     <color name="cetak">#94A3B8</color>
-    <color name="card">#CBD5E1</color>
+    <color name="card">#A8B8D8</color>
+    <color name="button">#81C784</color>
 </resources>
