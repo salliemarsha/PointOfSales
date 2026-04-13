@@ -5,7 +5,8 @@
     <string name="tgl_bln_thn">Date/Month/Year</string>
     <string name="komitmen2">Don\'t disappoint customers!</string>
     <string name="akun">Account</string>
-    <string name="kategori">Addition</string>
+    <string name="produk">Product</string>
+    <string name="kategori">Category</string>
     <string name="pegawai">Employee</string>
     <string name="cabang">Branch</string>
     <string name="cetak">Print</string>
@@ -14,7 +15,16 @@
     <string name="transaksi">Transaction</string>
     <string name="laporan">Report</string>
     <string name="komitmen1">Ready to serve customers wholeheartedly...</string>
-    <string name="produk">Service</string>
-    <string name="produk">Product</string>
-    <string name="kategori">Categories</string>
+    <string name="aktif">Active</string>
+    <string name="tmbh_kategori">Add Category</string>
+    <string name="nama_kategori">Category Name</string>
+    <string name="masukkan_nmktgr">Enter the category name</string>
+    <string name="status_kategori">Category Status</string>
+    <string name="tambah">ADD</string>
+    <string name="cari_kategori">Search Category</string>
+    <string-array name="status">
+        <item>Active</item>
+        <item>Inactive</item>
+    </string-array>
+    <string name="cari_produk">Search for Products</string>
 </resources>

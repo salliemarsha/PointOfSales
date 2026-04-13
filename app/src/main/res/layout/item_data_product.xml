@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_product"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="4dp"
+    android:backgroundTint="@color/tambahan"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center_vertical">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@color/card">
+
+            <ImageView
+                android:id="@+id/ivLogo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/produk"
+                android:scaleType="centerInside"
+                android:padding="8dp"/>
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="16dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@+id/chipStatus">
+
+                    <TextView
+                        android:id="@+id/tvNamaKategori"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/produk"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/lato_bold"
+                        android:textColor="@color/color2"/>
+
+                    <TextView
+                        android:id="@+id/tvHarga"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rp0"
+                        android:textSize="17sp"
+                        android:fontFamily="@font/lato_bold"
+                        android:textColor="@color/color2"
+                        android:layout_marginTop="2dp"/>
+                </LinearLayout>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/aktif"
+                    android:textColor="@color/color1"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/lato_bold"
+                    app:chipBackgroundColor="@color/card"
+                    app:chipCornerRadius="12dp"
+                    app:chipIcon="@drawable/ic_check"
+                    app:chipIconTint="@color/color1"
+                    app:chipIconSize="14dp"
+                    app:chipMinHeight="28dp"
+                    app:chipStartPadding="8dp"
+                    app:chipEndPadding="8dp"
+                    app:strokeWidth="0dp"/>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="8dp">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:src="@drawable/kategori"
+                    app:tint="@color/color6"/>
+
+                <TextView
+                    android:id="@+id/tvKategoriProduk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/kategori"
+                    android:textSize="13sp"
+                    android:textColor="@color/color6"
+                    android:fontFamily="@font/lato_regular"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="4dp">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:src="@drawable/stok"
+                    app:tint="@color/color6"/>
+
+                <TextView
+                    android:id="@+id/tvStokProduk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Tidak Terbatas"
+                    android:textSize="13sp"
+                    android:textColor="@color/color6"
+                    android:fontFamily="@font/lato_regular"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="4dp">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:src="@drawable/cabang"
+                    app:tint="@color/color6"/>
+
+                <TextView
+                    android:id="@+id/tvCabangProduk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Utama"
+                    android:textSize="13sp"
+                    android:textColor="@color/color6"
+                    android:fontFamily="@font/lato_regular"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

@@ -9,15 +9,21 @@
     <string name="komitmen1">Siap melayani pelanggan dengan sepenuh hati...</string>
     <string name="komitmen2">Jangan kecewakan pelanggan!</string>
     <string name="akun">Akun</string>
-    <string name="produk">Layanan</string>
-    <string name="kategori">Tambahan</string>
     <string name="pegawai">Pegawai</string>
     <string name="cabang">Cabang</string>
     <string name="cetak">Cetak</string>
-    <string name="produk">Produk</string>
-    <string name="produk">Produk</string>
-    <string name="produk">Produk</string>
-    <string name="produk">Produk</string>
-    <string name="produk">Produk</string>
     <string name="kategori">Kategori</string>
+    <string-array name="status">
+        <item>Aktif</item>
+        <item>Tidak Aktif</item>
+    </string-array>
+    <string name="tmbh_kategori">Tambah Kategori</string>
+    <string name="nama_kategori">Nama Kategori</string>
+    <string name="masukkan_nmktgr">Masukkan nama kategori</string>
+    <string name="status_kategori">Status Kategori</string>
+    <string name="tambah">TAMBAH</string>
+    <string name="aktif">Aktif</string>
+    <string name="produk">Produk</string>
+    <string name="cari_kategori">Cari Kategori</string>
+    <string name="cari_produk">Cari Produk</string>
 </resources>
