@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
 import com.sallie.pointofsales.model.ModelKategoriActivity
 
-class DetailKategoriAdapter (private val kategoriList: List<ModelKategoriActivity>):
+class DetailKategoriAdapter (private var kategoriList: List<ModelKategoriActivity>):
     RecyclerView.Adapter<DetailKategoriAdapter.KategoriViewHolder>() {
         lateinit var appContext: Context
 
@@ -44,6 +44,11 @@ class DetailKategoriAdapter (private val kategoriList: List<ModelKategoriActivit
 
     override fun getItemCount(): Int {
         return kategoriList.size
+    }
+
+    fun updateData(newList: List<ModelKategoriActivity>) {
+        kategoriList = newList
+        notifyDataSetChanged()
     }
 
     inner class KategoriViewHolder(itemView: View) :

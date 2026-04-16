@@ -31,18 +31,20 @@ class DataKategoriViewModel : ViewModel() {
 
     fun getData (){
         isLoading.value = true
-        val query = myRef.orderByChild("idKategori").limitToLast(100)
+        val query = myRef.limitToLast(100)
         query.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 isLoading.value = false
                 if (snapshot.exists()) {
                     val list = ArrayList<ModelKategoriActivity>()
                     for (dataSnapshot in snapshot.children) {
-                        val kategori = dataSnapshot.getValue(ModelKategoriActivity::class.java)
-                        if (kategori == null) {
-                            Log.e("DataKategoriViewModel", "Failed to purpose kategori")
-                        } else {
-                            list.add(kategori)
+                        try {
+                            val kategori = dataSnapshot.getValue(ModelKategoriActivity::class.java)
+                            if (kategori != null) {
+                                list.add(kategori)
+                            }
+                        } catch (e: Exception) {
+                            Log.e("ERROR_PARSE", e.message.toString())
                         }
                     }
                     originalKategoriList.clear()

@@ -55,7 +55,7 @@
                     android:layout_toStartOf="@+id/chipStatus">
 
                     <TextView
-                        android:id="@+id/tvNamaKategori"
+                        android:id="@+id/tvNamaProduk"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/produk"
@@ -77,7 +77,7 @@
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipStatus"
                     android:layout_width="wrap_content"
-                    android:layout_height="32dp"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="@string/aktif"
                     android:textColor="@color/color1"
@@ -87,11 +87,10 @@
                     app:chipCornerRadius="12dp"
                     app:chipIcon="@drawable/ic_check"
                     app:chipIconTint="@color/color1"
-                    app:chipIconSize="14dp"
+                    app:chipIconSize="16dp"
                     app:chipMinHeight="28dp"
                     app:chipStartPadding="8dp"
-                    app:chipEndPadding="8dp"
-                    app:strokeWidth="0dp"/>
+                    app:chipEndPadding="8dp"/>
             </RelativeLayout>
 
             <LinearLayout

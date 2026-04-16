@@ -3,7 +3,7 @@ package com.sallie.pointofsales.model
 import android.os.Parcel
 import android.os.Parcelable
 
-data class ModelKategoriActivity (
+data class ModelKategoriActivity(
     var idKategori: String? = null,
     var namaKategori: String? = null,
     var statusKategori: String? = null
@@ -21,12 +21,9 @@ data class ModelKategoriActivity (
         parcel.writeString(statusKategori)
     }
 
-    override fun describeContents(): Int {
-        return 0
-    }
+    override fun describeContents(): Int = 0
 
     companion object CREATOR : Parcelable.Creator<ModelKategoriActivity> {
-
         override fun createFromParcel(parcel: Parcel): ModelKategoriActivity {
             return ModelKategoriActivity(parcel)
         }
