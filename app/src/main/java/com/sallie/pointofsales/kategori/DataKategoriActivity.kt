@@ -37,17 +37,7 @@ class DataKategoriActivity : AppCompatActivity() {
         rvDataKategori.adapter = adapter
 
         adapter.setOnItemClickListener(object : DetailKategoriAdapter.OnItemClickListener {
-            override fun onItemClick(kategori: ModelKategoriActivity) {
-                if (!kategori.idKategori.isNullOrBlank()) {
-                    showKategoriDetailFragment(kategori)
-                } else {
-                    Toast.makeText(
-                        this@DataKategoriActivity,
-                        "Data tidak valid",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
+            override fun onItemClick(kategori: ModelKategoriActivity) {}
         })
 
         viewModel.kategoriList.observe(this) { list ->
@@ -61,10 +51,6 @@ class DataKategoriActivity : AppCompatActivity() {
         fabAddCategory.setOnClickListener {
             startActivity(Intent(this, ModKategoriActivity::class.java))
         }
-    }
-
-    private fun showKategoriDetailFragment(kategori: ModelKategoriActivity) {
-        Toast.makeText(this, "Klik: ${kategori.namaKategori}", Toast.LENGTH_SHORT).show()
     }
 
     private fun init() {

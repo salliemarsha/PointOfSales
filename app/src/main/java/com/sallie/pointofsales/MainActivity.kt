@@ -8,6 +8,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.sallie.pointofsales.kategori.DataKategoriActivity
+import com.sallie.pointofsales.produk.DataProductActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,7 +36,7 @@ class MainActivity : AppCompatActivity() {
     private fun init() {
         cvAccount = findViewById(R.id.cvAccount)
         cvProduct = findViewById(R.id.cvProduct)
-        cvCategory = findViewById(R.id.cvCategories)
+        cvCategory = findViewById(R.id.cvCategory)
         cvEmployee = findViewById(R.id.cvEmployee)
         cvBranch = findViewById(R.id.cvBranch)
         cvPrint = findViewById(R.id.cvPrint)
@@ -49,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         cvProduct.setOnClickListener {
-
+            startActivity(Intent(this, DataProductActivity::class.java))
         }
 
         cvEmployee.setOnClickListener {

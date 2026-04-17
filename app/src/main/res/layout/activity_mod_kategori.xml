@@ -29,7 +29,7 @@
                 android:fontFamily="@font/raleway_bold"
                 android:text="@string/tmbh_kategori"
                 android:textColor="@color/color2"
-                android:textSize="24sp" />
+                android:textSize="20sp" />
         </com.google.android.material.appbar.MaterialToolbar>
 
         <com.google.android.material.card.MaterialCardView
@@ -56,7 +56,7 @@
                     android:fontFamily="@font/lato_bold"
                     android:text="@string/nama_kategori"
                     android:textColor="@color/color2"
-                    android:textSize="16sp" />
+                    android:textSize="12sp" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -90,7 +90,7 @@
                     android:fontFamily="@font/lato_bold"
                     android:text="@string/status_kategori"
                     android:textColor="@color/color2"
-                    android:textSize="16sp" />
+                    android:textSize="12sp" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/statusKategori"
@@ -127,7 +127,7 @@
                     android:text="@string/tambah"
                     android:textAllCaps="false"
                     android:textColor="@color/color1"
-                    android:textSize="16sp"
+                    android:textSize="12sp"
                     app:cornerRadius="12dp" />
 
             </LinearLayout>

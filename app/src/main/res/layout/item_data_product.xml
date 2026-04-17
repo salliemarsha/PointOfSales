@@ -21,8 +21,8 @@
         android:gravity="center_vertical">
 
         <com.google.android.material.card.MaterialCardView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="91dp"
+            android:layout_height="91dp"
             app:cardCornerRadius="12dp"
             app:cardElevation="4dp"
             app:cardBackgroundColor="@color/card">
@@ -59,7 +59,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/produk"
-                        android:textSize="20sp"
+                        android:textSize="16sp"
                         android:fontFamily="@font/lato_bold"
                         android:textColor="@color/color2"/>
 
@@ -68,7 +68,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/rp0"
-                        android:textSize="17sp"
+                        android:textSize="13sp"
                         android:fontFamily="@font/lato_bold"
                         android:textColor="@color/color2"
                         android:layout_marginTop="2dp"/>
@@ -87,7 +87,7 @@
                     app:chipCornerRadius="12dp"
                     app:chipIcon="@drawable/ic_check"
                     app:chipIconTint="@color/color2"
-                    app:chipIconSize="16dp"
+                    app:chipIconSize="12dp"
                     app:chipMinHeight="28dp"
                     app:chipStartPadding="8dp"
                     app:chipEndPadding="8dp"/>
@@ -98,11 +98,11 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="0dp">
 
                 <ImageView
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
                     android:src="@drawable/kategori"
                     app:tint="@color/color6"/>
 
@@ -112,7 +112,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="@string/kategori"
-                    android:textSize="13sp"
+                    android:textSize="9sp"
                     android:textColor="@color/color6"
                     android:fontFamily="@font/lato_regular"/>
             </LinearLayout>
@@ -125,8 +125,8 @@
                 android:layout_marginTop="4dp">
 
                 <ImageView
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
                     android:src="@drawable/stok"
                     app:tint="@color/color6"/>
 
@@ -136,7 +136,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="@string/tdk_terbatas"
-                    android:textSize="13sp"
+                    android:textSize="9sp"
                     android:textColor="@color/color6"
                     android:fontFamily="@font/lato_regular"/>
             </LinearLayout>
@@ -149,8 +149,8 @@
                 android:layout_marginTop="4dp">
 
                 <ImageView
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
                     android:src="@drawable/cabang"
                     app:tint="@color/color6"/>
 
@@ -160,7 +160,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="@string/utama"
-                    android:textSize="13sp"
+                    android:textSize="9sp"
                     android:textColor="@color/color6"
                     android:fontFamily="@font/lato_regular"/>
             </LinearLayout>
