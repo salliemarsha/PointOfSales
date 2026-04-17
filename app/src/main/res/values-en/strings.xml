@@ -27,4 +27,22 @@
         <item>Inactive</item>
     </string-array>
     <string name="cari_produk">Search for Products</string>
+    <string name="tdk_terbatas">Unlimited</string>
+    <string name="terbatas">Limited</string>
+    <string name="utama">Main</string>
+    <string name="tmbh_produk">ADD PRODUCT</string>
+    <string name="foto_prdk">Product Photo</string>
+    <string name="tmbh_fotoprdk">Add Product Photo</string>
+    <string name="kamera">Camera</string>
+    <string name="galeri">Galery</string>
+    <string name="nm_prdk">Product Name</string>
+    <string name="nilai_profit">Profit</string>
+    <string name="stok">Stock</string>
+    <string name="masukkan_nmprdk">Enter product name</string>
+    <string name="pilih_kategori">Select category</string>
+    <string name="pilih_cabang">Select branch</string>
+    <string name="hrg_beli">Purchase Price</string>
+    <string name="hrg_jual">Selling Price</string>
+    <string name="batas_stok">Unlimited Stock</string>
+    <string name="pilih_status">Select status</string>
 </resources>

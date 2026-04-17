@@ -55,7 +55,7 @@ class DetailProdukAdapter(private var produkList: List<ModelProdukActivity>) :
 
         fun bind(produk: ModelProdukActivity) {
             tvNamaProduk.text = produk.namaProduk ?: "-"
-            tvHargaProduk.text = produk.hargaProduk?.toString() ?: "-"
+            tvHargaProduk.text = produk.hargaJual?.toString() ?: "-"
             chipStatus.text = produk.statusProduk ?: "-"
 
             itemView.setOnClickListener {

@@ -27,6 +27,11 @@ class DataProductActivity : AppCompatActivity() {
 
         init()
 
+        fabAddProduct.setOnClickListener {
+            val intent = android.content.Intent(this, ModProdukActivity::class.java)
+            startActivity(intent)
+        }
+
         val layoutManager = LinearLayoutManager(this)
         layoutManager.reverseLayout = true
         layoutManager.stackFromEnd = true

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color1"
+    android:id="@+id/modproduk"
     tools:context=".produk.ModProdukActivity">
 
     <LinearLayout
@@ -24,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/raleway_bold"
-                android:text="Tambah Produk"
+                android:text="@string/tmbh_produk"
                 android:textColor="@color/color2"
                 android:textSize="24sp" />
         </com.google.android.material.appbar.MaterialToolbar>
@@ -49,8 +50,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lato_bold"
-                    android:text="Foto Produk"
-                    android:textColor="@color/color5"
+                    android:text="@string/foto_prdk"
+                    android:textColor="@color/color2"
                     android:textSize="16sp" />
 
                 <com.google.android.material.card.MaterialCardView
@@ -77,7 +78,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:fontFamily="@font/lato_bold"
-                            android:text="Tambah Foto Produk"
+                            android:text="@string/tmbh_fotoprdk"
                             android:textColor="@color/color6" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -96,7 +97,7 @@
                         android:layout_weight="1"
                         android:backgroundTint="@color/button"
                         android:fontFamily="@font/lato_regular"
-                        android:text="Kamera"
+                        android:text="@string/kamera"
                         android:textColor="@color/color1" />
 
                     <Space
@@ -111,7 +112,7 @@
                         android:layout_weight="1"
                         android:backgroundTint="@color/button"
                         android:fontFamily="@font/lato_regular"
-                        android:text="Galeri"
+                        android:text="@string/galeri"
                         android:textColor="@color/color1" />
                 </LinearLayout>
 
@@ -120,8 +121,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/lato_bold"
-                    android:text="Nama Produk"
-                    android:textColor="@color/color5" />
+                    android:text="@string/nm_prdk"
+                    android:textColor="@color/color2" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -139,8 +140,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato_regular"
-                        android:hint="Masukkan nama produk"
-                        android:textColor="@color/color6" />
+                        android:hint="@string/masukkan_nmprdk"
+                        android:textColorHint="@color/color6"
+                        android:textColor="@color/color2"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
@@ -148,8 +150,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/lato_bold"
-                    android:text="Kategori"
-                    android:textColor="@color/color5" />
+                    android:text="@string/kategori"
+                    android:textColor="@color/color2" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
@@ -167,9 +169,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato_regular"
-                        android:hint="Pilih kategori"
+                        android:hint="@string/pilih_kategori"
                         android:inputType="none"
-                        android:textColor="@color/color6" />
+                        android:textColorHint="@color/color6"
+                        android:textColor="@color/color2"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
@@ -177,8 +180,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/lato_bold"
-                    android:text="Cabang"
-                    android:textColor="@color/color5" />
+                    android:text="@string/cabang"
+                    android:textColor="@color/color2" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
@@ -196,9 +199,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato_regular"
-                        android:hint="Pilih cabang"
+                        android:hint="@string/pilih_cabang"
                         android:inputType="none"
-                        android:textColor="@color/color6" />
+                        android:textColorHint="@color/color6"
+                        android:textColor="@color/color2"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
@@ -206,8 +210,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/lato_bold"
-                    android:text="Harga Beli"
-                    android:textColor="@color/color5" />
+                    android:text="@string/hrg_beli"
+                    android:textColor="@color/color2" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -227,7 +231,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato_regular"
                         android:inputType="number"
-                        android:textColor="@color/color6" />
+                        android:textColor="@color/color2" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
@@ -235,8 +239,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/lato_bold"
-                    android:text="Nilai Profit"
-                    android:textColor="@color/color5" />
+                    android:text="@string/nilai_profit"
+                    android:textColor="@color/color2" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -256,7 +260,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato_regular"
                         android:inputType="number"
-                        android:textColor="@color/color6" />
+                        android:textColor="@color/color2" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
@@ -264,8 +268,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/lato_bold"
-                    android:text="Harga Jual"
-                    android:textColor="@color/color5" />
+                    android:text="@string/hrg_jual"
+                    android:textColor="@color/color2" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -285,7 +289,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato_regular"
                         android:inputType="number"
-                        android:textColor="@color/color6" />
+                        android:textColor="@color/color2" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
@@ -293,8 +297,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/lato_bold"
-                    android:text="Stok"
-                    android:textColor="@color/color5" />
+                    android:text="@string/stok"
+                    android:textColor="@color/color2" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -313,7 +317,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato_regular"
                         android:inputType="number"
-                        android:textColor="@color/color6" />
+                        android:textColor="@color/color2" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <CheckBox
@@ -322,8 +326,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/lato_regular"
-                    android:text="Stok Tak Terbatas"
-                    android:textColor="@color/color5" />
+                    android:text="@string/batas_stok"
+                    android:textColor="@color/color2" />
 
                 <Button
                     android:id="@+id/btnSimpan"

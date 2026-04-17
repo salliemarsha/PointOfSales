@@ -85,7 +85,7 @@
         app:tint="@color/color1"
         app:fabSize="normal"
         app:elevation="8dp"
-        app:rippleColor="@color/color2"
+        app:rippleColor="@color/color4"
         android:contentDescription="Tambah kategori"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -55,7 +55,7 @@
                     android:layout_marginBottom="6dp"
                     android:fontFamily="@font/lato_bold"
                     android:text="@string/nama_kategori"
-                    android:textColor="@color/color5"
+                    android:textColor="@color/color2"
                     android:textSize="16sp" />
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -75,7 +75,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato_regular"
                         android:hint="@string/masukkan_nmktgr"
-                        android:textColor="@color/color6"
+                        android:textColor="@color/color2"
                         android:textColorHint="@color/color6" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -89,7 +89,7 @@
                     android:layout_marginBottom="6dp"
                     android:fontFamily="@font/lato_bold"
                     android:text="@string/status_kategori"
-                    android:textColor="@color/color5"
+                    android:textColor="@color/color2"
                     android:textSize="16sp" />
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -110,10 +110,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato_regular"
-                        android:hint="Pilih Status"
+                        android:hint="@string/pilih_status"
                         android:inputType="none"
                         android:padding="16dp"
-                        android:textColor="@color/color6"
+                        android:textColor="@color/color2"
                         android:textColorHint="@color/color6"/>
                 </com.google.android.material.textfield.TextInputLayout>
 

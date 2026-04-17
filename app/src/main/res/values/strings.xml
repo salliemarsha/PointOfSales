@@ -26,4 +26,22 @@
     <string name="produk">Produk</string>
     <string name="cari_kategori">Cari Kategori</string>
     <string name="cari_produk">Cari Produk</string>
+    <string name="tdk_terbatas">Tidak Terbatas</string>
+    <string name="terbatas">Terbatas</string>
+    <string name="utama">Utama</string>
+    <string name="tmbh_produk">TAMBAH PRODUK</string>
+    <string name="foto_prdk">Foto Produk</string>
+    <string name="tmbh_fotoprdk">Tambah Foto Produk</string>
+    <string name="kamera">Kamera</string>
+    <string name="galeri">Galeri</string>
+    <string name="nm_prdk">Nama Produk</string>
+    <string name="masukkan_nmprdk">Masukkan nama produk</string>
+    <string name="pilih_kategori">Pilih kategori</string>
+    <string name="pilih_cabang">Pilih cabang</string>
+    <string name="hrg_beli">Harga Beli</string>
+    <string name="hrg_jual">Harga Jual</string>
+    <string name="nilai_profit">Nilai Profit</string>
+    <string name="stok">Stok</string>
+    <string name="batas_stok">Stok Tak Terbatas</string>
+    <string name="pilih_status">Pilih status</string>
 </resources>

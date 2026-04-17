@@ -2,18 +2,19 @@ package com.sallie.pointofsales.model
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.sallie.pointofsales.model.ModelProdukActivity
 
-data class ModelProdukActivity (
+data class ModelProdukActivity(
     val idProduk: String? = null,
     val namaProduk: String? = null,
-    val hargaProduk: Int? = 0,
-    val idKategori: String? = null,
-    val idCabang: String? = null,
-    val fotoProduk: String? = null,
-    val stokProduk: Int? = 0,
+    val kategori: String? = null,
+    val cabang: String? = null,
+    val hargaBeli: Int? = 0,
+    val profit: Int? = 0,
+    val hargaJual: Int? = 0,
+    val stok: Int? = 0,
     val tanpaBatas: Boolean? = false,
-    val statusProduk: String? = null,
+    val fotoProduk: String? = null,
+    val statusProduk: String? = "aktif",
     var createdAt: String? = null,
     var updatedAt: String? = null
 
@@ -22,12 +23,14 @@ data class ModelProdukActivity (
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
         parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readByte() != 0.toByte(),
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString()
@@ -36,23 +39,22 @@ data class ModelProdukActivity (
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(idProduk)
         parcel.writeString(namaProduk)
-        parcel.writeValue(hargaProduk)
-        parcel.writeString(idKategori)
-        parcel.writeString(idCabang)
-        parcel.writeString(fotoProduk)
-        parcel.writeValue(stokProduk)
+        parcel.writeString(kategori)
+        parcel.writeString(cabang)
+        parcel.writeValue(hargaBeli)
+        parcel.writeValue(profit)
+        parcel.writeValue(hargaJual)
+        parcel.writeValue(stok)
         parcel.writeByte(if (tanpaBatas == true) 1 else 0)
+        parcel.writeString(fotoProduk)
         parcel.writeString(statusProduk)
         parcel.writeString(createdAt)
         parcel.writeString(updatedAt)
     }
 
-    override fun describeContents(): Int {
-        return 0
-    }
+    override fun describeContents(): Int = 0
 
     companion object CREATOR : Parcelable.Creator<ModelProdukActivity> {
-
         override fun createFromParcel(parcel: Parcel): ModelProdukActivity {
             return ModelProdukActivity(parcel)
         }
