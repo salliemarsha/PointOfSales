@@ -168,6 +168,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:paddingBottom="10dp"
             android:gravity="center"
             android:layout_marginBottom="25dp">
 
@@ -178,6 +181,8 @@
                 android:layout_weight="1"
                 android:layout_marginHorizontal="6dp"
                 android:backgroundTint="@color/akun"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardCornerRadius="30dp"
                 app:strokeWidth="1dp"
                 app:strokeColor="@color/color4">
@@ -212,6 +217,8 @@
                 android:layout_weight="1"
                 android:layout_marginHorizontal="6dp"
                 android:backgroundTint="@color/layanan"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardCornerRadius="30dp"
                 app:strokeWidth="1dp"
                 app:strokeColor="@color/color4">
@@ -246,6 +253,8 @@
                 android:layout_weight="1"
                 android:layout_marginHorizontal="6dp"
                 android:backgroundTint="@color/tambahan"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardCornerRadius="30dp"
                 app:strokeWidth="1dp"
                 app:strokeColor="@color/color4">
@@ -280,6 +289,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:gravity="center">
 
             <com.google.android.material.card.MaterialCardView
@@ -289,6 +300,8 @@
                 android:layout_weight="1"
                 android:layout_marginHorizontal="6dp"
                 android:backgroundTint="@color/pegawai"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardCornerRadius="30dp"
                 app:strokeWidth="1dp"
                 app:strokeColor="@color/color4">
@@ -323,6 +336,8 @@
                 android:layout_weight="1"
                 android:layout_marginHorizontal="6dp"
                 android:backgroundTint="@color/cabang"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardCornerRadius="30dp"
                 app:strokeWidth="1dp"
                 app:strokeColor="@color/color4">
@@ -357,6 +372,8 @@
                 android:layout_weight="1"
                 android:layout_marginHorizontal="6dp"
                 android:backgroundTint="@color/cetak"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardCornerRadius="30dp"
                 app:strokeWidth="1dp"
                 app:strokeColor="@color/color4">

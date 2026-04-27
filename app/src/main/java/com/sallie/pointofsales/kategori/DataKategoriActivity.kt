@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import android.widget.ImageButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.sallie.pointofsales.R
 import com.sallie.pointofsales.adapter.DetailKategoriAdapter
@@ -25,6 +26,12 @@ class DataKategoriActivity : AppCompatActivity() {
         setContentView(R.layout.activity_data_kategori)
 
         init()
+
+        val btnBack = findViewById<ImageButton>(R.id.btnBack)
+
+        btnBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
 
         val layoutManager = LinearLayoutManager(this)
         layoutManager.reverseLayout = true

@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import android.widget.ImageButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.sallie.pointofsales.R
 import com.sallie.pointofsales.model.ModelProdukActivity
@@ -26,6 +27,12 @@ class DataProductActivity : AppCompatActivity() {
         setContentView(R.layout.activity_data_product)
 
         init()
+
+        val btnBack = findViewById<ImageButton>(R.id.btnBack)
+
+        btnBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
 
         fabAddProduct.setOnClickListener {
             val intent = android.content.Intent(this, ModProdukActivity::class.java)

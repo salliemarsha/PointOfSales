@@ -15,6 +15,7 @@
         android:padding="16dp">
 
         <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/color1"
@@ -61,6 +62,12 @@
                     android:layout_marginTop="10dp"
                     android:backgroundTint="@color/color2"
                     app:cardCornerRadius="16dp">
+
+                    <ImageView
+                        android:id="@+id/ivPreview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -146,7 +153,7 @@
                         android:fontFamily="@font/lato_regular"
                         android:hint="@string/masukkan_nmprdk"
                         android:textColorHint="@color/color6"
-                        android:textColor="@color/color2"/>
+                        android:textColor="@color/color2" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
@@ -177,7 +184,8 @@
                         android:hint="@string/pilih_kategori"
                         android:inputType="none"
                         android:textColorHint="@color/color6"
-                        android:textColor="@color/color2"/>
+                        android:textColor="@color/color2"
+                        android:popupBackground="@drawable/bg_dropdown"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
@@ -208,7 +216,8 @@
                         android:hint="@string/pilih_cabang"
                         android:inputType="none"
                         android:textColorHint="@color/color6"
-                        android:textColor="@color/color2"/>
+                        android:textColor="@color/color2"
+                        android:popupBackground="@drawable/bg_dropdown"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView

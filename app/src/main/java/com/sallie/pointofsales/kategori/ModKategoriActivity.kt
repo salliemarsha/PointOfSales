@@ -36,6 +36,12 @@ class ModKategoriActivity : AppCompatActivity() {
 
         init()
 
+        val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
+
+        toolbar.setNavigationOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+
         val statusOptions = resources.getStringArray(R.array.status)
 
         val adapter = ArrayAdapter(

@@ -6,6 +6,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.widget.addTextChangedListener
+import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.database.FirebaseDatabase
@@ -27,6 +29,21 @@ class ModProdukActivity : AppCompatActivity() {
     private lateinit var etStok: TextInputEditText
     private lateinit var cbUnlimited: CheckBox
     private lateinit var btnSimpan: Button
+    private lateinit var imageView: ImageView
+
+    private val galleryLauncher =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            if (uri != null) {
+                imageView.setImageURI(uri)
+            }
+        }
+
+    private val cameraLauncher =
+        registerForActivityResult(ActivityResultContracts.TakePicturePreview()) { bitmap ->
+            if (bitmap != null) {
+                imageView.setImageBitmap(bitmap)
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,11 +52,44 @@ class ModProdukActivity : AppCompatActivity() {
 
         init()
 
+        fun hitungHarga() {
+            val beli = etHargaBeli.text.toString().toIntOrNull() ?: 0
+            val profit = etNilaiProfit.text.toString().toIntOrNull() ?: 0
+
+            val jual = beli + profit
+            etHargaJual.setText(jual.toString())
+        }
+
+        etHargaBeli.addTextChangedListener {
+            hitungHarga()
+        }
+
+        etNilaiProfit.addTextChangedListener {
+            hitungHarga()
+        }
+
         val kategoriList = arrayOf("Makanan", "Minuman", "Snack")
         val cabangList = arrayOf("Cabang 1", "Cabang 2", "Cabang 3")
 
         val kategoriAdapter = ArrayAdapter(this, R.layout.dropdown_item, kategoriList)
         val cabangAdapter = ArrayAdapter(this, R.layout.dropdown_item, cabangList)
+
+        val btnGaleri = findViewById<Button>(R.id.btnGaleri)
+        val btnKamera = findViewById<Button>(R.id.btnKamera)
+
+        toolbar = findViewById(R.id.toolbar)
+
+        btnGaleri.setOnClickListener {
+            galleryLauncher.launch("image/*")
+        }
+
+        btnKamera.setOnClickListener {
+            cameraLauncher.launch(null)
+        }
+
+        toolbar.setNavigationOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
 
         spKategori.setAdapter(kategoriAdapter)
         spCabang.setAdapter(cabangAdapter)
@@ -61,6 +111,7 @@ class ModProdukActivity : AppCompatActivity() {
         etStok = findViewById(R.id.etStok)
         cbUnlimited = findViewById(R.id.cbUnlimited)
         btnSimpan = findViewById(R.id.btnSimpan)
+        imageView = findViewById(R.id.ivPreview)
 
         btnSimpan.setOnClickListener {
             cekValidasi()

@@ -114,7 +114,8 @@
                         android:inputType="none"
                         android:padding="16dp"
                         android:textColor="@color/color2"
-                        android:textColorHint="@color/color6"/>
+                        android:textColorHint="@color/color6"
+                        android:popupBackground="@drawable/bg_dropdown"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
