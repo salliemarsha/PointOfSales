@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">PointOfSales</string>
-    <string name="selamat_pagi">Good Morning, %1$s</string>
+    <string name="selamat_pagi">Good Morning!</string>
     <string name="tgl_bln_thn">Date/Month/Year</string>
     <string name="komitmen2">Don\'t disappoint customers!</string>
     <string name="akun">Account</string>
