@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">PointOfSales</string>
-    <string name="selamat_pagi">Selamat Pagi! </string>
+    <string name="selamat_pagi">Selamat Pagi, Sallie! </string>
     <string name="tgl_bln_thn">Tanggal/Bulan/Tahun</string>
     <string name="estimasi">Estimasi hari ini</string>
-    <string name="rp0">Rp0</string>
+    <string name="rp0">Rp120.000</string>
     <string name="transaksi">Transaksi</string>
     <string name="laporan">Laporan</string>
     <string name="komitmen1">Siap melayani pelanggan dengan sepenuh hati...</string>
@@ -44,4 +44,16 @@
     <string name="stok">Stok</string>
     <string name="batas_stok">Stok Tak Terbatas</string>
     <string name="pilih_status">Pilih status</string>
+    <string name="cari_pegawai">Cari Pegawai</string>
+    <string name="jabatan">Jabatan</string>
+    <string name="tmbh_pegawai">Tambah Pegawai</string>
+    <string name="nama_lengkap">Nama Lengkap</string>
+    <string name="nmr_telepon">Nomor Telepon</string>
+    <string name="pilih_jabatan">Pilih jabatan</string>
+    <string name="pin">Login PIN</string>
+    <string name="simpan">SIMPAN</string>
+    <string name="hapus">HAPUS</string>
+    <string name="mskan_namalengkap">Masukkan nama lengkap</string>
+    <string name="buatpin">Buat login PIN 6-digit</string>
+    <string name="edit_pegawai">Edit Pegawai</string>
 </resources>
