@@ -1,24 +1,29 @@
 package com.sallie.pointofsales.produk
 
+import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import android.widget.ImageButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.textfield.TextInputEditText
 import com.sallie.pointofsales.R
+import com.sallie.pointofsales.adapter.DetailProdukAdapter
 import com.sallie.pointofsales.model.ModelProdukActivity
 import com.sallie.pointofsales.viewmodel.DataProdukViewModel
-import com.sallie.pointofsales.adapter.DetailProdukAdapter
 
 class DataProductActivity : AppCompatActivity() {
 
     private val viewModel: DataProdukViewModel by viewModels()
     private lateinit var rvDataProduk: RecyclerView
     private lateinit var fabAddProduct: FloatingActionButton
+    private lateinit var etSearchProduct: TextInputEditText
     private lateinit var adapter: DetailProdukAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,13 +34,12 @@ class DataProductActivity : AppCompatActivity() {
         init()
 
         val btnBack = findViewById<ImageButton>(R.id.btnBack)
-
         btnBack.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
 
         fabAddProduct.setOnClickListener {
-            val intent = android.content.Intent(this, ModProdukActivity::class.java)
+            val intent = Intent(this, ModProdukActivity::class.java)
             startActivity(intent)
         }
 
@@ -65,11 +69,18 @@ class DataProductActivity : AppCompatActivity() {
 
         viewModel.produkList.observe(this) { list ->
             adapter.updateData(list)
-
             if (list.isNotEmpty()) {
                 rvDataProduk.scrollToPosition(list.size - 1)
             }
         }
+
+        etSearchProduct.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                viewModel.filterList(s.toString())
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
     }
 
     private fun showProdukDetail(produk: ModelProdukActivity) {
@@ -79,6 +90,6 @@ class DataProductActivity : AppCompatActivity() {
     private fun init() {
         rvDataProduk = findViewById(R.id.rvDataProduk)
         fabAddProduct = findViewById(R.id.fabAddProduct)
+        etSearchProduct = findViewById(R.id.etSearchProduct)
     }
-
 }

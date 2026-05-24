@@ -11,41 +11,39 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PointOfSales">
-
+        <activity
+            android:name=".cabang.ModCabangActivity"
+            android:exported="false" />
+        <activity
+            android:name=".viewmodel.DataCabangActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".pegawai.DataPegawaiActivity"
             android:exported="false" />
-
         <activity
             android:name=".pegawai.ModPegawaiActivity"
             android:exported="false" />
-
         <activity
             android:name=".produk.DataProductActivity"
             android:exported="false" />
-
         <activity
             android:name=".produk.ModProdukActivity"
             android:exported="false" />
-
         <activity
             android:name=".kategori.DataKategoriActivity"
             android:exported="false" />
-
         <activity
             android:name=".kategori.ModKategoriActivity"
             android:exported="false" />
-
     </application>
 
 </manifest>

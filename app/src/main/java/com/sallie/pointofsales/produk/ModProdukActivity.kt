@@ -10,7 +10,10 @@ import androidx.core.widget.addTextChangedListener
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.sallie.pointofsales.R
 import com.sallie.pointofsales.model.ModelProdukActivity
 
@@ -18,6 +21,8 @@ class ModProdukActivity : AppCompatActivity() {
 
     private val database = FirebaseDatabase.getInstance()
     private val myRef = database.getReference("produk")
+    private val kategoriRef = database.getReference("kategori")
+    private val cabangRef = database.getReference("cabang")
 
     private lateinit var toolbar: MaterialToolbar
     private lateinit var etNamaProduk: TextInputEditText
@@ -30,6 +35,11 @@ class ModProdukActivity : AppCompatActivity() {
     private lateinit var cbUnlimited: CheckBox
     private lateinit var btnSimpan: Button
     private lateinit var imageView: ImageView
+
+    private val listKategori = ArrayList<String>()
+    private val listCabang = ArrayList<String>()
+    private lateinit var kategoriAdapter: ArrayAdapter<String>
+    private lateinit var cabangAdapter: ArrayAdapter<String>
 
     private val galleryLauncher =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
@@ -55,50 +65,68 @@ class ModProdukActivity : AppCompatActivity() {
         fun hitungHarga() {
             val beli = etHargaBeli.text.toString().toIntOrNull() ?: 0
             val profit = etNilaiProfit.text.toString().toIntOrNull() ?: 0
-
             val jual = beli + profit
             etHargaJual.setText(jual.toString())
         }
 
-        etHargaBeli.addTextChangedListener {
-            hitungHarga()
-        }
+        etHargaBeli.addTextChangedListener { hitungHarga() }
+        etNilaiProfit.addTextChangedListener { hitungHarga() }
 
-        etNilaiProfit.addTextChangedListener {
-            hitungHarga()
-        }
-
-        val kategoriList = arrayOf("Makanan", "Minuman", "Snack")
-        val cabangList = arrayOf("Cabang 1", "Cabang 2", "Cabang 3")
-
-        val kategoriAdapter = ArrayAdapter(this, R.layout.dropdown_item, kategoriList)
-        val cabangAdapter = ArrayAdapter(this, R.layout.dropdown_item, cabangList)
-
-        val btnGaleri = findViewById<Button>(R.id.btnGaleri)
-        val btnKamera = findViewById<Button>(R.id.btnKamera)
-
-        toolbar = findViewById(R.id.toolbar)
-
-        btnGaleri.setOnClickListener {
-            galleryLauncher.launch("image/*")
-        }
-
-        btnKamera.setOnClickListener {
-            cameraLauncher.launch(null)
-        }
-
-        toolbar.setNavigationOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
-        }
+        kategoriAdapter = ArrayAdapter(this, R.layout.dropdown_item, listKategori)
+        cabangAdapter = ArrayAdapter(this, R.layout.dropdown_item, listCabang)
 
         spKategori.setAdapter(kategoriAdapter)
         spCabang.setAdapter(cabangAdapter)
+
+        loadKategori()
+        loadCabang()
+
+        val btnGaleri = findViewById<Button>(R.id.btnGaleri)
+        val btnKamera = findViewById<Button>(R.id.btnKamera)
+        toolbar = findViewById(R.id.toolbar)
+
+        btnGaleri.setOnClickListener { galleryLauncher.launch("image/*") }
+        btnKamera.setOnClickListener { cameraLauncher.launch(null) }
+        toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.modproduk)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+    }
+
+    private fun loadKategori() {
+        kategoriRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                listKategori.clear()
+                for (dataSnapshot in snapshot.children) {
+                    val namaKategori = dataSnapshot.child("namaKategori").getValue(String::class.java)
+                    val statusKategori = dataSnapshot.child("statusKategori").getValue(String::class.java)
+                    if (namaKategori != null && statusKategori == "aktif") {
+                        listKategori.add(namaKategori)
+                    }
+                }
+                kategoriAdapter.notifyDataSetChanged()
+            }
+            override fun onCancelled(error: DatabaseError) {}
+        })
+    }
+
+    private fun loadCabang() {
+        cabangRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                listCabang.clear()
+                for (dataSnapshot in snapshot.children) {
+                    val namaCabang = dataSnapshot.child("namaCabang").getValue(String::class.java)
+                    if (namaCabang != null) {
+                        listCabang.add(namaCabang)
+                    }
+                }
+                cabangAdapter.notifyDataSetChanged()
+            }
+            override fun onCancelled(error: DatabaseError) {}
+        })
     }
 
     private fun init() {
@@ -113,9 +141,7 @@ class ModProdukActivity : AppCompatActivity() {
         btnSimpan = findViewById(R.id.btnSimpan)
         imageView = findViewById(R.id.ivPreview)
 
-        btnSimpan.setOnClickListener {
-            cekValidasi()
-        }
+        btnSimpan.setOnClickListener { cekValidasi() }
     }
 
     private fun cekValidasi() {
@@ -132,49 +158,41 @@ class ModProdukActivity : AppCompatActivity() {
             etNamaProduk.requestFocus()
             return
         }
-
         if (kategori.isEmpty()) {
             spKategori.error = "Kategori tidak boleh kosong"
             spKategori.requestFocus()
             return
         }
-
         if (cabang.isEmpty()) {
             spCabang.error = "Cabang tidak boleh kosong"
             spCabang.requestFocus()
             return
         }
-
         if (hargaBeli.isEmpty()) {
             etHargaBeli.error = "Harga beli tidak boleh kosong"
             etHargaBeli.requestFocus()
             return
         }
-
         if (profit.isEmpty()) {
             etNilaiProfit.error = "Profit tidak boleh kosong"
             etNilaiProfit.requestFocus()
             return
         }
-
         if (hargaJual.isEmpty()) {
             etHargaJual.error = "Harga jual tidak boleh kosong"
             etHargaJual.requestFocus()
             return
         }
-
         if (!cbUnlimited.isChecked && stok.isEmpty()) {
             etStok.error = "Stok tidak boleh kosong"
             etStok.requestFocus()
             return
         }
-
         simpan()
     }
 
     private fun simpan() {
         val id = myRef.push().key
-
         if (id == null) {
             Toast.makeText(this, "ID gagal dibuat", Toast.LENGTH_SHORT).show()
             return
