@@ -12,10 +12,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PointOfSales">
         <activity
+            android:name=".transaksi.StrukNotaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".transaksi.PembayaranActivity"
+            android:exported="false" />
+        <activity
+            android:name=".transaksi.TransaksiActivity"
+            android:exported="false" />
+        <activity
             android:name=".cabang.ModCabangActivity"
             android:exported="false" />
         <activity
-            android:name=".viewmodel.DataCabangActivity"
+            android:name=".cabang.DataCabangActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

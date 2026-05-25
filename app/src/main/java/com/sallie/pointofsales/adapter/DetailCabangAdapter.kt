@@ -31,7 +31,7 @@ class DetailCabangAdapter(private var cabangList: List<ModelCabangActivity>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CabangViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_data_branch, parent, false)
+            .inflate(R.layout.item_data_cabang, parent, false)
         appContext = parent.context
         return CabangViewHolder(view)
     }

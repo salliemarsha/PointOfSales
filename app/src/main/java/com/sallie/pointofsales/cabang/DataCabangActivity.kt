@@ -1,5 +1,6 @@
 package com.sallie.pointofsales.cabang
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -84,7 +85,7 @@ class DataCabangActivity : AppCompatActivity() {
 
     private fun init() {
         rvDataCabang = findViewById(R.id.rvDataCabang)
-        fabAddBranch = findViewById(R.id.fabAddBranch)
-        etSearchBranch = findViewById(R.id.etSearchBranch)
+        fabAddBranch = findViewById(R.id.fabAddCabang)
+        etSearchBranch = findViewById(R.id.etSearchCabang)
     }
 }

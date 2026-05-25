@@ -23,6 +23,7 @@
             app:navigationIconTint="@color/color2">
 
             <TextView
+                android:id="@+id/tvToolbarTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/raleway_bold"
@@ -81,6 +82,7 @@
                             android:src="@drawable/camera" />
 
                         <TextView
+                            android:id="@+id/tvPlaceholderFoto"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"

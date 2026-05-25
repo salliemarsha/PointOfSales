@@ -1,7 +1,9 @@
 package com.sallie.pointofsales.cabang
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +21,7 @@ class ModCabangActivity : AppCompatActivity() {
     private val myRef = database.getReference("cabang")
 
     private lateinit var toolbar: MaterialToolbar
+    private lateinit var tvToolbarTitle: TextView
     private lateinit var etNamaCabang: TextInputEditText
     private lateinit var etLokasiCabang: TextInputEditText
     private lateinit var btnSimpan: Button
@@ -37,16 +40,17 @@ class ModCabangActivity : AppCompatActivity() {
         val lokasiCabang = intent.getStringExtra("LOKASI_CABANG")
 
         if (idCabang != null) {
-            toolbar.title = "Ubah Cabang"
+            tvToolbarTitle.text = "Edit Cabang"
             etNamaCabang.setText(namaCabang)
             etLokasiCabang.setText(lokasiCabang)
+            btnSimpan.text = "Simpan Perubahan"
         }
 
         toolbar.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.modcabang)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mod)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
@@ -55,13 +59,12 @@ class ModCabangActivity : AppCompatActivity() {
 
     private fun init() {
         toolbar = findViewById(R.id.toolbar)
+        tvToolbarTitle = findViewById(R.id.tvToolbarTitle)
         etNamaCabang = findViewById(R.id.etNamaCabang)
         etLokasiCabang = findViewById(R.id.etLokasiCabang)
         btnSimpan = findViewById(R.id.btnSimpan)
 
-        btnSimpan.setOnClickListener {
-            cekValidasi()
-        }
+        btnSimpan.setOnClickListener { cekValidasi() }
     }
 
     private fun cekValidasi() {
@@ -73,7 +76,6 @@ class ModCabangActivity : AppCompatActivity() {
             etNamaCabang.requestFocus()
             return
         }
-
         if (lokasi.isEmpty()) {
             etLokasiCabang.error = "Lokasi cabang tidak boleh kosong"
             etLokasiCabang.requestFocus()
@@ -85,7 +87,6 @@ class ModCabangActivity : AppCompatActivity() {
 
     private fun simpan(nama: String, lokasi: String) {
         val id = idCabang ?: myRef.push().key
-
         if (id == null) {
             Toast.makeText(this, "ID gagal dibuat", Toast.LENGTH_SHORT).show()
             return
@@ -99,7 +100,7 @@ class ModCabangActivity : AppCompatActivity() {
 
         myRef.child(id).setValue(cabang)
             .addOnSuccessListener {
-                val pesan = if (idCabang != null) "Cabang berhasil diubah" else "Cabang berhasil ditambahkan"
+                val pesan = if (idCabang != null) "Data cabang diubah" else "Cabang ditambahkan"
                 Toast.makeText(this, pesan, Toast.LENGTH_SHORT).show()
                 finish()
             }

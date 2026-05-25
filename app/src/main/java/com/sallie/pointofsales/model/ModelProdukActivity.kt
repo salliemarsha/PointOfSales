@@ -1,66 +1,37 @@
 package com.sallie.pointofsales.model
 
-import android.os.Parcel
-import android.os.Parcelable
+class ModelProdukActivity {
+    var idProduk: String? = null
+    var namaProduk: String? = null
+    var kategori: String? = null
+    var cabang: String? = null
+    var hargaBeli: Int? = 0
+    var profit: Int? = 0
+    var hargaJual: Int? = 0
+    var stok: Int? = 0
+    var fotoUrl: String? = ""
 
-data class ModelProdukActivity(
-    val idProduk: String? = null,
-    val namaProduk: String? = null,
-    val kategori: String? = null,
-    val cabang: String? = null,
-    val hargaBeli: Int? = 0,
-    val profit: Int? = 0,
-    val hargaJual: Int? = 0,
-    val stok: Int? = 0,
-    val tanpaBatas: Boolean? = false,
-    val fotoProduk: String? = null,
-    val statusProduk: String? = "aktif",
-    var createdAt: String? = null,
-    var updatedAt: String? = null
+    constructor()
 
-) : Parcelable {
-
-    constructor(parcel: Parcel) : this(
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readByte() != 0.toByte(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString()
-    )
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(idProduk)
-        parcel.writeString(namaProduk)
-        parcel.writeString(kategori)
-        parcel.writeString(cabang)
-        parcel.writeValue(hargaBeli)
-        parcel.writeValue(profit)
-        parcel.writeValue(hargaJual)
-        parcel.writeValue(stok)
-        parcel.writeByte(if (tanpaBatas == true) 1 else 0)
-        parcel.writeString(fotoProduk)
-        parcel.writeString(statusProduk)
-        parcel.writeString(createdAt)
-        parcel.writeString(updatedAt)
-    }
-
-    override fun describeContents(): Int = 0
-
-    companion object CREATOR : Parcelable.Creator<ModelProdukActivity> {
-        override fun createFromParcel(parcel: Parcel): ModelProdukActivity {
-            return ModelProdukActivity(parcel)
-        }
-
-        override fun newArray(size: Int): Array<ModelProdukActivity?> {
-            return arrayOfNulls(size)
-        }
+    constructor(
+        idProduk: String?,
+        namaProduk: String?,
+        kategori: String?,
+        cabang: String?,
+        hargaBeli: Int?,
+        profit: Int?,
+        hargaJual: Int?,
+        stok: Int?,
+        fotoUrl: String? = ""
+    ) {
+        this.idProduk = idProduk
+        this.namaProduk = namaProduk
+        this.kategori = kategori
+        this.cabang = cabang
+        this.hargaBeli = hargaBeli
+        this.profit = profit
+        this.hargaJual = hargaJual
+        this.stok = stok
+        this.fotoUrl = fotoUrl
     }
 }

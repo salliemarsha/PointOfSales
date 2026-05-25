@@ -49,6 +49,8 @@ dependencies {
     implementation(libs.firebase.database)
     implementation("com.google.firebase:firebase-database-ktx:20.3.0")
     implementation("com.airbnb.android:lottie:6.4.0")
+    implementation("com.google.firebase:firebase-storage:21.0.1")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

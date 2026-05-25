@@ -8,11 +8,14 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
 import com.sallie.pointofsales.R
 import com.sallie.pointofsales.adapter.DetailProdukAdapter
 import com.sallie.pointofsales.model.ModelProdukActivity
@@ -56,13 +59,19 @@ class DataProductActivity : AppCompatActivity() {
         adapter.setOnItemClickListener(object : DetailProdukAdapter.OnItemClickListener {
             override fun onItemClick(produk: ModelProdukActivity) {
                 if (!produk.idProduk.isNullOrBlank()) {
-                    showProdukDetail(produk)
+                    bukaHalamanEdit(produk)
                 } else {
                     Toast.makeText(
                         this@DataProductActivity,
                         "Data tidak valid",
                         Toast.LENGTH_SHORT
                     ).show()
+                }
+            }
+
+            override fun onItemLongClick(produk: ModelProdukActivity) {
+                if (!produk.idProduk.isNullOrBlank()) {
+                    tampilkanDialogHapus(produk)
                 }
             }
         })
@@ -83,8 +92,48 @@ class DataProductActivity : AppCompatActivity() {
         })
     }
 
-    private fun showProdukDetail(produk: ModelProdukActivity) {
-        Toast.makeText(this, "Klik: ${produk.namaProduk}", Toast.LENGTH_SHORT).show()
+    private fun bukaHalamanEdit(produk: ModelProdukActivity) {
+        val intent = Intent(this, ModProdukActivity::class.java).apply {
+            putExtra("ID_PRODUK", produk.idProduk)
+            putExtra("NAMA_PRODUK", produk.namaProduk)
+            putExtra("KATEGORI_PRODUK", produk.kategori)
+            putExtra("CABANG_PRODUK", produk.cabang)
+            putExtra("HARGA_BELI", produk.hargaBeli)
+            putExtra("PROFIT_PRODUK", produk.profit)
+            putExtra("HARGA_JUAL", produk.hargaJual)
+            putExtra("STOK_PRODUK", produk.stok)
+        }
+        startActivity(intent)
+    }
+
+    private fun tampilkanDialogHapus(produk: ModelProdukActivity) {
+        AlertDialog.Builder(this)
+            .setTitle("Hapus Produk")
+            .setMessage("Apakah Anda yakin ingin menghapus ${produk.namaProduk}?")
+            .setPositiveButton("Hapus") { _, _ ->
+                hapusProdukDariFirebase(produk)
+            }
+            .setNegativeButton("Batal", null)
+            .show()
+    }
+
+    private fun hapusProdukDariFirebase(produk: ModelProdukActivity) {
+        val id = produk.idProduk ?: return
+        val databaseRef = FirebaseDatabase.getInstance().getReference("produk")
+        val storageRef = FirebaseStorage.getInstance().getReference("foto_produk")
+
+        databaseRef.child(id).removeValue().addOnSuccessListener {
+            if (!produk.fotoUrl.isNullOrEmpty()) {
+                val fileRef = storageRef.child("$id.jpg")
+                fileRef.delete().addOnCompleteListener {
+                    Toast.makeText(this, "Produk dan gambar berhasil dihapus", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(this, "Produk berhasil dihapus", Toast.LENGTH_SHORT).show()
+            }
+        }.addOnFailureListener {
+            Toast.makeText(this, "Gagal menghapus produk", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun init() {
