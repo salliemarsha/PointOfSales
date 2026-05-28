@@ -1,10 +1,19 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Base.Theme.PointOfSales" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.PointOfSales" parent="Theme.Material3.Light.NoActionBar">
 
-        <item name="colorPrimary">@color/color2</item>
+        <item name="colorPrimary">@color/color4</item>
+        <item name="colorOnPrimary">@color/color3</item>
+        <item name="colorSecondary">@color/color6</item>
+        <item name="colorSurface">@color/color3</item>
+        <item name="colorOnSurface">@color/color2</item>
+        <item name="android:windowBackground">@color/color1</item>
 
-        <item name="colorControlActivated">@color/color2</item>
+        <item name="colorControlActivated">@color/color4</item>
+        
+        <!-- Status Bar Configuration -->
+        <item name="android:statusBarColor">@color/color1</item>
+        <item name="android:windowLightStatusBar">true</item>
 
     </style>
 

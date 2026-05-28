@@ -6,21 +6,25 @@
     android:layout_height="match_parent"
     android:background="@color/color1"
     android:id="@+id/modproduk"
+    android:scrollbars="none"
     tools:context=".produk.ModProdukActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="20dp">
 
+        <!-- Toolbar Back & Title -->
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/color1"
             app:navigationIcon="@drawable/ic_back"
-            app:navigationIconTint="@color/color2">
+            app:navigationIconTint="@color/color2"
+            android:layout_marginBottom="8dp"
+            app:contentInsetStartWithNavigation="0dp">
 
             <TextView
                 android:id="@+id/tvToolbarTitle"
@@ -32,15 +36,15 @@
                 android:textSize="20sp" />
         </com.google.android.material.appbar.MaterialToolbar>
 
+        <!-- Form Card Container -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:backgroundTint="@color/card"
-            app:cardCornerRadius="24dp"
-            app:cardElevation="4dp"
-            app:strokeColor="@color/color2"
-            app:strokeWidth="1dp">
+            android:backgroundTint="@color/color3"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/color5">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -48,21 +52,29 @@
                 android:orientation="vertical"
                 android:padding="20dp">
 
+                <!-- Section: Foto Produk -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lato_bold"
                     android:text="@string/foto_prdk"
                     android:textColor="@color/color2"
-                    android:textSize="12sp" />
+                    android:textSize="13sp" />
 
+                <!-- Upload Container -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardFoto"
                     android:layout_width="match_parent"
-                    android:layout_height="160dp"
+                    android:layout_height="180dp"
                     android:layout_marginTop="10dp"
-                    android:backgroundTint="@color/color2"
-                    app:cardCornerRadius="16dp">
+                    android:backgroundTint="@color/color1"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="@color/color5"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground">
 
                     <ImageView
                         android:id="@+id/ivPreview"
@@ -74,12 +86,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:padding="16dp">
 
                         <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:src="@drawable/camera" />
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:src="@drawable/camera"
+                            app:tint="@color/color4" />
 
                         <TextView
                             android:id="@+id/tvPlaceholderFoto"
@@ -88,11 +102,12 @@
                             android:layout_marginTop="8dp"
                             android:fontFamily="@font/lato_bold"
                             android:text="@string/tmbh_fotoprdk"
-                            android:textSize="11sp"
+                            android:textSize="12sp"
                             android:textColor="@color/color6" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
+                <!-- Media Buttons -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -101,15 +116,16 @@
 
                     <Button
                         android:id="@+id/btnKamera"
-                        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="48dp"
                         android:layout_weight="1"
-                        android:backgroundTint="@color/button"
-                        android:fontFamily="@font/lato_regular"
+                        android:fontFamily="@font/lato_bold"
                         android:text="@string/kamera"
-                        android:textSize="12sp"
-                        android:textColor="@color/color1" />
+                        android:textSize="13sp"
+                        android:textColor="@color/color4"
+                        app:strokeColor="@color/color4"
+                        app:cornerRadius="10dp" />
 
                     <Space
                         android:layout_width="12dp"
@@ -117,36 +133,43 @@
 
                     <Button
                         android:id="@+id/btnGaleri"
-                        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="48dp"
                         android:layout_weight="1"
-                        android:backgroundTint="@color/button"
-                        android:fontFamily="@font/lato_regular"
+                        android:fontFamily="@font/lato_bold"
                         android:text="@string/galeri"
-                        android:textSize="12sp"
-                        android:textColor="@color/color1" />
+                        android:textSize="13sp"
+                        android:textColor="@color/color4"
+                        app:strokeColor="@color/color4"
+                        app:cornerRadius="10dp" />
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="20dp"
+                    android:background="@color/color5" />
+
+                <!-- Product Name Input -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:fontFamily="@font/lato_bold"
                     android:text="@string/nm_prdk"
-                    android:textSize="12sp"
+                    android:textSize="13sp"
                     android:textColor="@color/color2" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="6dp"
                     app:boxCornerRadiusBottomEnd="12dp"
                     app:boxCornerRadiusBottomStart="12dp"
                     app:boxCornerRadiusTopEnd="12dp"
                     app:boxCornerRadiusTopStart="12dp"
-                    app:boxStrokeColor="@color/color2">
+                    app:hintEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etNamaProduk"
@@ -155,28 +178,31 @@
                         android:fontFamily="@font/lato_regular"
                         android:hint="@string/masukkan_nmprdk"
                         android:textColorHint="@color/color6"
-                        android:textColor="@color/color2" />
+                        android:textColor="@color/color2"
+                        android:textSize="15sp"
+                        android:paddingVertical="14dp"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <!-- Category Dropdown Input -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/lato_bold"
                     android:text="@string/kategori"
-                    android:textSize="12sp"
+                    android:textSize="13sp"
                     android:textColor="@color/color2" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="6dp"
                     app:boxCornerRadiusBottomEnd="12dp"
                     app:boxCornerRadiusBottomStart="12dp"
                     app:boxCornerRadiusTopEnd="12dp"
                     app:boxCornerRadiusTopStart="12dp"
-                    app:boxStrokeColor="@color/color2">
+                    app:hintEnabled="false">
 
                     <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:id="@+id/spKategori"
@@ -187,28 +213,31 @@
                         android:inputType="none"
                         android:textColorHint="@color/color6"
                         android:textColor="@color/color2"
+                        android:textSize="15sp"
+                        android:paddingVertical="14dp"
                         android:popupBackground="@drawable/bg_dropdown"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <!-- Branch Dropdown Input -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/lato_bold"
                     android:text="@string/cabang"
-                    android:textSize="12sp"
+                    android:textSize="13sp"
                     android:textColor="@color/color2" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="6dp"
                     app:boxCornerRadiusBottomEnd="12dp"
                     app:boxCornerRadiusBottomStart="12dp"
                     app:boxCornerRadiusTopEnd="12dp"
                     app:boxCornerRadiusTopStart="12dp"
-                    app:boxStrokeColor="@color/color2">
+                    app:hintEnabled="false">
 
                     <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:id="@+id/spCabang"
@@ -219,29 +248,33 @@
                         android:inputType="none"
                         android:textColorHint="@color/color6"
                         android:textColor="@color/color2"
+                        android:textSize="15sp"
+                        android:paddingVertical="14dp"
                         android:popupBackground="@drawable/bg_dropdown"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <!-- Buy Price Input -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/lato_bold"
                     android:text="@string/hrg_beli"
-                    android:textSize="12sp"
+                    android:textSize="13sp"
                     android:textColor="@color/color2" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="6dp"
                     app:boxCornerRadiusBottomEnd="12dp"
                     app:boxCornerRadiusBottomStart="12dp"
                     app:boxCornerRadiusTopEnd="12dp"
                     app:boxCornerRadiusTopStart="12dp"
-                    app:boxStrokeColor="@color/color2"
-                    app:prefixText="Rp ">
+                    app:prefixText="Rp "
+                    app:prefixTextColor="@color/color4"
+                    app:hintEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etHargaBeli"
@@ -249,29 +282,33 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato_regular"
                         android:inputType="number"
-                        android:textColor="@color/color2" />
+                        android:textColor="@color/color2"
+                        android:textSize="15sp"
+                        android:paddingVertical="14dp"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <!-- Profit Value Input -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/lato_bold"
                     android:text="@string/nilai_profit"
-                    android:textSize="12sp"
+                    android:textSize="13sp"
                     android:textColor="@color/color2" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="6dp"
                     app:boxCornerRadiusBottomEnd="12dp"
                     app:boxCornerRadiusBottomStart="12dp"
                     app:boxCornerRadiusTopEnd="12dp"
                     app:boxCornerRadiusTopStart="12dp"
-                    app:boxStrokeColor="@color/color2"
-                    app:prefixText="Rp ">
+                    app:prefixText="Rp "
+                    app:prefixTextColor="@color/color4"
+                    app:hintEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etNilaiProfit"
@@ -279,29 +316,33 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato_regular"
                         android:inputType="number"
-                        android:textColor="@color/color2" />
+                        android:textColor="@color/color2"
+                        android:textSize="15sp"
+                        android:paddingVertical="14dp"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <!-- Sell Price Input -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/lato_bold"
                     android:text="@string/hrg_jual"
-                    android:textSize="12sp"
+                    android:textSize="13sp"
                     android:textColor="@color/color2" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="6dp"
                     app:boxCornerRadiusBottomEnd="12dp"
                     app:boxCornerRadiusBottomStart="12dp"
                     app:boxCornerRadiusTopEnd="12dp"
                     app:boxCornerRadiusTopStart="12dp"
-                    app:boxStrokeColor="@color/color2"
-                    app:prefixText="Rp ">
+                    app:prefixText="Rp "
+                    app:prefixTextColor="@color/color4"
+                    app:hintEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etHargaJual"
@@ -309,28 +350,31 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato_regular"
                         android:inputType="number"
-                        android:textColor="@color/color2" />
+                        android:textColor="@color/color2"
+                        android:textSize="15sp"
+                        android:paddingVertical="14dp"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <!-- Stock Input -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/lato_bold"
                     android:text="@string/stok"
-                    android:textSize="12sp"
+                    android:textSize="13sp"
                     android:textColor="@color/color2" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="6dp"
                     app:boxCornerRadiusBottomEnd="12dp"
                     app:boxCornerRadiusBottomStart="12dp"
                     app:boxCornerRadiusTopEnd="12dp"
                     app:boxCornerRadiusTopStart="12dp"
-                    app:boxStrokeColor="@color/color2">
+                    app:hintEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etStok"
@@ -338,31 +382,37 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato_regular"
                         android:inputType="number"
-                        android:textColor="@color/color2" />
+                        android:textColor="@color/color2"
+                        android:textSize="15sp"
+                        android:paddingVertical="14dp"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <!-- Stock Setting CheckBox -->
                 <CheckBox
                     android:id="@+id/cbUnlimited"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/lato_regular"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="@font/lato_bold"
                     android:text="@string/batas_stok"
-                    android:textSize="12sp"
-                    android:textColor="@color/color2" />
+                    android:textSize="13sp"
+                    android:textColor="@color/color2"
+                    android:buttonTint="@color/color4"/>
 
+                <!-- Save Action Button -->
                 <Button
                     android:id="@+id/btnSimpan"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="32dp"
                     android:backgroundTint="@color/button"
-                    android:fontFamily="@font/lato_bold"
+                    android:fontFamily="@font/raleway_bold"
                     android:text="@string/tambah"
                     android:textAllCaps="false"
-                    android:textColor="@color/color1"
-                    android:textSize="12sp"
-                    app:cornerRadius="12dp" />
+                    android:textColor="@color/color3"
+                    android:textSize="15sp"
+                    app:cornerRadius="12dp"
+                    android:elevation="2dp"/>
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

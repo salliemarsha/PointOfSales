@@ -12,6 +12,39 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PointOfSales">
         <activity
+            android:name=".printer.PrintPreviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".printer.ReceiptTemplateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".printer.PrinterSettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".laporan.LaporanKasirActivity"
+            android:exported="false" />
+        <activity
+            android:name=".laporan.ProdukTerlarisActivity"
+            android:exported="false" />
+        <activity
+            android:name=".laporan.LaporanBulananActivity"
+            android:exported="false" />
+        <activity
+            android:name=".laporan.LaporanHarianActivity"
+            android:exported="false" />
+        <activity
+            android:name=".laporan.LaporanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".akun.ChangePinActivity"
+            android:exported="false" />
+        <activity
+            android:name=".akun.EditProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".akun.AccountActivity"
+            android:exported="false" />
+        <activity
             android:name=".transaksi.StrukNotaActivity"
             android:exported="false" />
         <activity
