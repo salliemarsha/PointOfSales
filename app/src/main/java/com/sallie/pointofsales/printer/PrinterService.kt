@@ -1,6 +1,7 @@
 package com.sallie.pointofsales.printer
 
 import android.content.Context
+import android.content.Intent
 import android.widget.Toast
 import com.sallie.pointofsales.model.ItemKeranjang
 import com.sallie.pointofsales.model.ModelTransaksi
@@ -22,7 +23,24 @@ class PrinterService(private val context: Context) {
     )
 
     fun printTransaction(transaksi: ModelTransaksi) {
-        val data = ReceiptData(
+        val data = mapToReceiptData(transaksi)
+        printReceipt(data)
+    }
+
+    fun shareTransaction(transaksi: ModelTransaksi) {
+        val data = mapToReceiptData(transaksi)
+        val receiptText = buildReceiptString(data)
+        
+        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_SUBJECT, "Receipt #${data.idTransaksi.takeLast(8)}")
+            putExtra(Intent.EXTRA_TEXT, receiptText)
+        }
+        context.startActivity(Intent.createChooser(shareIntent, "Share Receipt Via"))
+    }
+
+    private fun mapToReceiptData(transaksi: ModelTransaksi): ReceiptData {
+        return ReceiptData(
             idTransaksi = transaksi.idTransaksi,
             tanggal = transaksi.tanggal,
             storeName = transaksi.namaCabang.ifEmpty { "NexPOS Store" },
@@ -31,7 +49,6 @@ class PrinterService(private val context: Context) {
             uangBayar = transaksi.uangBayar.toString(),
             kembalian = transaksi.kembalian.toString()
         )
-        printReceipt(data)
     }
 
     fun printReceipt(data: ReceiptData) {
@@ -40,21 +57,21 @@ class PrinterService(private val context: Context) {
 
         if (printerAddress == null) {
             Toast.makeText(context, "Printer not connected. Please go to Printer Settings.", Toast.LENGTH_LONG).show()
-            return
+            // Even if not connected, we show the preview/mock
         }
 
         val receiptText = buildReceiptString(data)
         
         Toast.makeText(context, "Printing receipt #${data.idTransaksi.takeLast(6)}...", Toast.LENGTH_SHORT).show()
         
-        // Mock Bluetooth output
-        println(receiptText)
+        // Mock Bluetooth output / Logs
+        println("BLUETOOTH PRINT:\n$receiptText")
     }
 
-    private fun buildReceiptString(data: ReceiptData): String {
+    fun buildReceiptString(data: ReceiptData): String {
         val sb = StringBuilder()
         sb.append("================================\n")
-        sb.append("          ${data.storeName}          \n")
+        sb.append("          ${data.storeName.uppercase()}          \n")
         sb.append("    ${data.storeAddress}    \n")
         sb.append("================================\n")
         sb.append("ID: ${data.idTransaksi}\n")

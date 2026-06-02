@@ -146,17 +146,52 @@
                 android:textSize="14sp" />
         </RelativeLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnPrintDetail"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/raleway_bold"
-            android:text="CETAK STRUK"
-            app:cornerRadius="12dp"
-            app:icon="@drawable/ic_printer"
-            app:iconGravity="textStart" />
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnShareDetail"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/raleway_bold"
+                android:text="SHARE"
+                app:cornerRadius="12dp"
+                app:icon="@drawable/ic_search"
+                app:iconGravity="textStart" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPrintDetail"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/raleway_bold"
+                android:text="PRINT"
+                app:cornerRadius="12dp"
+                app:icon="@drawable/ic_printer"
+                app:iconGravity="textStart" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvLatestLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_status_pair"
+            android:fontFamily="@font/lato_bold"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="TRANSAKSI TERBARU"
+            android:textColor="@color/color4"
+            android:textSize="12sp"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

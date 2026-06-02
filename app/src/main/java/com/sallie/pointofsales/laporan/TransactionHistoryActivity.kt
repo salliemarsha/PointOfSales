@@ -56,7 +56,9 @@ class TransactionHistoryActivity : AppCompatActivity() {
     private fun setupRecyclerView() {
         adapter = TransactionAdapter(
             transactions,
-            onItemClick = { showDetail(it) },
+            onItemClick = { transaction, isLatest -> 
+                showDetail(transaction, isLatest) 
+            },
             onPrintClick = { printerService.printTransaction(it) }
         )
         rvHistory.layoutManager = LinearLayoutManager(this)
@@ -73,8 +75,7 @@ class TransactionHistoryActivity : AppCompatActivity() {
                     transactions.add(trx)
                 }
                 
-                // Sort by date (assuming format dd-MM-yyyy HH:mm:ss or similar)
-                // Newest first
+                // Sort by date - Newest first (Latest transaction will be at index 0)
                 transactions.sortByDescending { it.tanggal }
                 
                 adapter.updateData(transactions)
@@ -112,7 +113,7 @@ class TransactionHistoryActivity : AppCompatActivity() {
         return ModelTransaksi(id, tanggal, cabang, total, bayar, kembali, items)
     }
 
-    private fun showDetail(transaction: ModelTransaksi) {
+    private fun showDetail(transaction: ModelTransaksi, isLatest: Boolean) {
         val dialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.layout_transaction_detail, null)
         
@@ -122,10 +123,21 @@ class TransactionHistoryActivity : AppCompatActivity() {
         view.findViewById<TextView>(R.id.tvDetailBayar).text = "Rp${transaction.uangBayar}"
         view.findViewById<TextView>(R.id.tvDetailKembalian).text = "Rp${transaction.kembalian}"
         
+        // Handle Latest Transaction Badge
+        val tvLatest = view.findViewById<TextView>(R.id.tvLatestLabel)
+        tvLatest.visibility = if (isLatest) View.VISIBLE else View.GONE
+
         val rvItems = view.findViewById<RecyclerView>(R.id.rvDetailItems)
         rvItems.layoutManager = LinearLayoutManager(this)
         rvItems.adapter = DetailItemsAdapter(transaction.itemTerjual)
         
+        // Share Feature
+        view.findViewById<MaterialButton>(R.id.btnShareDetail).setOnClickListener {
+            printerService.shareTransaction(transaction)
+            dialog.dismiss()
+        }
+
+        // Print Feature
         view.findViewById<MaterialButton>(R.id.btnPrintDetail).setOnClickListener {
             printerService.printTransaction(transaction)
             dialog.dismiss()

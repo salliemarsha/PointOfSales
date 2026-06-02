@@ -1,5 +1,6 @@
 package com.sallie.pointofsales.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +13,7 @@ import com.sallie.pointofsales.model.ModelTransaksi
 
 class TransactionAdapter(
     private var transactions: List<ModelTransaksi>,
-    private val onItemClick: (ModelTransaksi) -> Unit,
+    private val onItemClick: (ModelTransaksi, Boolean) -> Unit,
     private val onPrintClick: (ModelTransaksi) -> Unit
 ) : RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder>() {
 
@@ -28,7 +29,8 @@ class TransactionAdapter(
 
     override fun onBindViewHolder(holder: TransactionViewHolder, position: Int) {
         val transaction = transactions[position]
-        holder.bind(transaction)
+        val isLatest = position == 0
+        holder.bind(transaction, isLatest)
     }
 
     override fun getItemCount(): Int = transactions.size
@@ -41,13 +43,21 @@ class TransactionAdapter(
         private val tvTotal = view.findViewById<TextView>(R.id.tvTotal)
         private val btnPrint = view.findViewById<ImageButton>(R.id.btnQuickPrint)
 
-        fun bind(transaction: ModelTransaksi) {
+        fun bind(transaction: ModelTransaksi, isLatest: Boolean) {
             tvId.text = "#${transaction.idTransaksi.takeLast(8).uppercase()}"
             tvDate.text = transaction.tanggal
             tvStore.text = transaction.namaCabang.ifEmpty { "POS Store" }
             tvTotal.text = "Rp${transaction.totalBayar}"
 
-            card.setOnClickListener { onItemClick(transaction) }
+            if (isLatest) {
+                card.strokeColor = Color.parseColor("#4CAF50") // Green for latest
+                card.strokeWidth = 4
+            } else {
+                card.strokeColor = Color.parseColor("#E0E0E0")
+                card.strokeWidth = 2
+            }
+
+            card.setOnClickListener { onItemClick(transaction, isLatest) }
             btnPrint.setOnClickListener { onPrintClick(transaction) }
         }
     }
