@@ -62,6 +62,9 @@
             android:name=".laporan.LaporanActivity"
             android:exported="false" />
         <activity
+            android:name=".laporan.TransactionHistoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".akun.ChangePinActivity"
             android:exported="false" />
         <activity
