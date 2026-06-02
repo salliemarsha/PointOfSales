@@ -1,10 +1,284 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/layoutLaporanBulanan"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color1"
+    android:fillViewport="true"
     tools:context=".laporan.LaporanBulananActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Header Toolbar -->
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbarLaporanBulanan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color1"
+            app:navigationIcon="@drawable/ic_back"
+            app:navigationIconTint="@color/color2">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/raleway_bold"
+                android:text="Laporan Bulanan"
+                android:textColor="@color/color2"
+                android:textSize="20sp" />
+        </com.google.android.material.appbar.MaterialToolbar>
+
+        <!-- Dropdown Month Filter Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginVertical="8dp"
+            android:backgroundTint="@color/card"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            app:strokeColor="@color/color5"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp"
+                    android:fontFamily="@font/lato_bold"
+                    android:text="Pilih Periode Bulan"
+                    android:textColor="@color/color2"
+                    android:textSize="12sp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tlFilterBulan"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxStrokeColor="@color/color4"
+                    app:boxStrokeWidthFocused="2dp"
+                    app:endIconTint="@color/color6"
+                    app:hintEnabled="false">
+
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                        android:id="@+id/spFilterBulan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato_regular"
+                        android:hint="Pilih Bulan &amp; Tahun"
+                        android:inputType="none"
+                        android:padding="16dp"
+                        android:textColor="@color/color2"
+                        android:textColorHint="@color/color6"
+                        android:popupBackground="@drawable/bg_dropdown"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Monthly Summary Income Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginVertical="8dp"
+            android:backgroundTint="@color/layanan"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="3dp"
+            app:strokeColor="@color/color5"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/raleway_bold"
+                    android:text="PENDAPATAN BULAN INI"
+                    android:textColor="#16A34A"
+                    android:textSize="12sp"
+                    android:letterSpacing="0.05" />
+
+                <TextView
+                    android:id="@+id/tvTotalPendapatanBulanan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/raleway_bold"
+                    android:text="Rp34.500.000"
+                    android:textColor="@color/color2"
+                    android:textSize="28sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Revenue Analytics Graphic Chart Placeholder -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/raleway_bold"
+            android:text="Grafik Analisis Pendapatan"
+            android:textColor="@color/color2"
+            android:textSize="14sp" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginVertical="6dp"
+            android:backgroundTint="@color/card"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="3dp"
+            app:strokeColor="@color/color5"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <!-- Mock Graphic Chart Container -->
+                <LinearLayout
+                    android:id="@+id/viewChartPlaceholder"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:orientation="horizontal"
+                    android:gravity="bottom"
+                    android:paddingHorizontal="8dp"
+                    android:paddingTop="16dp"
+                    android:layout_marginBottom="12dp">
+
+                    <!-- Week 1 Bar -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal"
+                        android:layout_marginHorizontal="8dp">
+
+                        <View
+                            android:layout_width="16dp"
+                            android:layout_height="80dp"
+                            android:background="@color/color4" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="W1"
+                            android:textColor="@color/color6"
+                            android:textSize="10sp"
+                            android:fontFamily="@font/lato_bold" />
+                    </LinearLayout>
+
+                    <!-- Week 2 Bar -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal"
+                        android:layout_marginHorizontal="8dp">
+
+                        <View
+                            android:layout_width="16dp"
+                            android:layout_height="130dp"
+                            android:background="@color/color4" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="W2"
+                            android:textColor="@color/color6"
+                            android:textSize="10sp"
+                            android:fontFamily="@font/lato_bold" />
+                    </LinearLayout>
+
+                    <!-- Week 3 Bar -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal"
+                        android:layout_marginHorizontal="8dp">
+
+                        <View
+                            android:layout_width="16dp"
+                            android:layout_height="110dp"
+                            android:background="@color/color4" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="W3"
+                            android:textColor="@color/color6"
+                            android:textSize="10sp"
+                            android:fontFamily="@font/lato_bold" />
+                    </LinearLayout>
+
+                    <!-- Week 4 Bar -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal"
+                        android:layout_marginHorizontal="8dp">
+
+                        <View
+                            android:layout_width="16dp"
+                            android:layout_height="150dp"
+                            android:background="@color/color4" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="W4"
+                            android:textColor="@color/color6"
+                            android:textSize="10sp"
+                            android:fontFamily="@font/lato_bold" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Pendapatan tertinggi diperoleh pada Minggu ke-4."
+                    android:textColor="@color/color6"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/lato_regular" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+</ScrollView>

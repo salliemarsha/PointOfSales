@@ -1,21 +1,13 @@
 package com.sallie.pointofsales.printer
 
-import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.sallie.pointofsales.R
+import com.sallie.pointofsales.transaksi.ItemKeranjang
 
-class ReceiptTemplateActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_receipt_template)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-    }
-}
+data class ReceiptTemplate(
+    val idTransaksi: String,
+    val tanggal: String,
+    val namaCabang: String,
+    val items: List<ItemKeranjang>,
+    val total: Int,
+    val bayar: Int,
+    val kembalian: Int
+)

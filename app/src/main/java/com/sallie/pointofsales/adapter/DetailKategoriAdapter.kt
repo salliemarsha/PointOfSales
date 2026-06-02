@@ -2,7 +2,6 @@ package com.sallie.pointofsales.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.view.ViewParent
 import com.sallie.pointofsales.R
 import android.content.Context
 import android.view.View
@@ -11,12 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
 import com.sallie.pointofsales.model.ModelKategoriActivity
 
-class DetailKategoriAdapter (private var kategoriList: List<ModelKategoriActivity>):
+class DetailKategoriAdapter(private var kategoriList: List<ModelKategoriActivity>) :
     RecyclerView.Adapter<DetailKategoriAdapter.KategoriViewHolder>() {
-        lateinit var appContext: Context
+    lateinit var appContext: Context
 
     interface OnItemClickListener {
         fun onItemClick(kategori: ModelKategoriActivity)
+        fun onItemLongClick(kategori: ModelKategoriActivity)
     }
 
     private var listener: OnItemClickListener? = null
@@ -29,7 +29,8 @@ class DetailKategoriAdapter (private var kategoriList: List<ModelKategoriActivit
         parent: ViewGroup,
         viewType: Int
     ): KategoriViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_data_kategori, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_data_kategori, parent, false)
         appContext = parent.context
         return KategoriViewHolder(view)
     }
@@ -38,7 +39,7 @@ class DetailKategoriAdapter (private var kategoriList: List<ModelKategoriActivit
         holder: DetailKategoriAdapter.KategoriViewHolder,
         position: Int
     ) {
-       val kategori = kategoriList[position]
+        val kategori = kategoriList[position]
         holder.bind(kategori)
     }
 
@@ -52,10 +53,10 @@ class DetailKategoriAdapter (private var kategoriList: List<ModelKategoriActivit
     }
 
     inner class KategoriViewHolder(itemView: View) :
-            RecyclerView.ViewHolder(itemView) {
+        RecyclerView.ViewHolder(itemView) {
 
-                val tvNamaKategori: TextView = itemView.findViewById(R.id.tvNamaKategori)
-                val chipStatus: Chip = itemView.findViewById(R.id.chipStatus)
+        val tvNamaKategori: TextView = itemView.findViewById(R.id.tvNamaKategori)
+        val chipStatus: Chip = itemView.findViewById(R.id.chipStatus)
 
         fun bind(kategori: ModelKategoriActivity) {
             tvNamaKategori.text = kategori.namaKategori ?: "-"
@@ -64,7 +65,12 @@ class DetailKategoriAdapter (private var kategoriList: List<ModelKategoriActivit
             itemView.setOnClickListener {
                 listener?.onItemClick(kategori)
             }
-        }
+
+            itemView.setOnLongClickListener {
+                listener?.onItemLongClick(kategori)
+                true
             }
+        }
+    }
 
 }

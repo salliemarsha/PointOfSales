@@ -32,6 +32,7 @@ class ModProdukActivity : AppCompatActivity() {
 
     private lateinit var toolbar: MaterialToolbar
     private lateinit var etNamaProduk: TextInputEditText
+    private lateinit var etProductImageUrl: TextInputEditText
     private lateinit var spKategori: AutoCompleteTextView
     private lateinit var spCabang: AutoCompleteTextView
     private lateinit var etHargaBeli: TextInputEditText
@@ -99,6 +100,7 @@ class ModProdukActivity : AppCompatActivity() {
 
         idProduk = intent.getStringExtra("ID_PRODUK")
         val namaProduk = intent.getStringExtra("NAMA_PRODUK")
+        val productImageUrl = intent.getStringExtra("PRODUCT_IMAGE_URL")
         val kategoriProduk = intent.getStringExtra("KATEGORI_PRODUK")
         val cabangProduk = intent.getStringExtra("CABANG_PRODUK")
         val hargaBeli = intent.getIntExtra("HARGA_BELI", 0)
@@ -110,6 +112,7 @@ class ModProdukActivity : AppCompatActivity() {
             val titleToolbar = toolbar.findViewById<TextView>(R.id.tvToolbarTitle)
             if (titleToolbar != null) titleToolbar.text = "Edit Produk"
             etNamaProduk.setText(namaProduk)
+            etProductImageUrl.setText(productImageUrl)
             spKategori.setText(kategoriProduk, false)
             spCabang.setText(cabangProduk, false)
             etHargaBeli.setText(hargaBeli.toString())
@@ -176,6 +179,7 @@ class ModProdukActivity : AppCompatActivity() {
     private fun init() {
         toolbar = findViewById(R.id.toolbar)
         etNamaProduk = findViewById(R.id.etNamaProduk)
+        etProductImageUrl = findViewById(R.id.etProductImageUrl)
         spKategori = findViewById(R.id.spKategori)
         spCabang = findViewById(R.id.spCabang)
         etHargaBeli = findViewById(R.id.etHargaBeli)
@@ -272,7 +276,9 @@ class ModProdukActivity : AppCompatActivity() {
                     Toast.makeText(this, "Gagal mengunggah foto kamera", Toast.LENGTH_SHORT).show()
                 }
         } else {
-            simpanKeDatabase(id, "")
+            // Use URL from EditText if provided, otherwise empty
+            val manualUrl = etProductImageUrl.text.toString().trim()
+            simpanKeDatabase(id, manualUrl)
         }
     }
 
@@ -285,14 +291,12 @@ class ModProdukActivity : AppCompatActivity() {
             hargaBeli = etHargaBeli.text.toString().toIntOrNull() ?: 0,
             profit = etNilaiProfit.text.toString().toIntOrNull() ?: 0,
             hargaJual = etHargaJual.text.toString().toIntOrNull() ?: 0,
-            stok = if (cbUnlimited.isChecked) -1 else (etStok.text.toString().toIntOrNull() ?: 0)
+            stok = if (cbUnlimited.isChecked) -1 else (etStok.text.toString().toIntOrNull() ?: 0),
+            productImageUrl = if (fotoUrl.isNotEmpty()) fotoUrl else etProductImageUrl.text.toString().trim()
         )
 
         myRef.child(id).setValue(produk)
             .addOnSuccessListener {
-                if (fotoUrl.isNotEmpty()) {
-                    myRef.child(id).child("fotoUrl").setValue(fotoUrl)
-                }
                 val pesan = if (idProduk != null) "Data produk diubah" else "Produk berhasil ditambahkan"
                 Toast.makeText(this, pesan, Toast.LENGTH_SHORT).show()
                 finish()

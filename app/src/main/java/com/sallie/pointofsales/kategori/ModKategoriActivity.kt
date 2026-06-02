@@ -29,6 +29,8 @@ class ModKategoriActivity : AppCompatActivity() {
     private lateinit var spstatus: AutoCompleteTextView
     private lateinit var btAdd: Button
 
+    private var idKategori: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -36,22 +38,27 @@ class ModKategoriActivity : AppCompatActivity() {
 
         init()
 
-        val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
-
         toolbar.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
 
         val statusOptions = resources.getStringArray(R.array.status)
-
-        val adapter = ArrayAdapter(
-            this,
-            R.layout.dropdown_item,
-            statusOptions
-        )
-
+        val adapter = ArrayAdapter(this, R.layout.dropdown_item, statusOptions)
         spstatus.setAdapter(adapter)
-        spstatus.setText(statusOptions[0], false)
+
+        // Check for Edit Mode
+        idKategori = intent.getStringExtra("ID_KATEGORI")
+        val namaKategori = intent.getStringExtra("NAMA_KATEGORI")
+        val statusKategori = intent.getStringExtra("STATUS_KATEGORI")
+
+        if (idKategori != null) {
+            tvToolbarTitle.text = "Edit Kategori"
+            etNameKategori.setText(namaKategori)
+            spstatus.setText(statusKategori, false)
+            btAdd.text = getString(R.string.simpan)
+        } else {
+            spstatus.setText(statusOptions[0], false)
+        }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mod)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -60,7 +67,8 @@ class ModKategoriActivity : AppCompatActivity() {
         }
     }
 
-    private fun init(){
+    private fun init() {
+        toolbar = findViewById(R.id.toolbar)
         tvToolbarTitle = findViewById(R.id.tvToolbarTitle)
         etNameKategori = findViewById(R.id.etNameKategori)
         statuskategori = findViewById(R.id.statusKategori)
@@ -72,8 +80,7 @@ class ModKategoriActivity : AppCompatActivity() {
         }
     }
 
-    private fun cekValidasi(){
-
+    private fun cekValidasi() {
         val nama = etNameKategori.text.toString().trim()
         val status = spstatus.text.toString().trim()
 
@@ -89,13 +96,11 @@ class ModKategoriActivity : AppCompatActivity() {
             return
         }
 
-        if (btAdd.text.toString() == getString(R.string.tambah)) {
-            simpan()
-        }
+        simpan()
     }
 
     private fun simpan() {
-        val id = myRef.push().key
+        val id = idKategori ?: myRef.push().key
 
         if (id == null) {
             Toast.makeText(this, "ID gagal dibuat", Toast.LENGTH_SHORT).show()
@@ -110,12 +115,12 @@ class ModKategoriActivity : AppCompatActivity() {
 
         myRef.child(id).setValue(kategori)
             .addOnSuccessListener {
-                Toast.makeText(this, "Kategori berhasil ditambahkan", Toast.LENGTH_SHORT).show()
-
+                val message = if (idKategori != null) "Kategori berhasil diperbarui" else "Kategori berhasil ditambahkan"
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                 finish()
             }
             .addOnFailureListener {
-                Toast.makeText(this, "Gagal menambahkan kategori", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Gagal menyimpan kategori", Toast.LENGTH_SHORT).show()
             }
     }
-    }
+}

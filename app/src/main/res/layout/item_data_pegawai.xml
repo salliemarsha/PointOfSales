@@ -91,6 +91,17 @@
                         android:fontFamily="@font/lato_regular"/>
                 </LinearLayout>
 
+                <!-- Added missing TextView to prevent crash -->
+                <TextView
+                    android:id="@+id/tvPhoneNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="0812345678"
+                    android:textSize="11sp"
+                    android:textColor="@color/color6"
+                    android:fontFamily="@font/lato_regular" />
+
             </LinearLayout>
 
             <com.google.android.material.chip.Chip

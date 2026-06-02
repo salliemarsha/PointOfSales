@@ -35,6 +35,7 @@ class PembayaranActivity : AppCompatActivity() {
     private var totalTagihan = 0
     private var uangBayar = 0
     private var uangKembalian = 0
+    private var idTransaksi = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,12 +44,14 @@ class PembayaranActivity : AppCompatActivity() {
 
         initComponent()
 
+        idTransaksi = intent.getStringExtra("ID_TRANSAKSI") ?: ""
+        totalTagihan = intent.getIntExtra("TOTAL_BELANJA", 0)
+
+        tvTotalTagihan.text = "Rp$totalTagihan"
+
         toolbarPembayaran.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
-
-        totalTagihan = intent.getIntExtra("TOTAL_BELANJA", 0)
-        tvTotalTagihan.text = "Rp$totalTagihan"
 
         etUangBayar.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -74,10 +77,10 @@ class PembayaranActivity : AppCompatActivity() {
         if (inputUang.isNotEmpty()) {
             uangBayar = inputUang.toInt()
             uangKembalian = uangBayar - totalTagihan
-            if (uangKembalian >= 0) {
-                tvUangKembalian.text = "Rp$uangKembalian"
+            tvUangKembalian.text = if (uangKembalian >= 0) {
+                "Rp$uangKembalian"
             } else {
-                tvUangKembalian.text = "Uang Kurang"
+                "Uang Kurang"
             }
         } else {
             uangBayar = 0
@@ -87,30 +90,28 @@ class PembayaranActivity : AppCompatActivity() {
     }
 
     private fun prosesSimpanTransaksi() {
+        if (idTransaksi.isEmpty()) {
+            Toast.makeText(this, "ID transaksi tidak ditemukan", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         if (uangBayar < totalTagihan) {
             Toast.makeText(this, "Nominal uang yang dibayarkan kurang!", Toast.LENGTH_SHORT).show()
             return
         }
 
-        val databaseRef = FirebaseDatabase.getInstance().getReference("transaksi")
-        val idTransaksi = databaseRef.push().key ?: return
+        val ref = FirebaseDatabase.getInstance().getReference("transaksi")
 
-        val sdf = SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault())
-        val tanggalSekarang = sdf.format(Date())
+        val updates = mapOf(
+            "uangBayar" to uangBayar,
+            "kembalian" to uangKembalian
+        )
 
-        val dataTransaksi = HashMap<String, Any>()
-        dataTransaksi["idTransaksi"] = idTransaksi
-        dataTransaksi["tanggal"] = tanggalSekarang
-        dataTransaksi["totalHarga"] = totalTagihan
-        dataTransaksi["uangBayar"] = uangBayar
-        dataTransaksi["kembalian"] = uangKembalian
-
-        databaseRef.child(idTransaksi).setValue(dataTransaksi)
+        ref.child(idTransaksi).updateChildren(updates)
             .addOnSuccessListener {
                 Toast.makeText(this, "Transaksi Berhasil Disimpan", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, StrukNotaActivity::class.java).apply {
-                    putExtra("ID_TRANSAKSI", idTransaksi)
-                }
+                val intent = Intent(this, StrukNotaActivity::class.java)
+                intent.putExtra("ID_TRANSAKSI", idTransaksi)
                 startActivity(intent)
                 finish()
             }

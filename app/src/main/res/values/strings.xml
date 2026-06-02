@@ -56,4 +56,23 @@
     <string name="mskan_namalengkap">Masukkan nama lengkap</string>
     <string name="buatpin">Buat login PIN 6-digit</string>
     <string name="edit_pegawai">Edit Pegawai</string>
+
+    <!-- Pelanggan Module Strings -->
+    <string name="pelanggan">Pelanggan</string>
+    <string name="cari_pelanggan">Cari Pelanggan</string>
+    <string name="tambah_pelanggan">Tambah Pelanggan</string>
+    <string name="edit_pelanggan">Edit Pelanggan</string>
+    <string name="nama_pelanggan">Nama Pelanggan</string>
+    <string name="nomor_telepon_label">Nomor Telepon</string>
+    <string name="email_label">Email (Opsional)</string>
+    <string name="alamat_label">Alamat (Opsional)</string>
+    <string name="batal">Batal</string>
+    <string name="hapus_pelanggan_title">Hapus Pelanggan</string>
+    <string name="hapus_pelanggan_confirm">Apakah Anda yakin ingin menghapus pelanggan ini?</string>
+    <string name="belum_ada_pelanggan">Belum ada pelanggan</string>
+    <string name="tambah_pelanggan_pertama">Tambahkan pelanggan pertama Anda</string>
+    <string name="pelanggan_added">Pelanggan berhasil ditambahkan</string>
+    <string name="pelanggan_updated">Data pelanggan diperbarui</string>
+    <string name="pelanggan_deleted">Pelanggan berhasil dihapus</string>
+    <string name="wajib_diisi">Wajib diisi</string>
 </resources>

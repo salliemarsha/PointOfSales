@@ -12,6 +12,6 @@ data class ItemKeranjang(
     val idProduk: String = "",
     val namaProduk: String = "",
     val hargaJual: Int = 0,
-    val jumlahBeli: Int = 0,
-    val subTotal: Int = 0
+    var jumlahBeli: Int = 0,
+    var subTotal: Int = 0
 )

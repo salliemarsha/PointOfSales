@@ -1,10 +1,443 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".printer.ReceiptTemplateActivity">
+    android:background="@color/color1"
+    android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Header Toolbar -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbarReceiptTemplate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color1"
+        android:paddingHorizontal="4dp"
+        app:navigationIcon="@drawable/ic_back"
+        app:navigationIconTint="@color/color2">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/raleway_bold"
+            android:text="Desain Struk"
+            android:textColor="@color/color2"
+            android:textSize="20sp" />
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <!-- Scrollable Content -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Configuration Form Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvReceiptForm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
+                android:layout_marginBottom="20dp"
+                android:backgroundTint="@color/card"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="3dp"
+                app:strokeColor="@color/color5"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:fontFamily="@font/raleway_bold"
+                        android:text="Pengaturan Informasi Struk"
+                        android:textColor="@color/color2"
+                        android:textSize="15sp" />
+
+                    <!-- Store Name Input -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:fontFamily="@font/lato_bold"
+                        android:text="Nama Toko"
+                        android:textColor="@color/color2"
+                        android:textSize="12sp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilStoreName"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:boxCornerRadiusBottomEnd="12dp"
+                        app:boxCornerRadiusBottomStart="12dp"
+                        app:boxCornerRadiusTopEnd="12dp"
+                        app:boxCornerRadiusTopStart="12dp"
+                        app:boxStrokeColor="@color/color4"
+                        app:boxStrokeWidthFocused="2dp"
+                        app:startIconDrawable="@drawable/ic_store"
+                        app:startIconTint="@color/color6"
+                        app:hintEnabled="false">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etStoreName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/lato_regular"
+                            android:hint="Masukkan nama toko"
+                            android:inputType="textPersonName"
+                            android:textColor="@color/color2"
+                            android:textColorHint="@color/color6" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="16dp" />
+
+                    <!-- Store Address Input -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:fontFamily="@font/lato_bold"
+                        android:text="Alamat Toko"
+                        android:textColor="@color/color2"
+                        android:textSize="12sp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilStoreAddress"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:boxCornerRadiusBottomEnd="12dp"
+                        app:boxCornerRadiusBottomStart="12dp"
+                        app:boxCornerRadiusTopEnd="12dp"
+                        app:boxCornerRadiusTopStart="12dp"
+                        app:boxStrokeColor="@color/color4"
+                        app:boxStrokeWidthFocused="2dp"
+                        app:startIconDrawable="@drawable/ic_location"
+                        app:startIconTint="@color/color6"
+                        app:hintEnabled="false">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etStoreAddress"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/lato_regular"
+                            android:hint="Masukkan alamat toko"
+                            android:inputType="text"
+                            android:textColor="@color/color2"
+                            android:textColorHint="@color/color6" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="16dp" />
+
+                    <!-- Receipt Footer Text Input -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:fontFamily="@font/lato_bold"
+                        android:text="Pesan Kaki Struk (Footer)"
+                        android:textColor="@color/color2"
+                        android:textSize="12sp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilReceiptFooter"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:boxCornerRadiusBottomEnd="12dp"
+                        app:boxCornerRadiusBottomStart="12dp"
+                        app:boxCornerRadiusTopEnd="12dp"
+                        app:boxCornerRadiusTopStart="12dp"
+                        app:boxStrokeColor="@color/color4"
+                        app:boxStrokeWidthFocused="2dp"
+                        app:startIconDrawable="@drawable/ic_text_format"
+                        app:startIconTint="@color/color6"
+                        app:hintEnabled="false">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etReceiptFooter"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/lato_regular"
+                            android:hint="Contoh: Terima Kasih Atas Kunjungan Anda"
+                            android:inputType="text"
+                            android:textColor="@color/color2"
+                            android:textColorHint="@color/color6" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Save Config Button -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSaveTemplate"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:layout_marginTop="24dp"
+                        android:backgroundTint="@color/button"
+                        android:fontFamily="@font/raleway_bold"
+                        android:text="Simpan Desain Struk"
+                        android:textAllCaps="false"
+                        android:textColor="@color/color3"
+                        android:textSize="14sp"
+                        app:cornerRadius="12dp"
+                        app:elevation="2dp" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Preview Header -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginBottom="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/raleway_bold"
+                    android:text="Pratinjau Live Struk"
+                    android:textColor="@color/color2"
+                    android:textSize="14sp" />
+
+                <!-- Premium Live Badge -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    app:cardCornerRadius="6dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@color/layanan"
+                    app:strokeColor="#D1FAE5"
+                    app:strokeWidth="1dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="4dp"
+                        android:fontFamily="@font/lato_bold"
+                        android:text="MOCKUP LIVE"
+                        android:textColor="#15803D"
+                        android:textSize="10sp"
+                        tools:ignore="SmallSp" />
+                </com.google.android.material.card.MaterialCardView>
+            </RelativeLayout>
+
+            <!-- Centered Receipt Mockup Paper Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="290dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginBottom="32dp"
+                android:backgroundTint="#FFFFFF"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="4dp"
+                app:strokeColor="@color/color5"
+                app:strokeWidth="1.5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <!-- Store Brand Header -->
+                    <TextView
+                        android:id="@+id/tvPreviewStoreName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/raleway_bold"
+                        android:gravity="center"
+                        android:text="Nama Toko Anda"
+                        android:textColor="@color/color2"
+                        android:textSize="18sp"
+                        android:letterSpacing="0.05" />
+
+                    <TextView
+                        android:id="@+id/tvPreviewStoreAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:gravity="center"
+                        android:text="Alamat Toko Anda Akan Tampil Di Sini"
+                        android:textColor="@color/color6"
+                        android:textSize="11sp"
+                        android:fontFamily="@font/lato_regular" />
+
+                    <!-- Dashed Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginVertical="12dp"
+                        android:background="@drawable/bg_dashed_line"
+                        android:layerType="software" />
+
+                    <!-- Invoice ID & Date -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:fontFamily="@font/lato_bold"
+                            android:text="ID: #TX-PREVIEW"
+                            android:textColor="@color/color2"
+                            android:textSize="11sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:fontFamily="@font/lato_regular"
+                            android:text="29/05/2026 12:00"
+                            android:textColor="@color/color6"
+                            android:textSize="11sp" />
+                    </RelativeLayout>
+
+                    <!-- Dashed Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginVertical="12dp"
+                        android:background="@drawable/bg_dashed_line"
+                        android:layerType="software" />
+
+                    <!-- Items Table -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <!-- Item Row 1 -->
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="6dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:fontFamily="@font/lato_regular"
+                                android:text="1x Kopi Latte Premium"
+                                android:textColor="@color/color2"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:fontFamily="@font/lato_regular"
+                                android:text="Rp25.000"
+                                android:textColor="@color/color2"
+                                android:textSize="12sp" />
+                        </RelativeLayout>
+
+                        <!-- Item Row 2 -->
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:fontFamily="@font/lato_regular"
+                                android:text="2x Butter Croissant"
+                                android:textColor="@color/color2"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:fontFamily="@font/lato_regular"
+                                android:text="Rp30.000"
+                                android:textColor="@color/color2"
+                                android:textSize="12sp" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <!-- Dashed Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginVertical="12dp"
+                        android:background="@drawable/bg_dashed_line"
+                        android:layerType="software" />
+
+                    <!-- Totals Block -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:fontFamily="@font/lato_bold"
+                            android:text="TOTAL"
+                            android:textColor="@color/color2"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:fontFamily="@font/lato_bold"
+                            android:text="Rp55.000"
+                            android:textColor="@color/color4"
+                            android:textSize="14sp" />
+                    </RelativeLayout>
+
+                    <!-- Dashed Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginVertical="12dp"
+                        android:background="@drawable/bg_dashed_line"
+                        android:layerType="software" />
+
+                    <!-- Footer Note -->
+                    <TextView
+                        android:id="@+id/tvPreviewFooterText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center"
+                        android:text="*** Terima Kasih Atas Kunjungan Anda ***"
+                        android:textColor="@color/color6"
+                        android:textSize="10sp"
+                        android:fontFamily="@font/lato_bold"
+                        android:letterSpacing="0.05" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

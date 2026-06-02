@@ -1,10 +1,274 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".printer.PrinterSettingsActivity">
+    android:background="@color/color1"
+    android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Header Toolbar -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbarPrinterSettings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color1"
+        android:paddingHorizontal="4dp"
+        app:navigationIcon="@drawable/ic_back"
+        app:navigationIconTint="@color/color2">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/raleway_bold"
+            android:text="Pengaturan Printer"
+            android:textColor="@color/color2"
+            android:textSize="20sp" />
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <!-- Scrollable content -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Printer Status Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvPrinterStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/card"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="3dp"
+                app:strokeColor="@color/color5"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato_bold"
+                        android:text="Status Koneksi"
+                        android:textColor="@color/color6"
+                        android:textSize="12sp"
+                        android:textAllCaps="true" />
+
+                    <!-- Status Display Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <!-- Circular Printer Icon Container -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            app:cardCornerRadius="28dp"
+                            app:cardElevation="0dp"
+                            app:cardBackgroundColor="@color/blue_accent_light"
+                            app:strokeWidth="0dp">
+
+                            <ImageView
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_printer"
+                                app:tint="@color/color4"
+                                android:contentDescription="Printer Icon" />
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginStart="16dp">
+
+                            <!-- Device name when connected or state -->
+                            <TextView
+                                android:id="@+id/tvPrinterName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/raleway_bold"
+                                android:text="Belum Ada Printer"
+                                android:textColor="@color/color2"
+                                android:textSize="16sp" />
+
+                            <!-- Status text -->
+                            <TextView
+                                android:id="@+id/tvPrinterInfo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:fontFamily="@font/lato_regular"
+                                android:text="Sambungkan printer untuk mulai mencetak nota"
+                                android:textColor="@color/color6"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <!-- Dynamic Visual Indicator Badge (Soft red by default, can be toggled by code) -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cvStatusBadge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="0dp"
+                            app:cardBackgroundColor="#FEE2E2"
+                            app:strokeColor="#FECACA"
+                            app:strokeWidth="1dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingHorizontal="10dp"
+                                android:paddingVertical="6dp"
+                                android:gravity="center_vertical">
+
+                                <!-- Indicator Dot -->
+                                <com.google.android.material.card.MaterialCardView
+                                    android:id="@+id/viewIndicatorDot"
+                                    android:layout_width="8dp"
+                                    android:layout_height="8dp"
+                                    app:cardCornerRadius="4dp"
+                                    app:cardElevation="0dp"
+                                    app:cardBackgroundColor="@color/button2"
+                                    app:strokeWidth="0dp" />
+
+                                <TextView
+                                    android:id="@+id/tvStatusBadgeText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="6dp"
+                                    android:fontFamily="@font/lato_bold"
+                                    android:text="Terputus"
+                                    android:textColor="@color/button2"
+                                    android:textSize="11sp" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Bluetooth Printer Section Title -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/raleway_bold"
+                android:text="Pilih Printer Bluetooth"
+                android:textColor="@color/color2"
+                android:textSize="14sp" />
+
+            <!-- Device List Container -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvDeviceListContainer"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="4dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/card"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/color5"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvBluetoothDevices"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clipToPadding="false"
+                        android:scrollbars="vertical"
+                        tools:listitem="@layout/item_bluetooth_device" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Action Buttons Area -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginHorizontal="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp">
+
+                <!-- Primary Action: Connect -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnConnectPrinter"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:backgroundTint="@color/button"
+                    android:fontFamily="@font/raleway_bold"
+                    android:text="Hubungkan Printer"
+                    android:textAllCaps="false"
+                    android:textColor="@color/color3"
+                    android:textSize="14sp"
+                    app:cornerRadius="12dp"
+                    app:elevation="2dp" />
+
+                <!-- Secondary Action: Test Print -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnTestPrint"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="12dp"
+                    android:backgroundTint="@color/blue_accent_light"
+                    android:fontFamily="@font/raleway_bold"
+                    android:text="Cetak Uji Coba"
+                    android:textAllCaps="false"
+                    android:textColor="@color/button"
+                    android:textSize="14sp"
+                    app:cornerRadius="12dp"
+                    app:strokeColor="@color/color4"
+                    app:strokeWidth="1dp" />
+
+                <!-- Tertiary Action: Disconnect -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnDisconnectPrinter"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="12dp"
+                    android:backgroundTint="#FEE2E2"
+                    android:fontFamily="@font/raleway_bold"
+                    android:text="Putuskan Printer"
+                    android:textAllCaps="false"
+                    android:textColor="@color/button2"
+                    android:textSize="14sp"
+                    app:cornerRadius="12dp"
+                    app:strokeColor="@color/button2"
+                    app:strokeWidth="1dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

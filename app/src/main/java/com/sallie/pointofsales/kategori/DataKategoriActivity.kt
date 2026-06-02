@@ -7,11 +7,13 @@ import android.text.TextWatcher
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.database.FirebaseDatabase
 import com.sallie.pointofsales.R
 import com.sallie.pointofsales.adapter.DetailKategoriAdapter
 import com.sallie.pointofsales.model.ModelKategoriActivity
@@ -48,16 +50,12 @@ class DataKategoriActivity : AppCompatActivity() {
 
         adapter.setOnItemClickListener(object : DetailKategoriAdapter.OnItemClickListener {
             override fun onItemClick(kategori: ModelKategoriActivity) {
-                if (!kategori.idKategori.isNullOrBlank()) {
-                    val intent = Intent(this@DataKategoriActivity, ModKategoriActivity::class.java).apply {
-                        putExtra("ID_KATEGORI", kategori.idKategori)
-                        putExtra("NAMA_KATEGORI", kategori.namaKategori)
-                        putExtra("STATUS_KATEGORI", kategori.statusKategori)
-                    }
-                    startActivity(intent)
-                } else {
-                    Toast.makeText(this@DataKategoriActivity, "Data tidak valid", Toast.LENGTH_SHORT).show()
-                }
+                // Regular click opens edit directly as per existing behavior
+                openEditCategory(kategori)
+            }
+
+            override fun onItemLongClick(kategori: ModelKategoriActivity) {
+                showLongPressMenu(kategori)
             }
         })
 
@@ -79,6 +77,54 @@ class DataKategoriActivity : AppCompatActivity() {
             }
             override fun afterTextChanged(s: Editable?) {}
         })
+    }
+
+    private fun openEditCategory(kategori: ModelKategoriActivity) {
+        if (!kategori.idKategori.isNullOrBlank()) {
+            val intent = Intent(this, ModKategoriActivity::class.java).apply {
+                putExtra("ID_KATEGORI", kategori.idKategori)
+                putExtra("NAMA_KATEGORI", kategori.namaKategori)
+                putExtra("STATUS_KATEGORI", kategori.statusKategori)
+            }
+            startActivity(intent)
+        } else {
+            Toast.makeText(this, "Data tidak valid", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun showLongPressMenu(kategori: ModelKategoriActivity) {
+        val options = arrayOf("Edit Kategori", "Hapus Kategori")
+        AlertDialog.Builder(this)
+            .setTitle(kategori.namaKategori)
+            .setItems(options) { dialog, which ->
+                when (which) {
+                    0 -> openEditCategory(kategori)
+                    1 -> showDeleteConfirmation(kategori)
+                }
+            }
+            .show()
+    }
+
+    private fun showDeleteConfirmation(kategori: ModelKategoriActivity) {
+        AlertDialog.Builder(this)
+            .setTitle("Hapus Kategori")
+            .setMessage("Apakah Anda yakin ingin menghapus kategori '${kategori.namaKategori}'?")
+            .setPositiveButton("Hapus") { _, _ ->
+                deleteCategory(kategori)
+            }
+            .setNegativeButton("Batal", null)
+            .show()
+    }
+
+    private fun deleteCategory(kategori: ModelKategoriActivity) {
+        val id = kategori.idKategori ?: return
+        FirebaseDatabase.getInstance().getReference("kategori").child(id).removeValue()
+            .addOnSuccessListener {
+                Toast.makeText(this, "Kategori berhasil dihapus", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Gagal menghapus kategori", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun init() {

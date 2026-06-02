@@ -1,19 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="color1">#121212</color>
-    <color name="color2">#F5F5F5</color>
-    <color name="color3">#1E1E1E</color>
-    <color name="color4">#7A98A6</color>
-    <color name="color5">#2D2D2D</color>
-    <color name="color6">#8A8A8A</color>
-    <color name="akun">#0F172A</color>
-    <color name="layanan">#1E293B</color>
-    <color name="tambahan">#334155</color>
-    <color name="pegawai">#475569</color>
-    <color name="cabang">#64748B</color>
-    <color name="cetak">#94A3B8</color>
-    <color name="card">#4A5B7A </color>
-    <color name="dropdown">#2E3A4D</color>
-    <color name="button">#81C784</color>
-    <color name="button2">#F28B82</color>
+
+    <!-- Background and Main Text Colors -->
+    <color name="color1">#0B1220</color> <!-- Dark Navy Background -->
+    <color name="color2">#C7CDD6</color> <!-- Slightly darker balanced primary text -->
+    <color name="color3">#111827</color> <!-- Card Background (dark elevated surface) -->
+    <color name="color4">#60A5FA</color> <!-- Accent Blue (slightly lighter for dark mode) -->
+    <color name="color5">#1F2937</color> <!-- Borders / Dividers -->
+    <color name="color6">#94A3B8</color> <!-- Secondary Text (muted gray) -->
+
+    <!-- Dashboard Icon Card Tints (Dark-friendly pastel versions) -->
+    <color name="akun">#1E3A8A</color>     <!-- Deep Blue Tint -->
+    <color name="layanan">#14532D</color>  <!-- Deep Green Tint -->
+    <color name="tambahan">#312E81</color> <!-- Deep Purple Tint -->
+    <color name="pegawai">#7C2D12</color>  <!-- Deep Orange Tint -->
+    <color name="cabang">#831843</color>   <!-- Deep Pink Tint -->
+    <color name="cetak">#134E4A</color>    <!-- Deep Teal Tint -->
+
+    <!-- Card Backgrounds & UI States -->
+    <color name="card">#111827</color>     <!-- Dark Card Surface -->
+    <color name="dropdown">#1F2937</color> <!-- Dropdown Background -->
+    <color name="button">#3B82F6</color>   <!-- Royal Blue Button (slightly brighter in dark mode) -->
+    <color name="button2">#F87171</color>  <!-- Soft Red (less harsh in dark mode) -->
+
+    <!-- Accent -->
+    <color name="blue_accent_light">#1E3A8A</color> <!-- Dark Blue Accent Surface -->
+
 </resources>

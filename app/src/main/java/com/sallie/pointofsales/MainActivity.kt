@@ -2,16 +2,24 @@ package com.sallie.pointofsales
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.auth.FirebaseAuth
+import com.sallie.pointofsales.akun.AccountActivity
+import com.sallie.pointofsales.auth.LoginActivity
 import com.sallie.pointofsales.cabang.DataCabangActivity
 import com.sallie.pointofsales.kategori.DataKategoriActivity
+import com.sallie.pointofsales.laporan.LaporanActivity
 import com.sallie.pointofsales.pegawai.DataPegawaiActivity
+import com.sallie.pointofsales.pelanggan.PelangganActivity
+import com.sallie.pointofsales.printer.PrinterSettingsActivity
 import com.sallie.pointofsales.produk.DataProductActivity
 import com.sallie.pointofsales.transaksi.TransaksiActivity
 import java.text.SimpleDateFormat
@@ -19,7 +27,13 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
+/**
+ * MainActivity serves as the primary dashboard for the POS system.
+ * It manages session validation and provides navigation to all core modules.
+ */
 class MainActivity : AppCompatActivity() {
+
+    private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
 
     private lateinit var cvAccount: CardView
     private lateinit var cvProduct: CardView
@@ -27,23 +41,32 @@ class MainActivity : AppCompatActivity() {
     private lateinit var cvEmployee: CardView
     private lateinit var cvBranch: CardView
     private lateinit var cvPrint: CardView
+
     private lateinit var llTransaksi: LinearLayout
     private lateinit var llLaporan: LinearLayout
+    private lateinit var llPelanggan: LinearLayout
+
     private lateinit var tvDate: TextView
     private lateinit var tvGreetings: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        
+        // 1. Session Guard: Redirect to Login if no active session
+        if (auth.currentUser == null) {
+            redirectToLogin()
+            return
+        }
+
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        init()
+        // 2. Component Initialization
+        initViews()
+        setupListeners()
+        updateDashboardInfo()
 
-        val currentDate = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID")).format(Date())
-        tvDate.text = currentDate
-
-        tvGreetings.text = getGreeting()
-
+        // 3. System UI Setup
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -51,55 +74,71 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getGreeting(): String {
-        val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
-        return when (hour) {
-            in 0..11 -> "Selamat Pagi, Sallie"
-            in 12..14 -> "Selamat Siang, Sallie"
-            in 15..17 -> "Selamat Sore, Sallie"
-            else -> "Selamat Malam, Sallie"
-        }
-    }
-
-    private fun init() {
+    private fun initViews() {
         cvAccount = findViewById(R.id.cvAccount)
         cvProduct = findViewById(R.id.cvProduct)
         cvCategory = findViewById(R.id.cvCategory)
         cvEmployee = findViewById(R.id.cvEmployee)
         cvBranch = findViewById(R.id.cvBranch)
         cvPrint = findViewById(R.id.cvPrint)
+
         llTransaksi = findViewById(R.id.llTransaksi)
         llLaporan = findViewById(R.id.llLaporan)
+        llPelanggan = findViewById(R.id.llPelanggan)
+
         tvDate = findViewById(R.id.tvDate)
         tvGreetings = findViewById(R.id.tvGreetings)
+    }
 
-        cvCategory.setOnClickListener {
-            startActivity(Intent(this, DataKategoriActivity::class.java))
-        }
+    private fun setupListeners() {
+        cvCategory.setOnClickListener { navigateTo(DataKategoriActivity::class.java) }
+        cvProduct.setOnClickListener { navigateTo(DataProductActivity::class.java) }
+        cvEmployee.setOnClickListener { navigateTo(DataPegawaiActivity::class.java) }
+        cvBranch.setOnClickListener { navigateTo(DataCabangActivity::class.java) }
+        llTransaksi.setOnClickListener { navigateTo(TransaksiActivity::class.java) }
+        llLaporan.setOnClickListener { navigateTo(LaporanActivity::class.java) }
+        llPelanggan.setOnClickListener { navigateTo(PelangganActivity::class.java) }
+        cvAccount.setOnClickListener { navigateTo(AccountActivity::class.java) }
+        cvPrint.setOnClickListener { navigateTo(PrinterSettingsActivity::class.java) }
+    }
 
-        cvProduct.setOnClickListener {
-            startActivity(Intent(this, DataProductActivity::class.java))
-        }
+    private fun updateDashboardInfo() {
+        val localeID = Locale("id", "ID")
+        tvDate.text = SimpleDateFormat("dd MMMM yyyy", localeID).format(Date())
+        tvGreetings.text = getGreeting()
+    }
 
-        cvEmployee.setOnClickListener {
-            startActivity(Intent(this, DataPegawaiActivity::class.java))
+    private fun getGreeting(): String {
+        val user = auth.currentUser
+        // Logic: Use Display Name -> Email Prefix -> Generic "User"
+        val userName = user?.displayName ?: user?.email?.substringBefore("@") ?: "User"
+        val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+        
+        val timeLabel = when (hour) {
+            in 0..11 -> "Pagi"
+            in 12..14 -> "Siang"
+            in 15..17 -> "Sore"
+            else -> "Malam"
         }
+        return "Selamat $timeLabel, $userName"
+    }
 
-        cvBranch.setOnClickListener {
-            startActivity(Intent(this, DataCabangActivity::class.java))
+    /**
+     * Standardized navigation helper with error logging for production stability.
+     */
+    private fun <T> navigateTo(destination: Class<T>) {
+        try {
+            startActivity(Intent(this, destination))
+        } catch (e: Exception) {
+            Log.e("MainActivity", "Navigation error to ${destination.simpleName}: ${e.message}")
+            Toast.makeText(this, "Modul tidak tersedia", Toast.LENGTH_SHORT).show()
         }
+    }
 
-        llTransaksi.setOnClickListener {
-            startActivity(Intent(this, TransaksiActivity::class.java))
-        }
-
-        llLaporan.setOnClickListener {
-        }
-
-        cvAccount.setOnClickListener {
-        }
-
-        cvPrint.setOnClickListener {
-        }
+    private fun redirectToLogin() {
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
     }
 }

@@ -1,6 +1,5 @@
 package com.sallie.pointofsales.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,49 +9,89 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sallie.pointofsales.R
 import com.sallie.pointofsales.model.ItemKeranjang
 
-class KeranjangAdapter(private var keranjangList: List<ItemKeranjang>) :
-    RecyclerView.Adapter<KeranjangAdapter.KeranjangViewHolder>() {
+class KeranjangAdapter(
+    private val keranjangList: MutableList<ItemKeranjang>,
+    private val listener: OnItemChangeListener? = null
+) : RecyclerView.Adapter<KeranjangAdapter.KeranjangViewHolder>() {
 
-    lateinit var appContext: Context
-
-    interface OnItemClickListener {
-        fun onItemHapusClick(item: ItemKeranjang, position: Int)
-    }
-
-    private var listener: OnItemClickListener? = null
-
-    fun setOnItemClickListener(listener: OnItemClickListener) {
-        this.listener = listener
+    interface OnItemChangeListener {
+        fun onItemDeleted(item: ItemKeranjang, position: Int)
+        fun onItemUpdated()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): KeranjangViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_keranjang, parent, false)
-        appContext = parent.context
         return KeranjangViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: KeranjangViewHolder, position: Int) {
-        val item = keranjangList[position]
-        holder.bind(item, position)
+        holder.bind(keranjangList[position])
     }
 
     override fun getItemCount(): Int = keranjangList.size
 
     inner class KeranjangViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvNamaProdukKeranjang: TextView = itemView.findViewById(R.id.tvNamaProdukKeranjang)
-        val tvSubTotalKeranjang: TextView = itemView.findViewById(R.id.tvSubTotalKeranjang)
-        val tvQtyKeranjang: TextView = itemView.findViewById(R.id.tvQtyKeranjang)
-        val btnHapusItem: ImageButton = itemView.findViewById(R.id.btnHapusItem)
 
-        fun bind(item: ItemKeranjang, position: Int) {
+        private val tvNamaProdukKeranjang: TextView =
+            itemView.findViewById(R.id.tvNamaProdukKeranjang)
+
+        private val tvSubTotalKeranjang: TextView =
+            itemView.findViewById(R.id.tvSubTotalKeranjang)
+
+        private val tvQtyKeranjang: TextView =
+            itemView.findViewById(R.id.tvQtyKeranjang)
+
+        private val btnHapusItem: ImageButton =
+            itemView.findViewById(R.id.btnHapusItem)
+
+        private val btnPlusItem: ImageButton =
+            itemView.findViewById(R.id.btnPlusItem)
+
+        private val btnMinusItem: ImageButton =
+            itemView.findViewById(R.id.btnMinusItem)
+
+        fun bind(item: ItemKeranjang) {
+
             tvNamaProdukKeranjang.text = item.namaProduk
+            tvQtyKeranjang.text = "Qty: ${item.jumlahBeli}"
             tvSubTotalKeranjang.text = "Rp${item.subTotal}"
-            tvQtyKeranjang.text = "Jumlah Beli: ${item.jumlahBeli}"
+
+            btnPlusItem.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    item.jumlahBeli += 1
+                    item.subTotal = item.hargaJual * item.jumlahBeli
+                    notifyItemChanged(position)
+                    listener?.onItemUpdated()
+                }
+            }
+
+            btnMinusItem.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    if (item.jumlahBeli > 1) {
+                        item.jumlahBeli -= 1
+                        item.subTotal = item.hargaJual * item.jumlahBeli
+                        notifyItemChanged(position)
+                        listener?.onItemUpdated()
+                    }
+                }
+            }
 
             btnHapusItem.setOnClickListener {
-                listener?.onItemHapusClick(item, position)
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    listener?.onItemDeleted(item, position)
+                }
             }
+        }
+    }
+
+    fun removeItem(position: Int) {
+        if (position in keranjangList.indices) {
+            keranjangList.removeAt(position)
+            notifyItemRemoved(position)
         }
     }
 }

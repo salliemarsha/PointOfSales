@@ -1,10 +1,243 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/layoutAccount"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color1"
+    android:fillViewport="true"
     tools:context=".akun.AccountActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Toolbar Header -->
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbarAccount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color1"
+            app:navigationIcon="@drawable/ic_back"
+            app:navigationIconTint="@color/color2">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/raleway_bold"
+                android:text="Profil Akun"
+                android:textColor="@color/color2"
+                android:textSize="20sp" />
+        </com.google.android.material.appbar.MaterialToolbar>
+
+        <!-- Profile Header Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvProfileHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginVertical="12dp"
+            android:backgroundTint="@color/card"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="3dp"
+            app:strokeColor="@color/color5"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="20dp"
+                android:gravity="center_vertical">
+
+                <!-- Circular Avatar Placeholder -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    app:cardCornerRadius="30dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@color/blue_accent_light"
+                    app:strokeWidth="0dp">
+
+                    <TextView
+                        android:id="@+id/tvAvatarInitials"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="JD"
+                        android:textColor="@color/color4"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/raleway_bold" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Name and Role Details -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="16dp">
+
+                    <TextView
+                        android:id="@+id/tvAccountName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/raleway_bold"
+                        android:text="John Doe"
+                        android:textColor="@color/color2"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/tvAccountRole"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/lato_regular"
+                        android:text="Jabatan"
+                        android:textColor="@color/color6"
+                        android:textSize="13sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Menu Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/raleway_bold"
+            android:text="Pengaturan Akun"
+            android:textColor="@color/color2"
+            android:textSize="14sp" />
+
+        <!-- Edit Profile Card Menu -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvEditProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginVertical="6dp"
+            android:backgroundTint="@color/card"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            app:strokeColor="@color/color5"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="18dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/akun"
+                    app:tint="@color/color6" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/lato_bold"
+                    android:text="Edit Profil Pengguna"
+                    android:textColor="@color/color2"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato_bold"
+                    android:text="→"
+                    android:textColor="@color/color6"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Change PIN Card Menu -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvChangePin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginVertical="6dp"
+            android:backgroundTint="@color/card"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            app:strokeColor="@color/color5"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="18dp"
+                android:gravity="center_vertical">
+
+                <!-- Lock style icon using stok icon which represents key/safety -->
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/role"
+                    app:tint="@color/color6" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/lato_bold"
+                    android:text="Ubah PIN Keamanan"
+                    android:textColor="@color/color2"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato_bold"
+                    android:text="→"
+                    android:textColor="@color/color6"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Spacer -->
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!-- Logout Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLogout"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="#FEE2E2"
+            android:fontFamily="@font/raleway_bold"
+            android:text="Keluar Akun"
+            android:textAllCaps="false"
+            android:textColor="@color/button2"
+            android:textSize="14sp"
+            app:cornerRadius="12dp"
+            app:strokeColor="@color/button2"
+            app:strokeWidth="1dp" />
+
+    </LinearLayout>
+</ScrollView>

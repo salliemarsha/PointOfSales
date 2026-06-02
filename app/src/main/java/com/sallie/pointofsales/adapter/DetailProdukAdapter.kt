@@ -1,64 +1,53 @@
 package com.sallie.pointofsales.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.chip.Chip
 import com.sallie.pointofsales.R
 import com.sallie.pointofsales.model.ModelProdukActivity
 
-class DetailProdukAdapter(private var produkList: List<ModelProdukActivity>) :
-    RecyclerView.Adapter<DetailProdukAdapter.ProdukViewHolder>() {
+/**
+ * Standardized Product Adapter
+ * - Uses ListAdapter with DiffUtil for optimized updates.
+ * - Centralized Glide logic for consistent image loading.
+ * - Lambda-based click handling for clean separation of concerns.
+ */
+class DetailProdukAdapter(
+    private val onItemClicked: (ModelProdukActivity) -> Unit,
+    private val onItemLongClicked: (ModelProdukActivity) -> Unit
+) : ListAdapter<ModelProdukActivity, DetailProdukAdapter.ViewHolder>(DiffCallback) {
 
-    lateinit var appContext: Context
-
-    interface OnItemClickListener {
-        fun onItemClick(produk: ModelProdukActivity)
-        fun onItemLongClick(produk: ModelProdukActivity)
-    }
-
-    private var listener: OnItemClickListener? = null
-
-    fun setOnItemClickListener(listener: OnItemClickListener) {
-        this.listener = listener
-    }
-
-    fun updateData(newList: List<ModelProdukActivity>) {
-        produkList = newList
-        notifyDataSetChanged()
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProdukViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_data_product, parent, false)
-        appContext = parent.context
-        return ProdukViewHolder(view)
+        return ViewHolder(view, onItemClicked, onItemLongClicked)
     }
 
-    override fun onBindViewHolder(holder: ProdukViewHolder, position: Int) {
-        val produk = produkList[position]
-        holder.bind(produk)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(getItem(position))
     }
 
-    override fun getItemCount(): Int {
-        return produkList.size
-    }
+    class ViewHolder(
+        view: View,
+        private val onClick: (ModelProdukActivity) -> Unit,
+        private val onLongClick: (ModelProdukActivity) -> Unit
+    ) : RecyclerView.ViewHolder(view) {
 
-    inner class ProdukViewHolder(itemView: View) :
-        RecyclerView.ViewHolder(itemView) {
-
-        val ivLogo: ImageView = itemView.findViewById(R.id.ivLogo)
-        val tvNamaProduk: TextView = itemView.findViewById(R.id.tvNamaProduk)
-        val tvHargaProduk: TextView = itemView.findViewById(R.id.tvHarga)
-        val chipStatus: Chip = itemView.findViewById(R.id.chipStatus)
-        val tvKategoriProduk: TextView = itemView.findViewById(R.id.tvKategoriProduk)
-        val tvStokProduk: TextView = itemView.findViewById(R.id.tvStokProduk)
-        val tvCabangProduk: TextView = itemView.findViewById(R.id.tvCabangProduk)
+        private val ivLogo: ImageView = view.findViewById(R.id.ivLogo)
+        private val tvNamaProduk: TextView = view.findViewById(R.id.tvNamaProduk)
+        private val tvHargaProduk: TextView = view.findViewById(R.id.tvHarga)
+        private val chipStatus: Chip = view.findViewById(R.id.chipStatus)
+        private val tvKategoriProduk: TextView = view.findViewById(R.id.tvKategoriProduk)
+        private val tvStokProduk: TextView = view.findViewById(R.id.tvStokProduk)
+        private val tvCabangProduk: TextView = view.findViewById(R.id.tvCabangProduk)
 
         fun bind(produk: ModelProdukActivity) {
             tvNamaProduk.text = produk.namaProduk ?: "-"
@@ -66,6 +55,7 @@ class DetailProdukAdapter(private var produkList: List<ModelProdukActivity>) :
             tvKategoriProduk.text = produk.kategori ?: "-"
             tvCabangProduk.text = produk.cabang ?: "-"
 
+            // Logic: Stok Management
             if (produk.stok == -1) {
                 tvStokProduk.text = "Tidak Terbatas"
                 chipStatus.text = "Aktif"
@@ -82,27 +72,34 @@ class DetailProdukAdapter(private var produkList: List<ModelProdukActivity>) :
                 }
             }
 
-            val urlFoto = produk.fotoUrl
-            if (!urlFoto.isNullOrEmpty()) {
-                Glide.with(appContext)
-                    .load(urlFoto)
-                    .placeholder(R.drawable.produk)
-                    .error(R.drawable.produk)
-                    .centerCrop()
-                    .into(ivLogo)
-            } else {
-                ivLogo.setImageResource(R.drawable.produk)
-                ivLogo.scaleType = ImageView.ScaleType.CENTER_INSIDE
-            }
+            // Standardized Glide Implementation
+            Glide.with(itemView.context)
+                .load(produk.productImageUrl)
+                .placeholder(R.drawable.produk)
+                .error(R.drawable.produk)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .centerCrop()
+                .into(ivLogo)
 
-            itemView.setOnClickListener {
-                listener?.onItemClick(produk)
-            }
-
+            itemView.setOnClickListener { onClick(produk) }
             itemView.setOnLongClickListener {
-                listener?.onItemLongClick(produk)
+                onLongClick(produk)
                 true
             }
+        }
+    }
+
+    /**
+     * DiffCallback ensures we only update the items that actually changed,
+     * significantly improving RecyclerView performance.
+     */
+    object DiffCallback : DiffUtil.ItemCallback<ModelProdukActivity>() {
+        override fun areItemsTheSame(oldItem: ModelProdukActivity, newItem: ModelProdukActivity): Boolean {
+            return oldItem.idProduk == newItem.idProduk
+        }
+
+        override fun areContentsTheSame(oldItem: ModelProdukActivity, newItem: ModelProdukActivity): Boolean {
+            return oldItem == newItem
         }
     }
 }

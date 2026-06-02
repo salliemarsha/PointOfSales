@@ -5,4 +5,9 @@
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/color6</item>
     </style>
+
+    <style name="CustomAlertDialog" parent="Theme.Material3.Light.Dialog.Alert">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
 </resources>

@@ -53,11 +53,9 @@ class DataProductActivity : AppCompatActivity() {
         rvDataProduk.layoutManager = layoutManager
         rvDataProduk.setHasFixedSize(true)
 
-        adapter = DetailProdukAdapter(emptyList())
-        rvDataProduk.adapter = adapter
-
-        adapter.setOnItemClickListener(object : DetailProdukAdapter.OnItemClickListener {
-            override fun onItemClick(produk: ModelProdukActivity) {
+        // Initialize DetailProdukAdapter with the required click and long click lambdas
+        adapter = DetailProdukAdapter(
+            onItemClicked = { produk ->
                 if (!produk.idProduk.isNullOrBlank()) {
                     bukaHalamanEdit(produk)
                 } else {
@@ -67,18 +65,19 @@ class DataProductActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-            }
-
-            override fun onItemLongClick(produk: ModelProdukActivity) {
+            },
+            onItemLongClicked = { produk ->
                 if (!produk.idProduk.isNullOrBlank()) {
                     tampilkanDialogHapus(produk)
                 }
             }
-        })
+        )
+        rvDataProduk.adapter = adapter
 
         viewModel.produkList.observe(this) { list ->
-            adapter.updateData(list)
-            if (list.isNotEmpty()) {
+            // Use submitList for ListAdapter
+            adapter.submitList(list)
+            if (list != null && list.isNotEmpty()) {
                 rvDataProduk.scrollToPosition(list.size - 1)
             }
         }
@@ -96,6 +95,7 @@ class DataProductActivity : AppCompatActivity() {
         val intent = Intent(this, ModProdukActivity::class.java).apply {
             putExtra("ID_PRODUK", produk.idProduk)
             putExtra("NAMA_PRODUK", produk.namaProduk)
+            putExtra("PRODUCT_IMAGE_URL", produk.productImageUrl)
             putExtra("KATEGORI_PRODUK", produk.kategori)
             putExtra("CABANG_PRODUK", produk.cabang)
             putExtra("HARGA_BELI", produk.hargaBeli)
@@ -123,7 +123,7 @@ class DataProductActivity : AppCompatActivity() {
         val storageRef = FirebaseStorage.getInstance().getReference("foto_produk")
 
         databaseRef.child(id).removeValue().addOnSuccessListener {
-            if (!produk.fotoUrl.isNullOrEmpty()) {
+            if (!produk.productImageUrl.isNullOrEmpty()) {
                 val fileRef = storageRef.child("$id.jpg")
                 fileRef.delete().addOnCompleteListener {
                     Toast.makeText(this, "Produk dan gambar berhasil dihapus", Toast.LENGTH_SHORT).show()

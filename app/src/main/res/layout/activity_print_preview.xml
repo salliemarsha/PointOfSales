@@ -1,10 +1,357 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".printer.PrintPreviewActivity">
+    android:background="@color/color1">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Header Toolbar -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbarPrintPreview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color1"
+        android:paddingHorizontal="4dp"
+        android:layout_alignParentTop="true"
+        app:navigationIcon="@drawable/ic_back"
+        app:navigationIconTint="@color/color2">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/raleway_bold"
+            android:text="Pratinjau Cetak"
+            android:textColor="@color/color2"
+            android:textSize="20sp" />
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <!-- Bottom Actions Container -->
+    <LinearLayout
+        android:id="@+id/llActionPreview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color1"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPrint"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:backgroundTint="@color/button"
+            android:fontFamily="@font/raleway_bold"
+            android:text="Cetak"
+            android:textAllCaps="false"
+            android:textColor="@color/color3"
+            android:textSize="14sp"
+            app:cornerRadius="12dp"
+            app:elevation="2dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCancel"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/raleway_bold"
+            android:text="Batal"
+            android:textAllCaps="false"
+            android:textColor="@color/color2"
+            android:textSize="14sp"
+            app:cornerRadius="12dp"
+            app:strokeColor="@color/color5"
+            app:strokeWidth="1.5dp" />
+    </LinearLayout>
+
+    <!-- Receipt Scrollable Content (Centered between toolbar and actions) -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/llActionPreview"
+        android:layout_below="@id/toolbarPrintPreview"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="16dp">
+
+            <!-- Premium Centered Thermal Receipt Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#FFFFFF"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="4dp"
+                app:strokeColor="@color/color5"
+                app:strokeWidth="1.5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+
+                    <!-- Store Brand Header -->
+                    <TextView
+                        android:id="@+id/tvPreviewHeaderStore"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/raleway_bold"
+                        android:gravity="center"
+                        android:text="NexPOS Store"
+                        android:textColor="@color/color2"
+                        android:textSize="20sp"
+                        android:letterSpacing="0.05" />
+
+                    <TextView
+                        android:id="@+id/tvPreviewHeaderAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:gravity="center"
+                        android:text="Jl. Raya Kelontong No. 123"
+                        android:textColor="@color/color6"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/lato_regular" />
+
+                    <!-- Dashed Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginVertical="16dp"
+                        android:background="@drawable/bg_dashed_line"
+                        android:layerType="software" />
+
+                    <!-- Invoice ID and Date Section -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tvPreviewInvoiceId"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:fontFamily="@font/lato_bold"
+                            android:text="ID: #TX-776655"
+                            android:textColor="@color/color2"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/tvPreviewInvoiceDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:fontFamily="@font/lato_regular"
+                            android:text="29/05/2026 14:35"
+                            android:textColor="@color/color6"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+
+                    <!-- Dashed Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginVertical="16dp"
+                        android:background="@drawable/bg_dashed_line"
+                        android:layerType="software" />
+
+                    <!-- Purchased Items List (Tabular Layout) -->
+                    <LinearLayout
+                        android:id="@+id/llPreviewItemsContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <!-- Item Row 1 -->
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:fontFamily="@font/lato_regular"
+                                android:text="2x Kopi Espresso"
+                                android:textColor="@color/color2"
+                                android:textSize="13sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:fontFamily="@font/lato_regular"
+                                android:text="Rp30.000"
+                                android:textColor="@color/color2"
+                                android:textSize="13sp" />
+                        </RelativeLayout>
+
+                        <!-- Item Row 2 -->
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:fontFamily="@font/lato_regular"
+                                android:text="1x Donut Glazed"
+                                android:textColor="@color/color2"
+                                android:textSize="13sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:fontFamily="@font/lato_regular"
+                                android:text="Rp12.000"
+                                android:textColor="@color/color2"
+                                android:textSize="13sp" />
+                        </RelativeLayout>
+
+                        <!-- Item Row 3 -->
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:fontFamily="@font/lato_regular"
+                                android:text="1x Mineral Water"
+                                android:textColor="@color/color2"
+                                android:textSize="13sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:fontFamily="@font/lato_regular"
+                                android:text="Rp8.000"
+                                android:textColor="@color/color2"
+                                android:textSize="13sp" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <!-- Dashed Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginVertical="16dp"
+                        android:background="@drawable/bg_dashed_line"
+                        android:layerType="software" />
+
+                    <!-- Totals Block -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:fontFamily="@font/lato_bold"
+                            android:text="TOTAL BELANJA"
+                            android:textColor="@color/color2"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tvPreviewTotal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:fontFamily="@font/lato_bold"
+                            android:text="Rp50.000"
+                            android:textColor="@color/color4"
+                            android:textSize="16sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:fontFamily="@font/lato_regular"
+                            android:text="Uang Tunai"
+                            android:textColor="@color/color6"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/tvPreviewCash"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:fontFamily="@font/lato_regular"
+                            android:text="Rp50.000"
+                            android:textColor="@color/color2"
+                            android:textSize="13sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:fontFamily="@font/lato_regular"
+                            android:text="Kembalian"
+                            android:textColor="@color/color6"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/tvPreviewChange"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:fontFamily="@font/lato_regular"
+                            android:text="Rp0"
+                            android:textColor="@color/color2"
+                            android:textSize="13sp" />
+                    </RelativeLayout>
+
+                    <!-- Dashed Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginVertical="16dp"
+                        android:background="@drawable/bg_dashed_line"
+                        android:layerType="software" />
+
+                    <!-- Footer Note -->
+                    <TextView
+                        android:id="@+id/tvPreviewFooter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="*** Terima Kasih Telah Berbelanja ***"
+                        android:textColor="@color/color6"
+                        android:textSize="11sp"
+                        android:fontFamily="@font/lato_bold"
+                        android:letterSpacing="0.05" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

@@ -183,6 +183,39 @@
                         android:paddingVertical="14dp"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <!-- Product Image URL Input -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/lato_bold"
+                    android:text="Product Image URL"
+                    android:textSize="13sp"
+                    android:textColor="@color/color2" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:hintEnabled="false">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etProductImageUrl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato_regular"
+                        android:hint="Enter image URL"
+                        android:textColorHint="@color/color6"
+                        android:textColor="@color/color2"
+                        android:textSize="15sp"
+                        android:paddingVertical="14dp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
                 <!-- Category Dropdown Input -->
                 <TextView
                     android:layout_width="wrap_content"
