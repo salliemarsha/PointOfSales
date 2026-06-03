@@ -63,79 +63,79 @@ Sallie's Point of Sales merupakan aplikasi Android yang dirancang untuk membantu
 
 ### Register
 
-![Register](screenshot/register.jpeg)
+![Register](screenshots/register.jpeg)
 
 ### Login
 
-![Login](screenshot/login.jpeg)
+![Login](screenshots/login.jpeg)
 
 ### Dashboard
 
-![Dashboard](screenshot/dashboard.jpeg)
+![Dashboard](screenshots/dashboard.jpeg)
 
 ### Kategori
 
-![Kategori](screenshot/datakategori.jpeg)
+![Kategori](screenshots/datakategori.jpeg)
 
 ### Tambah Kategori
 
-![Tambah Kategori](screenshot/modkategori.jpeg)
+![Tambah Kategori](screenshots/modkategori.jpeg)
 
 ### Cabang
 
-![Cabang](screenshot/datacabang.jpeg)
+![Cabang](screenshots/datacabang.jpeg)
 
 ### Tambah Cabang
 
-![Tambah Cabang](screenshot/modcabang.jpeg)
+![Tambah Cabang](screenshots/modcabang.jpeg)
 
 ### Pegawai
 
-![Pegawai](screenshot/pegawai.jpeg)
+![Pegawai](screenshots/pegawai.jpeg)
 
 ### Tambah Pegawai
 
-![Tambah Pegawai](screenshot/modpegawai.jpeg)
+![Tambah Pegawai](screenshots/modpegawai.jpeg)
 
 ### Pelanggan
 
-![Pelanggan](screenshot/pelanggan.jpeg)
+![Pelanggan](screenshots/pelanggan.jpeg)
 
 ### Tambah Pelanggan
 
-![Tambah Pelanggan](screenshot/modpelanggan.jpeg)
+![Tambah Pelanggan](screenshots/modpelanggan.jpeg)
 
 ### Produk
 
-![Produk](screenshot/dataproduk.jpeg)
+![Produk](screenshots/dataproduk.jpeg)
 
 ### Tambah Produk
 
-![Tambah Produk](screenshot/modproduk.jpeg)
+![Tambah Produk](screenshots/modproduk.jpeg)
 
 ### Transaksi
 
-![Transaksi](screenshot/transaksi.jpeg)
+![Transaksi](screenshots/transaksi.jpeg)
 
 ### Pembayaran
 
-![Pembayaran](screenshot/pembayaran.jpeg)
+![Pembayaran](screenshots/pembayaran.jpeg)
 
 ### Struk Nota
 
-![Struk](screenshot/struk.jpeg)
+![Struk](screenshots/struk.jpeg)
 
 ### Laporan
 
-![Laporan](screenshot/riwayat.jpeg)
+![Laporan](screenshots/riwayat.jpeg)
 
 ### Akun
 
-![Akun](screenshot/prifil.jpeg)
+![Akun](screenshots/profil.jpeg)
 
 ### Pengaturan Printer
 
-![Printer](screenshot/printer.png)
+![Printer](screenshots/printer.png)
 
 ## Struktur Database Firebase
 
