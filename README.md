@@ -7,10 +7,9 @@ Sallie's Point of Sales merupakan aplikasi Android yang dirancang untuk membantu
 ## Teknologi yang Digunakan
 
 * Android Studio
-* Java
+* Kotlin
 * Firebase Realtime Database
 * Firebase Authentication
-* Material Design 3
 
 ## Fitur Utama
 
