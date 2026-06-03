@@ -132,7 +132,7 @@ Sallie's Point of Sales merupakan aplikasi Android yang dirancang untuk membantu
 
 ### Pengaturan Printer
 
-![Printer](screenshot/printer.png)
+![Printer](screenshot/printer.jpeg)
 
 ## Struktur Database Firebase
 
