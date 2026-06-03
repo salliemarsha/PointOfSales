@@ -31,6 +31,7 @@ class LoginActivity : AppCompatActivity() {
         val etPassword = findViewById<TextInputEditText>(R.id.etPassword)
         val btnLogin = findViewById<Button>(R.id.btnLogin)
         val tvGoToRegister = findViewById<TextView>(R.id.tvGoToRegister)
+        val tvLoginKasir = findViewById<TextView>(R.id.tvLoginKasir)
 
         btnLogin.setOnClickListener {
             val email = etEmail.text.toString().trim()
@@ -50,6 +51,10 @@ class LoginActivity : AppCompatActivity() {
                         Toast.makeText(this, "Login Failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                     }
                 }
+        }
+
+        tvLoginKasir.setOnClickListener {
+            startActivity(Intent(this, LoginKasirActivity::class.java))
         }
 
         tvGoToRegister.setOnClickListener {

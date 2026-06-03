@@ -88,7 +88,7 @@ class DataPegawaiActivity : AppCompatActivity() {
             putExtra("ID_PEGAWAI", pegawai.idPegawai)
             putExtra("NAMA_PEGAWAI", pegawai.namaPegawai)
             putExtra("PHONE_PEGAWAI", pegawai.phonePegawai)
-            putExtra("ROLE_PEGAWAI", pegawai.rolePegawai)
+            putExtra("ROLE_PEGAWAI", pegawai.jabatan)
             putExtra("PIN_PEGAWAI", pegawai.pinPegawai)
         }
         startActivity(intent)

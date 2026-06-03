@@ -1,5 +1,6 @@
 package com.sallie.pointofsales.transaksi
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -126,7 +127,6 @@ class TransaksiActivity : AppCompatActivity(), KeranjangAdapter.OnItemChangeList
                     val status = data.child("statusKategori").getValue(String::class.java) ?: "ACTIVE"
                     if (name != null) {
                         categoryStatusMap[name] = status
-                        Log.d("CategoryStatus", "Category: $name, Status: $status")
                     }
                 }
                 // Refresh product list if branch already selected
@@ -139,7 +139,7 @@ class TransaksiActivity : AppCompatActivity(), KeranjangAdapter.OnItemChangeList
     }
 
     private fun isStatusActive(status: String?): Boolean {
-        if (status.isNullOrBlank()) return true // Default to ACTIVE
+        if (status.isNullOrBlank()) return true
         val s = status.uppercase()
         return s == "ACTIVE" || s == "AKTIF"
     }
@@ -164,7 +164,6 @@ class TransaksiActivity : AppCompatActivity(), KeranjangAdapter.OnItemChangeList
                         val harga = data.child("hargaJual").getValue(Int::class.java) ?: 0
                         val stok = data.child("stok").getValue(Int::class.java) ?: 0
 
-                        // Only show products that are in stock or unlimited
                         if (nama != null && (stok > 0 || stok == -1)) {
                             listProduk.add(data)
                             listNamaProduk.add("$nama - Rp$harga (Stok: ${if (stok == -1) "∞" else stok})")
@@ -196,7 +195,6 @@ class TransaksiActivity : AppCompatActivity(), KeranjangAdapter.OnItemChangeList
         val snap = listProduk[index]
         val stok = snap.child("stok").getValue(Int::class.java) ?: 0
 
-        // Stock Validation
         if (stok != -1 && jumlah > stok) {
             Toast.makeText(this, "Insufficient stock available. Current stock: $stok", Toast.LENGTH_SHORT).show()
             return
@@ -206,7 +204,6 @@ class TransaksiActivity : AppCompatActivity(), KeranjangAdapter.OnItemChangeList
         val nama = snap.child("namaProduk").getValue(String::class.java) ?: ""
         val harga = snap.child("hargaJual").getValue(Int::class.java) ?: 0
 
-        // Check if item already in cart
         val existingItem = keranjangBelanja.find { it.idProduk == id }
         if (existingItem != null) {
             val totalQty = existingItem.jumlahBeli + jumlah
@@ -255,7 +252,6 @@ class TransaksiActivity : AppCompatActivity(), KeranjangAdapter.OnItemChangeList
             return
         }
 
-        // Final stock check before saving
         val itemsToValidate = keranjangBelanja.toList()
         var processedCount = 0
         var isAborted = false
@@ -268,14 +264,12 @@ class TransaksiActivity : AppCompatActivity(), KeranjangAdapter.OnItemChangeList
                 if (currentStok != -1 && item.jumlahBeli > currentStok) {
                     isAborted = true
                     Toast.makeText(this, "Stock changed for ${item.namaProduk}. Available: $currentStok", Toast.LENGTH_LONG).show()
-                    // Optionally refresh the list
                     loadProdukPerCabang(cabangTerpilih)
                     return@addOnSuccessListener
                 }
 
                 processedCount++
                 if (processedCount == itemsToValidate.size) {
-                    // All validated
                     finalSaveTransaction()
                 }
             }
@@ -283,6 +277,10 @@ class TransaksiActivity : AppCompatActivity(), KeranjangAdapter.OnItemChangeList
     }
 
     private fun finalSaveTransaction() {
+        val sharedPref = getSharedPreferences("KASIR_SESSION", Context.MODE_PRIVATE)
+        val idKasir = sharedPref.getString("KASIR_ID", "") ?: ""
+        val namaKasir = sharedPref.getString("KASIR_NAMA", "") ?: ""
+
         val idTx = transaksiRef.push().key ?: return
         val sdf = SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault())
         val tanggal = sdf.format(Date())
@@ -292,12 +290,13 @@ class TransaksiActivity : AppCompatActivity(), KeranjangAdapter.OnItemChangeList
             tanggal = tanggal,
             namaCabang = cabangTerpilih,
             totalBayar = totalBelanja,
-            itemTerjual = keranjangBelanja
+            itemTerjual = keranjangBelanja,
+            idKasir = idKasir,
+            namaKasir = namaKasir
         )
 
         transaksiRef.child(idTx).setValue(transaksi)
             .addOnSuccessListener {
-                // Requirement 4: Stock deduction after transaction successfully saved
                 deductStockAndProceed(idTx)
             }
             .addOnFailureListener {

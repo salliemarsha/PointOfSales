@@ -56,7 +56,7 @@ class DetailPegawaiAdapter(private var pegawaiList: List<ModelPegawaiActivity>) 
         fun bind(pegawai: ModelPegawaiActivity) {
             tvNamaPegawai.text = pegawai.namaPegawai ?: "-"
             tvPhonePegawai.text = pegawai.phonePegawai ?: "-"
-            chipRole.text = pegawai.rolePegawai ?: "-"
+            chipRole.text = pegawai.jabatan ?: "-"
 
             itemView.setOnClickListener {
                 listener?.onItemClick(pegawai)

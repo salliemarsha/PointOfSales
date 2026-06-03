@@ -9,7 +9,9 @@ data class ModelTransaksi(
     val totalBayar: Int = 0,
     val uangBayar: Int = 0,
     val kembalian: Int = 0,
-    val itemTerjual: List<ItemKeranjang> = emptyList()
+    val itemTerjual: List<ItemKeranjang> = emptyList(),
+    val idKasir: String = "",
+    val namaKasir: String = ""
 ) : Serializable
 
 data class ItemKeranjang(

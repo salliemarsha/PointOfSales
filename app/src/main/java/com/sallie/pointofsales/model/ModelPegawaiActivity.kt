@@ -7,7 +7,7 @@ data class ModelPegawaiActivity(
     val idPegawai: String? = null,
     val namaPegawai: String? = null,
     val phonePegawai: String? = null,
-    val rolePegawai: String? = null,
+    val jabatan: String? = null, // Admin or Kasir
     val pinPegawai: String? = null
 ) : Parcelable {
 
@@ -23,7 +23,7 @@ data class ModelPegawaiActivity(
         parcel.writeString(idPegawai)
         parcel.writeString(namaPegawai)
         parcel.writeString(phonePegawai)
-        parcel.writeString(rolePegawai)
+        parcel.writeString(jabatan)
         parcel.writeString(pinPegawai)
     }
 

@@ -150,7 +150,7 @@ class ModPegawaiActivity : AppCompatActivity() {
             idPegawai = id,
             namaPegawai = etNameEmployee.text.toString().trim(),
             phonePegawai = etPhoneEmployee.text.toString().trim(),
-            rolePegawai = spRoleEmployee.text.toString().trim(),
+            jabatan = spRoleEmployee.text.toString().trim(),
             pinPegawai = etPinEmployee.text.toString().trim()
         )
 

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color1"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/pegawai"
+        app:tint="@color/color4" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/raleway_bold"
+        android:text="Login Kasir"
+        android:textColor="@color/color2"
+        android:textSize="24sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/lato_regular"
+        android:text="Pilih nama dan masukkan PIN"
+        android:textColor="@color/color6"
+        android:textSize="14sp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusTopStart="12dp"
+        app:hintEnabled="false">
+
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/spPilihKasir"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_bold"
+            android:hint="Pilih Nama Pegawai"
+            android:inputType="none"
+            android:padding="16dp"
+            android:textColor="@color/color2"
+            android:popupBackground="@color/dropdown"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutDots"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:orientation="horizontal">
+        <View android:layout_width="15dp" android:layout_height="15dp" android:layout_margin="8dp" android:background="@drawable/bg_dot_off" />
+        <View android:layout_width="15dp" android:layout_height="15dp" android:layout_margin="8dp" android:background="@drawable/bg_dot_off" />
+        <View android:layout_width="15dp" android:layout_height="15dp" android:layout_margin="8dp" android:background="@drawable/bg_dot_off" />
+        <View android:layout_width="15dp" android:layout_height="15dp" android:layout_margin="8dp" android:background="@drawable/bg_dot_off" />
+        <View android:layout_width="15dp" android:layout_height="15dp" android:layout_margin="8dp" android:background="@drawable/bg_dot_off" />
+        <View android:layout_width="15dp" android:layout_height="15dp" android:layout_margin="8dp" android:background="@drawable/bg_dot_off" />
+    </LinearLayout>
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:columnCount="3"
+        android:rowCount="4">
+
+        <Button style="@style/Widget.Material3.Button.TextButton" android:id="@+id/btn1" android:layout_width="80dp" android:layout_height="80dp" android:text="1" android:textSize="24sp" android:textColor="@color/color2" />
+        <Button style="@style/Widget.Material3.Button.TextButton" android:id="@+id/btn2" android:layout_width="80dp" android:layout_height="80dp" android:text="2" android:textSize="24sp" android:textColor="@color/color2" />
+        <Button style="@style/Widget.Material3.Button.TextButton" android:id="@+id/btn3" android:layout_width="80dp" android:layout_height="80dp" android:text="3" android:textSize="24sp" android:textColor="@color/color2" />
+        <Button style="@style/Widget.Material3.Button.TextButton" android:id="@+id/btn4" android:layout_width="80dp" android:layout_height="80dp" android:text="4" android:textSize="24sp" android:textColor="@color/color2" />
+        <Button style="@style/Widget.Material3.Button.TextButton" android:id="@+id/btn5" android:layout_width="80dp" android:layout_height="80dp" android:text="5" android:textSize="24sp" android:textColor="@color/color2" />
+        <Button style="@style/Widget.Material3.Button.TextButton" android:id="@+id/btn6" android:layout_width="80dp" android:layout_height="80dp" android:text="6" android:textSize="24sp" android:textColor="@color/color2" />
+        <Button style="@style/Widget.Material3.Button.TextButton" android:id="@+id/btn7" android:layout_width="80dp" android:layout_height="80dp" android:text="7" android:textSize="24sp" android:textColor="@color/color2" />
+        <Button style="@style/Widget.Material3.Button.TextButton" android:id="@+id/btn8" android:layout_width="80dp" android:layout_height="80dp" android:text="8" android:textSize="24sp" android:textColor="@color/color2" />
+        <Button style="@style/Widget.Material3.Button.TextButton" android:id="@+id/btn9" android:layout_width="80dp" android:layout_height="80dp" android:text="9" android:textSize="24sp" android:textColor="@color/color2" />
+        <View android:layout_width="80dp" android:layout_height="80dp" />
+        <Button style="@style/Widget.Material3.Button.TextButton" android:id="@+id/btn0" android:layout_width="80dp" android:layout_height="80dp" android:text="0" android:textSize="24sp" android:textColor="@color/color2" />
+        <ImageButton style="@style/Widget.Material3.Button.TextButton" android:id="@+id/btnDelete" android:layout_width="80dp" android:layout_height="80dp" android:src="@drawable/hapus" app:tint="@color/button2" />
+
+    </GridLayout>
+
+</LinearLayout>

@@ -17,7 +17,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome Back"
+        android:text="Admin Login"
         android:fontFamily="@font/lato_bold"
         android:textSize="28sp"
         android:textStyle="bold"
@@ -27,7 +27,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign in to continue"
+        android:text="Sign in to continue as Admin"
         android:fontFamily="@font/lato_regular"
         android:textColor="@color/color6"
         android:layout_marginBottom="32dp"/>
@@ -81,13 +81,24 @@
         app:cornerRadius="12dp"/>
 
     <TextView
+        android:id="@+id/tvLoginKasir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Masuk sebagai Kasir (PIN)"
+        android:fontFamily="@font/lato_bold"
+        android:textColor="@color/color4"
+        android:textStyle="bold"
+        android:textSize="16sp"/>
+
+    <TextView
         android:id="@+id/tvGoToRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Don't have an account? Register"
         android:fontFamily="@font/lato_regular"
-        android:textColor="@color/color4"
-        android:textStyle="bold"/>
+        android:textColor="@color/color6"
+        android:textSize="14sp"/>
 
 </LinearLayout>
