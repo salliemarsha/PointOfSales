@@ -17,6 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Create Account"
+            android:fontFamily="@font/raleway_bold"
             android:textSize="28sp"
             android:textStyle="bold"
             android:textColor="@color/color2"
@@ -26,6 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sign up to get started"
+            android:fontFamily="@font/raleway_medium"
             android:textColor="@color/color6"
             android:layout_marginBottom="32dp"/>
 
@@ -43,6 +45,7 @@
                 android:id="@+id/etFullName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/lato_regular"
                 android:inputType="textPersonName"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -61,6 +64,7 @@
                 android:id="@+id/etEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/lato_regular"
                 android:inputType="textEmailAddress"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -80,6 +84,7 @@
                 android:id="@+id/etPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/lato_regular"
                 android:inputType="textPassword"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -99,6 +104,7 @@
                 android:id="@+id/etConfirmPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/lato_regular"
                 android:inputType="textPassword"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -108,6 +114,7 @@
             android:layout_height="56dp"
             android:layout_marginTop="32dp"
             android:text="Register"
+            android:fontFamily="@font/raleway_bold"
             android:backgroundTint="@color/button"
             app:cornerRadius="12dp"/>
 
@@ -117,6 +124,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="Already have an account? Login"
+            android:fontFamily="@font/lato_regular"
             android:textColor="@color/color4"
             android:textStyle="bold"/>
 
