@@ -1,7 +1,5 @@
 # Sallie's Point of Sales
 
-Aplikasi Point of Sales (POS) berbasis Android yang digunakan untuk mengelola produk, transaksi penjualan, laporan penjualan, data pegawai, dan pengaturan printer struk.
-
 ## Deskripsi Proyek
 
 Sallie's Point of Sales merupakan aplikasi Android yang dirancang untuk membantu proses penjualan pada toko atau usaha kecil. Aplikasi memungkinkan admin mengelola produk, cabang, transaksi, laporan, dan mencetak struk pembayaran secara langsung.
