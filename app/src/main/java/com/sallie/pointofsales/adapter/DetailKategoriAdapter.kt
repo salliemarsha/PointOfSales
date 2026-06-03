@@ -6,6 +6,7 @@ import com.sallie.pointofsales.R
 import android.content.Context
 import android.view.View
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
 import com.sallie.pointofsales.model.ModelKategoriActivity
@@ -60,7 +61,24 @@ class DetailKategoriAdapter(private var kategoriList: List<ModelKategoriActivity
 
         fun bind(kategori: ModelKategoriActivity) {
             tvNamaKategori.text = kategori.namaKategori ?: "-"
-            chipStatus.text = kategori.statusKategori ?: "-"
+            
+            val status = kategori.statusKategori ?: "ACTIVE"
+            val isActive = status.equals("ACTIVE", ignoreCase = true) || 
+                           status.equals("Aktif", ignoreCase = true)
+            
+            if (isActive) {
+                chipStatus.text = "Aktif"
+                chipStatus.setChipIconResource(R.drawable.ic_check)
+                chipStatus.setChipIconTintResource(R.color.color4)
+                chipStatus.setChipBackgroundColorResource(R.color.layanan) // Soft Green tint
+                chipStatus.setTextColor(ContextCompat.getColor(itemView.context, R.color.color2))
+            } else {
+                chipStatus.text = "Nonaktif"
+                chipStatus.setChipIconResource(R.drawable.hapus)
+                chipStatus.setChipIconTintResource(R.color.button2)
+                chipStatus.setChipBackgroundColorResource(R.color.color5) // Light Gray
+                chipStatus.setTextColor(ContextCompat.getColor(itemView.context, R.color.color6))
+            }
 
             itemView.setOnClickListener {
                 listener?.onItemClick(kategori)
@@ -72,5 +90,4 @@ class DetailKategoriAdapter(private var kategoriList: List<ModelKategoriActivity
             }
         }
     }
-
 }

@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.textfield.TextInputEditText
 import android.widget.TextView
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.sallie.pointofsales.R
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -36,6 +36,9 @@ class PembayaranActivity : AppCompatActivity() {
     private var uangBayar = 0
     private var uangKembalian = 0
     private var idTransaksi = ""
+
+    private val database = FirebaseDatabase.getInstance()
+    private val balanceRef = database.getReference("store_balance")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,13 +72,13 @@ class PembayaranActivity : AppCompatActivity() {
         btnResetNominal.setOnClickListener { etUangBayar.setText("") }
 
         btnKonfirmasiPembayaran.setOnClickListener {
-            prosesSimpanTransaksi()
+            cekSaldoDanProses()
         }
     }
 
     private fun hitungKembalian(inputUang: String) {
         if (inputUang.isNotEmpty()) {
-            uangBayar = inputUang.toInt()
+            uangBayar = try { inputUang.toInt() } catch (e: Exception) { 0 }
             uangKembalian = uangBayar - totalTagihan
             tvUangKembalian.text = if (uangKembalian >= 0) {
                 "Rp$uangKembalian"
@@ -89,7 +92,7 @@ class PembayaranActivity : AppCompatActivity() {
         }
     }
 
-    private fun prosesSimpanTransaksi() {
+    private fun cekSaldoDanProses() {
         if (idTransaksi.isEmpty()) {
             Toast.makeText(this, "ID transaksi tidak ditemukan", Toast.LENGTH_SHORT).show()
             return
@@ -100,7 +103,31 @@ class PembayaranActivity : AppCompatActivity() {
             return
         }
 
-        val ref = FirebaseDatabase.getInstance().getReference("transaksi")
+        // Validate balance before proceeding
+        balanceRef.runTransaction(object : Transaction.Handler {
+            override fun doTransaction(currentData: MutableData): Transaction.Result {
+                val currentBalance = currentData.getValue(Long::class.java) ?: 0L
+                if (currentBalance < totalTagihan) {
+                    return Transaction.abort()
+                }
+                // We don't deduct here yet, just check. 
+                // Or we can deduct here and if transaction save fails, we'd have to rollback.
+                // Requirement says: "Subtract it from the current balance ... ONLY AFTER transaction is successfully saved."
+                return Transaction.success(currentData)
+            }
+
+            override fun onComplete(error: DatabaseError?, committed: Boolean, snapshot: DataSnapshot?) {
+                if (committed) {
+                    prosesSimpanTransaksi()
+                } else {
+                    Toast.makeText(this@PembayaranActivity, "Insufficient store balance.", Toast.LENGTH_LONG).show()
+                }
+            }
+        })
+    }
+
+    private fun prosesSimpanTransaksi() {
+        val ref = database.getReference("transaksi")
 
         val updates = mapOf(
             "uangBayar" to uangBayar,
@@ -109,15 +136,34 @@ class PembayaranActivity : AppCompatActivity() {
 
         ref.child(idTransaksi).updateChildren(updates)
             .addOnSuccessListener {
-                Toast.makeText(this, "Transaksi Berhasil Disimpan", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, StrukNotaActivity::class.java)
-                intent.putExtra("ID_TRANSAKSI", idTransaksi)
-                startActivity(intent)
-                finish()
+                deductBalance()
             }
             .addOnFailureListener {
                 Toast.makeText(this, "Gagal menyimpan transaksi", Toast.LENGTH_SHORT).show()
             }
+    }
+
+    private fun deductBalance() {
+        balanceRef.runTransaction(object : Transaction.Handler {
+            override fun doTransaction(currentData: MutableData): Transaction.Result {
+                val currentBalance = currentData.getValue(Long::class.java) ?: 0L
+                currentData.value = currentBalance - totalTagihan
+                return Transaction.success(currentData)
+            }
+
+            override fun onComplete(error: DatabaseError?, committed: Boolean, snapshot: DataSnapshot?) {
+                if (committed) {
+                    Toast.makeText(this@PembayaranActivity, "Transaksi Berhasil Disimpan", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this@PembayaranActivity, StrukNotaActivity::class.java)
+                    intent.putExtra("ID_TRANSAKSI", idTransaksi)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    // This is unlikely if check succeeded, but handle it
+                    Toast.makeText(this@PembayaranActivity, "Gagal memperbarui saldo", Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
     }
 
     private fun initComponent() {

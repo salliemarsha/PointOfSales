@@ -6,13 +6,13 @@ import android.os.Parcelable
 data class ModelKategoriActivity(
     var idKategori: String? = null,
     var namaKategori: String? = null,
-    var statusKategori: String? = null
+    var statusKategori: String? = "ACTIVE"
 ) : Parcelable {
 
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readString(),
-        parcel.readString()
+        parcel.readString() ?: "ACTIVE"
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

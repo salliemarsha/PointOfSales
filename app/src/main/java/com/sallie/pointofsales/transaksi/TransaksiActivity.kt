@@ -2,6 +2,7 @@ package com.sallie.pointofsales.transaksi
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.*
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +15,7 @@ import com.google.firebase.database.*
 import com.sallie.pointofsales.R
 import com.sallie.pointofsales.adapter.KeranjangAdapter
 import com.sallie.pointofsales.model.ItemKeranjang
+import com.sallie.pointofsales.model.ModelProdukActivity
 import com.sallie.pointofsales.model.ModelTransaksi
 import java.text.SimpleDateFormat
 import java.util.*
@@ -24,6 +26,7 @@ class TransaksiActivity : AppCompatActivity(), KeranjangAdapter.OnItemChangeList
     private val transaksiRef = database.getReference("transaksi")
     private val cabangRef = database.getReference("cabang")
     private val produkRef = database.getReference("produk")
+    private val kategoriRef = database.getReference("kategori")
 
     private lateinit var toolbar: MaterialToolbar
     private lateinit var spCabangTransaksi: AutoCompleteTextView
@@ -38,6 +41,7 @@ class TransaksiActivity : AppCompatActivity(), KeranjangAdapter.OnItemChangeList
     private val listProduk = ArrayList<DataSnapshot>()
     private val listNamaProduk = ArrayList<String>()
     private val keranjangBelanja = ArrayList<ItemKeranjang>()
+    private val categoryStatusMap = HashMap<String, String>()
 
     private lateinit var cabangAdapter: ArrayAdapter<String>
     private lateinit var produkAdapter: ArrayAdapter<String>
@@ -54,6 +58,7 @@ class TransaksiActivity : AppCompatActivity(), KeranjangAdapter.OnItemChangeList
         init()
         setupAdapters()
         loadCabang()
+        loadCategoryStatuses()
 
         spCabangTransaksi.setOnItemClickListener { _, _, position, _ ->
             cabangTerpilih = listCabang[position]
@@ -111,22 +116,58 @@ class TransaksiActivity : AppCompatActivity(), KeranjangAdapter.OnItemChangeList
         })
     }
 
+    private fun loadCategoryStatuses() {
+        kategoriRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                categoryStatusMap.clear()
+                for (data in snapshot.children) {
+                    val name = data.child("namaKategori").getValue(String::class.java)
+                        ?: data.child("nameKategori").getValue(String::class.java)
+                    val status = data.child("statusKategori").getValue(String::class.java) ?: "ACTIVE"
+                    if (name != null) {
+                        categoryStatusMap[name] = status
+                        Log.d("CategoryStatus", "Category: $name, Status: $status")
+                    }
+                }
+                // Refresh product list if branch already selected
+                if (cabangTerpilih.isNotEmpty()) {
+                    loadProdukPerCabang(cabangTerpilih)
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {}
+        })
+    }
+
+    private fun isStatusActive(status: String?): Boolean {
+        if (status.isNullOrBlank()) return true // Default to ACTIVE
+        val s = status.uppercase()
+        return s == "ACTIVE" || s == "AKTIF"
+    }
+
     private fun loadProdukPerCabang(cabang: String) {
-        produkRef.addValueEventListener(object : ValueEventListener {
+        produkRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 listProduk.clear()
                 listNamaProduk.clear()
 
                 for (data in snapshot.children) {
                     val cab = data.child("cabang").getValue(String::class.java)
-                    if (cab == cabang) {
+                    val statusProduk = data.child("statusProduk").getValue(String::class.java) ?: "ACTIVE"
+                    val kategori = data.child("kategori").getValue(String::class.java) ?: ""
+                    val statusKategori = categoryStatusMap[kategori] ?: "ACTIVE"
 
+                    val isProdActive = isStatusActive(statusProduk)
+                    val isCatActive = isStatusActive(statusKategori)
+
+                    if (cab == cabang && isProdActive && isCatActive) {
                         val nama = data.child("namaProduk").getValue(String::class.java)
                         val harga = data.child("hargaJual").getValue(Int::class.java) ?: 0
+                        val stok = data.child("stok").getValue(Int::class.java) ?: 0
 
-                        if (nama != null) {
+                        // Only show products that are in stock or unlimited
+                        if (nama != null && (stok > 0 || stok == -1)) {
                             listProduk.add(data)
-                            listNamaProduk.add("$nama - Rp$harga")
+                            listNamaProduk.add("$nama - Rp$harga (Stok: ${if (stok == -1) "∞" else stok})")
                         }
                     }
                 }
@@ -153,14 +194,33 @@ class TransaksiActivity : AppCompatActivity(), KeranjangAdapter.OnItemChangeList
         if (index == -1) return
 
         val snap = listProduk[index]
+        val stok = snap.child("stok").getValue(Int::class.java) ?: 0
+
+        // Stock Validation
+        if (stok != -1 && jumlah > stok) {
+            Toast.makeText(this, "Insufficient stock available. Current stock: $stok", Toast.LENGTH_SHORT).show()
+            return
+        }
 
         val id = snap.child("idProduk").getValue(String::class.java) ?: ""
         val nama = snap.child("namaProduk").getValue(String::class.java) ?: ""
         val harga = snap.child("hargaJual").getValue(Int::class.java) ?: 0
 
-        val item = ItemKeranjang(id, nama, harga, jumlah, harga * jumlah)
+        // Check if item already in cart
+        val existingItem = keranjangBelanja.find { it.idProduk == id }
+        if (existingItem != null) {
+            val totalQty = existingItem.jumlahBeli + jumlah
+            if (stok != -1 && totalQty > stok) {
+                Toast.makeText(this, "Insufficient stock available for total quantity in cart.", Toast.LENGTH_SHORT).show()
+                return
+            }
+            existingItem.jumlahBeli = totalQty
+            existingItem.subTotal = existingItem.jumlahBeli * existingItem.hargaJual
+        } else {
+            val item = ItemKeranjang(id, nama, harga, jumlah, harga * jumlah)
+            keranjangBelanja.add(item)
+        }
 
-        keranjangBelanja.add(item)
         keranjangAdapter.notifyDataSetChanged()
         hitungTotal()
 
@@ -195,8 +255,35 @@ class TransaksiActivity : AppCompatActivity(), KeranjangAdapter.OnItemChangeList
             return
         }
 
-        val idTx = transaksiRef.push().key ?: return
+        // Final stock check before saving
+        val itemsToValidate = keranjangBelanja.toList()
+        var processedCount = 0
+        var isAborted = false
 
+        for (item in itemsToValidate) {
+            produkRef.child(item.idProduk).get().addOnSuccessListener { snapshot ->
+                if (isAborted) return@addOnSuccessListener
+                
+                val currentStok = snapshot.child("stok").getValue(Int::class.java) ?: 0
+                if (currentStok != -1 && item.jumlahBeli > currentStok) {
+                    isAborted = true
+                    Toast.makeText(this, "Stock changed for ${item.namaProduk}. Available: $currentStok", Toast.LENGTH_LONG).show()
+                    // Optionally refresh the list
+                    loadProdukPerCabang(cabangTerpilih)
+                    return@addOnSuccessListener
+                }
+
+                processedCount++
+                if (processedCount == itemsToValidate.size) {
+                    // All validated
+                    finalSaveTransaction()
+                }
+            }
+        }
+    }
+
+    private fun finalSaveTransaction() {
+        val idTx = transaksiRef.push().key ?: return
         val sdf = SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault())
         val tanggal = sdf.format(Date())
 
@@ -210,14 +297,42 @@ class TransaksiActivity : AppCompatActivity(), KeranjangAdapter.OnItemChangeList
 
         transaksiRef.child(idTx).setValue(transaksi)
             .addOnSuccessListener {
-                val intent = Intent(this, PembayaranActivity::class.java)
-                intent.putExtra("TOTAL_BELANJA", totalBelanja)
-                intent.putExtra("ID_TRANSAKSI", idTx)
-                startActivity(intent)
-                finish()
+                // Requirement 4: Stock deduction after transaction successfully saved
+                deductStockAndProceed(idTx)
             }
             .addOnFailureListener {
                 Toast.makeText(this, "Gagal simpan transaksi", Toast.LENGTH_SHORT).show()
             }
+    }
+
+    private fun deductStockAndProceed(idTx: String) {
+        val totalItems = keranjangBelanja.size
+        var updatedItems = 0
+
+        for (item in keranjangBelanja) {
+            val productRef = produkRef.child(item.idProduk)
+            productRef.runTransaction(object : Transaction.Handler {
+                override fun doTransaction(currentData: MutableData): Transaction.Result {
+                    val p = currentData.getValue(ModelProdukActivity::class.java) ?: return Transaction.success(currentData)
+                    if (p.stok == -1) return Transaction.success(currentData)
+                    
+                    val newStok = (p.stok ?: 0) - item.jumlahBeli
+                    p.stok = if (newStok < 0) 0 else newStok
+                    currentData.value = p
+                    return Transaction.success(currentData)
+                }
+
+                override fun onComplete(error: DatabaseError?, committed: Boolean, snapshot: DataSnapshot?) {
+                    updatedItems++
+                    if (updatedItems == totalItems) {
+                        val intent = Intent(this@TransaksiActivity, PembayaranActivity::class.java)
+                        intent.putExtra("TOTAL_BELANJA", totalBelanja)
+                        intent.putExtra("ID_TRANSAKSI", idTx)
+                        startActivity(intent)
+                        finish()
+                    }
+                }
+            })
+        }
     }
 }

@@ -12,20 +12,20 @@ import androidx.cardview.widget.CardView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 import com.sallie.pointofsales.akun.AccountActivity
 import com.sallie.pointofsales.auth.LoginActivity
 import com.sallie.pointofsales.cabang.DataCabangActivity
 import com.sallie.pointofsales.kategori.DataKategoriActivity
-import com.sallie.pointofsales.laporan.LaporanActivity
+import com.sallie.pointofsales.laporan.TransactionHistoryActivity
 import com.sallie.pointofsales.pegawai.DataPegawaiActivity
 import com.sallie.pointofsales.pelanggan.PelangganActivity
 import com.sallie.pointofsales.printer.PrinterSettingsActivity
 import com.sallie.pointofsales.produk.DataProductActivity
 import com.sallie.pointofsales.transaksi.TransaksiActivity
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Date
-import java.util.Locale
+import java.util.*
 
 /**
  * MainActivity serves as the primary dashboard for the POS system.
@@ -34,6 +34,8 @@ import java.util.Locale
 class MainActivity : AppCompatActivity() {
 
     private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
+    private val database = FirebaseDatabase.getInstance()
+    private val balanceRef = database.getReference("store_balance")
 
     private lateinit var cvAccount: CardView
     private lateinit var cvProduct: CardView
@@ -48,6 +50,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var tvDate: TextView
     private lateinit var tvGreetings: TextView
+    private lateinit var tvRP: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +68,7 @@ class MainActivity : AppCompatActivity() {
         initViews()
         setupListeners()
         updateDashboardInfo()
+        listenToBalance()
 
         // 3. System UI Setup
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -88,6 +92,7 @@ class MainActivity : AppCompatActivity() {
 
         tvDate = findViewById(R.id.tvDate)
         tvGreetings = findViewById(R.id.tvGreetings)
+        tvRP = findViewById(R.id.tvRP)
     }
 
     private fun setupListeners() {
@@ -96,7 +101,10 @@ class MainActivity : AppCompatActivity() {
         cvEmployee.setOnClickListener { navigateTo(DataPegawaiActivity::class.java) }
         cvBranch.setOnClickListener { navigateTo(DataCabangActivity::class.java) }
         llTransaksi.setOnClickListener { navigateTo(TransaksiActivity::class.java) }
-        llLaporan.setOnClickListener { navigateTo(LaporanActivity::class.java) }
+        
+        // Refactored: Report button now opens Transaction History
+        llLaporan.setOnClickListener { navigateTo(TransactionHistoryActivity::class.java) }
+
         llPelanggan.setOnClickListener { navigateTo(PelangganActivity::class.java) }
         cvAccount.setOnClickListener { navigateTo(AccountActivity::class.java) }
         cvPrint.setOnClickListener { navigateTo(PrinterSettingsActivity::class.java) }
@@ -106,6 +114,23 @@ class MainActivity : AppCompatActivity() {
         val localeID = Locale("id", "ID")
         tvDate.text = SimpleDateFormat("dd MMMM yyyy", localeID).format(Date())
         tvGreetings.text = getGreeting()
+    }
+
+    private fun listenToBalance() {
+        balanceRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val balance = snapshot.getValue(Long::class.java) ?: 1000000L // Default 1jt if empty
+                if (!snapshot.exists()) {
+                    balanceRef.setValue(balance)
+                }
+                val format = NumberFormat.getCurrencyInstance(Locale("id", "ID"))
+                tvRP.text = format.format(balance).replace(",00", "").replace("Rp", "Rp ")
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("MainActivity", "Balance listener cancelled: ${error.message}")
+            }
+        })
     }
 
     private fun getGreeting(): String {

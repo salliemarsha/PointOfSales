@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -55,21 +56,36 @@ class DetailProdukAdapter(
             tvKategoriProduk.text = produk.kategori ?: "-"
             tvCabangProduk.text = produk.cabang ?: "-"
 
-            // Logic: Stok Management
-            if (produk.stok == -1) {
-                tvStokProduk.text = "Tidak Terbatas"
+            // Logic: Status and Stock Management
+            val status = produk.statusProduk ?: "ACTIVE"
+            val currentStock = produk.stok ?: 0
+            val isActive = status.equals("ACTIVE", ignoreCase = true) || 
+                           status.equals("Aktif", ignoreCase = true)
+
+            if (!isActive) {
+                chipStatus.text = "Nonaktif"
+                chipStatus.setChipIconResource(R.drawable.hapus)
+                chipStatus.setChipIconTintResource(R.color.button2)
+                chipStatus.setChipBackgroundColorResource(R.color.color5)
+                chipStatus.setTextColor(ContextCompat.getColor(itemView.context, R.color.color6))
+            } else if (currentStock == 0) {
+                chipStatus.text = "Habis"
+                chipStatus.setChipIconResource(R.drawable.stok)
+                chipStatus.setChipIconTintResource(R.color.color6)
+                chipStatus.setChipBackgroundColorResource(R.color.color5)
+                chipStatus.setTextColor(ContextCompat.getColor(itemView.context, R.color.color6))
+            } else {
                 chipStatus.text = "Aktif"
                 chipStatus.setChipIconResource(R.drawable.ic_check)
+                chipStatus.setChipIconTintResource(R.color.color4)
+                chipStatus.setChipBackgroundColorResource(R.color.layanan)
+                chipStatus.setTextColor(ContextCompat.getColor(itemView.context, R.color.color2))
+            }
+
+            if (currentStock == -1) {
+                tvStokProduk.text = "Stok: Tidak Terbatas"
             } else {
-                val currentStock = produk.stok ?: 0
                 tvStokProduk.text = "Stok: $currentStock"
-                if (currentStock > 0) {
-                    chipStatus.text = "Aktif"
-                    chipStatus.setChipIconResource(R.drawable.ic_check)
-                } else {
-                    chipStatus.text = "Habis"
-                    chipStatus.setChipIconResource(R.drawable.stok)
-                }
             }
 
             // Standardized Glide Implementation

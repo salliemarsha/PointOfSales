@@ -12,65 +12,55 @@ import com.sallie.pointofsales.model.ModelKategoriActivity
 class DataKategoriViewModel : ViewModel() {
 
     private val database = FirebaseDatabase.getInstance()
-
     private val myRef = database.getReference("kategori")
 
     val kategoriList = MutableLiveData<ArrayList<ModelKategoriActivity>>()
-
     private var originalKategoriList = ArrayList<ModelKategoriActivity>()
-
-    private val searchQuery = MutableLiveData<String?>()
-
     val isLoading = MutableLiveData<Boolean>()
-
     val isSearchEmpty = MutableLiveData<Boolean>()
 
     init {
         getData()
     }
 
-    fun getData (){
+    fun getData() {
         isLoading.value = true
-        val query = myRef.limitToLast(100)
-        query.addValueEventListener(object : ValueEventListener {
+        myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 isLoading.value = false
+                val list = ArrayList<ModelKategoriActivity>()
                 if (snapshot.exists()) {
-                    val list = ArrayList<ModelKategoriActivity>()
                     for (dataSnapshot in snapshot.children) {
                         try {
                             val kategori = dataSnapshot.getValue(ModelKategoriActivity::class.java)
                             if (kategori != null) {
+                                // Management screen shows BOTH Active and Inactive
                                 list.add(kategori)
                             }
                         } catch (e: Exception) {
-                            Log.e("ERROR_PARSE", e.message.toString())
+                            Log.e("CategoryStatus", "Error parsing category: ${e.message}")
                         }
                     }
-                    originalKategoriList.clear()
-                    originalKategoriList.addAll(list)
-                    kategoriList.value = list
-                    isSearchEmpty.value = false
-                    Log.d("DataKategoriViewModel", "Loaded ${list.size} kategori items.")
-                } else {
-                    originalKategoriList.clear()
-                    kategoriList.value = ArrayList()
-                    isSearchEmpty.value = true
-                    Log.d("DataKategoriViewModel", "No kategori data found.")
                 }
+                Log.d("CategoryStatus", "Loaded ${list.size} categories (Active + Inactive) for management.")
+                
+                originalKategoriList.clear()
+                originalKategoriList.addAll(list)
+                kategoriList.value = list
+                isSearchEmpty.value = list.isEmpty()
             }
 
             override fun onCancelled(error: DatabaseError) {
                 isLoading.value = false
+                Log.e("CategoryStatus", "Database error: ${error.message}")
             }
         })
     }
 
     fun filterList(query: String?) {
-        searchQuery.value = query
         if (query.isNullOrEmpty()) {
             kategoriList.value = originalKategoriList
-            isSearchEmpty.value = false
+            isSearchEmpty.value = originalKategoriList.isEmpty()
         } else {
             val filteredList = originalKategoriList.filter {
                 it.namaKategori?.lowercase()?.contains(query.lowercase()) == true

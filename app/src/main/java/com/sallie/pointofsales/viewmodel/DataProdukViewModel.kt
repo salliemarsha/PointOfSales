@@ -12,63 +12,55 @@ import com.sallie.pointofsales.model.ModelProdukActivity
 class DataProdukViewModel : ViewModel() {
 
     private val database = FirebaseDatabase.getInstance()
-
     private val myRef = database.getReference("produk")
 
     val produkList = MutableLiveData<ArrayList<ModelProdukActivity>>()
-
     private var originalProdukList = ArrayList<ModelProdukActivity>()
-
-    private val searchQuery = MutableLiveData<String?>()
-
     val isLoading = MutableLiveData<Boolean>()
-
     val isSearchEmpty = MutableLiveData<Boolean>()
 
     init {
         getData()
     }
 
-    fun getData (){
+    fun getData() {
         isLoading.value = true
-        val query = myRef.orderByChild("idProduk").limitToLast(100)
-        query.addValueEventListener(object : ValueEventListener {
+        myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 isLoading.value = false
+                val list = ArrayList<ModelProdukActivity>()
                 if (snapshot.exists()) {
-                    val list = ArrayList<ModelProdukActivity>()
                     for (dataSnapshot in snapshot.children) {
-                        val produk = dataSnapshot.getValue(ModelProdukActivity::class.java)
-                        if (produk == null) {
-                            Log.e("DataProdukViewModel", "Failed to purpose produk")
-                        } else {
-                            list.add(produk)
+                        try {
+                            val produk = dataSnapshot.getValue(ModelProdukActivity::class.java)
+                            if (produk != null) {
+                                // Management screen shows BOTH Active and Inactive
+                                list.add(produk)
+                            }
+                        } catch (e: Exception) {
+                            Log.e("ProductStatus", "Error parsing product: ${e.message}")
                         }
                     }
-                    originalProdukList.clear()
-                    originalProdukList.addAll(list)
-                    produkList.value = list
-                    isSearchEmpty.value = false
-                    Log.d("DataProdukViewModel", "Loaded ${list.size} produk items.")
-                } else {
-                    originalProdukList.clear()
-                    produkList.value = ArrayList()
-                    isSearchEmpty.value = true
-                    Log.d("DataProdukViewModel", "No produk data found.")
                 }
+                Log.d("ProductStatus", "Loaded ${list.size} products (Active + Inactive) for management.")
+                
+                originalProdukList.clear()
+                originalProdukList.addAll(list)
+                produkList.value = list
+                isSearchEmpty.value = list.isEmpty()
             }
 
             override fun onCancelled(error: DatabaseError) {
                 isLoading.value = false
+                Log.e("ProductStatus", "Database error: ${error.message}")
             }
         })
     }
 
     fun filterList(query: String?) {
-        searchQuery.value = query
         if (query.isNullOrEmpty()) {
             produkList.value = originalProdukList
-            isSearchEmpty.value = false
+            isSearchEmpty.value = originalProdukList.isEmpty()
         } else {
             val filteredList = originalProdukList.filter {
                 it.namaProduk?.lowercase()?.contains(query.lowercase()) == true

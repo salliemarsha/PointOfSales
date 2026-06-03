@@ -1,27 +1,25 @@
 package com.sallie.pointofsales.laporan
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.ProgressBar
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.button.MaterialButton
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.sallie.pointofsales.R
-import com.sallie.pointofsales.adapter.DetailItemsAdapter
 import com.sallie.pointofsales.adapter.TransactionAdapter
 import com.sallie.pointofsales.model.ItemKeranjang
 import com.sallie.pointofsales.model.ModelTransaksi
-import com.sallie.pointofsales.printer.PrinterService
+import com.sallie.pointofsales.transaksi.StrukNotaActivity
 
 class TransactionHistoryActivity : AppCompatActivity() {
 
@@ -32,7 +30,6 @@ class TransactionHistoryActivity : AppCompatActivity() {
     private lateinit var adapter: TransactionAdapter
     
     private val transactions = mutableListOf<ModelTransaksi>()
-    private val printerService by lazy { PrinterService(this) }
     private val database = FirebaseDatabase.getInstance().getReference("transaksi")
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,13 +51,13 @@ class TransactionHistoryActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        adapter = TransactionAdapter(
-            transactions,
-            onItemClick = { transaction, isLatest -> 
-                showDetail(transaction, isLatest) 
-            },
-            onPrintClick = { printerService.printTransaction(it) }
-        )
+        adapter = TransactionAdapter(transactions) { transaction ->
+            // Click Behavior: Navigate to Printer Screen (StrukNotaActivity)
+            Log.d("TransactionHistory", "Opening Printer Screen for: ${transaction.idTransaksi}")
+            val intent = Intent(this, StrukNotaActivity::class.java)
+            intent.putExtra("ID_TRANSAKSI", transaction.idTransaksi)
+            startActivity(intent)
+        }
         rvHistory.layoutManager = LinearLayoutManager(this)
         rvHistory.adapter = adapter
     }
@@ -71,12 +68,16 @@ class TransactionHistoryActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 transactions.clear()
                 for (data in snapshot.children) {
-                    val trx = parseTransaction(data)
-                    transactions.add(trx)
+                    try {
+                        val trx = parseTransaction(data)
+                        transactions.add(trx)
+                    } catch (e: Exception) {
+                        Log.e("TransactionHistory", "Error parsing transaction: ${e.message}")
+                    }
                 }
                 
-                // Sort by date - Newest first (Latest transaction will be at index 0)
-                transactions.sortByDescending { it.tanggal }
+                // Sort by ID or Date descending (Newest first)
+                transactions.sortByDescending { it.idTransaksi }
                 
                 adapter.updateData(transactions)
                 progressBar.visibility = View.GONE
@@ -92,58 +93,10 @@ class TransactionHistoryActivity : AppCompatActivity() {
 
     private fun parseTransaction(data: DataSnapshot): ModelTransaksi {
         val id = data.child("idTransaksi").value?.toString() ?: ""
-        val tanggal = data.child("tanggal").value?.toString() ?: ""
-        val cabang = data.child("namaCabang").value?.toString() ?: ""
-        val total = data.child("totalBayar").value?.toString()?.toIntOrNull() ?: 0
-        val bayar = data.child("uangBayar").value?.toString()?.toIntOrNull() ?: 0
-        val kembali = data.child("kembalian").value?.toString()?.toIntOrNull() ?: 0
+        val total = data.child("totalBayar").value?.toString()?.toIntOrNull() 
+                    ?: data.child("totalHarga").value?.toString()?.toIntOrNull() ?: 0
         
-        val items = mutableListOf<ItemKeranjang>()
-        data.child("itemTerjual").children.forEach { itemSnap ->
-            val item = ItemKeranjang(
-                idProduk = itemSnap.child("idProduk").value?.toString() ?: "",
-                namaProduk = itemSnap.child("namaProduk").value?.toString() ?: "",
-                hargaJual = itemSnap.child("hargaJual").value?.toString()?.toIntOrNull() ?: 0,
-                jumlahBeli = itemSnap.child("jumlahBeli").value?.toString()?.toIntOrNull() ?: 0,
-                subTotal = itemSnap.child("subTotal").value?.toString()?.toIntOrNull() ?: 0
-            )
-            items.add(item)
-        }
-        
-        return ModelTransaksi(id, tanggal, cabang, total, bayar, kembali, items)
-    }
-
-    private fun showDetail(transaction: ModelTransaksi, isLatest: Boolean) {
-        val dialog = BottomSheetDialog(this)
-        val view = layoutInflater.inflate(R.layout.layout_transaction_detail, null)
-        
-        view.findViewById<TextView>(R.id.tvDetailId).text = "#${transaction.idTransaksi}"
-        view.findViewById<TextView>(R.id.tvDetailTanggal).text = transaction.tanggal
-        view.findViewById<TextView>(R.id.tvDetailTotal).text = "Rp${transaction.totalBayar}"
-        view.findViewById<TextView>(R.id.tvDetailBayar).text = "Rp${transaction.uangBayar}"
-        view.findViewById<TextView>(R.id.tvDetailKembalian).text = "Rp${transaction.kembalian}"
-        
-        // Handle Latest Transaction Badge
-        val tvLatest = view.findViewById<TextView>(R.id.tvLatestLabel)
-        tvLatest.visibility = if (isLatest) View.VISIBLE else View.GONE
-
-        val rvItems = view.findViewById<RecyclerView>(R.id.rvDetailItems)
-        rvItems.layoutManager = LinearLayoutManager(this)
-        rvItems.adapter = DetailItemsAdapter(transaction.itemTerjual)
-        
-        // Share Feature
-        view.findViewById<MaterialButton>(R.id.btnShareDetail).setOnClickListener {
-            printerService.shareTransaction(transaction)
-            dialog.dismiss()
-        }
-
-        // Print Feature
-        view.findViewById<MaterialButton>(R.id.btnPrintDetail).setOnClickListener {
-            printerService.printTransaction(transaction)
-            dialog.dismiss()
-        }
-        
-        dialog.setContentView(view)
-        dialog.show()
+        // We only need ID and Total for the simple history list
+        return ModelTransaksi(idTransaksi = id, totalBayar = total)
     }
 }

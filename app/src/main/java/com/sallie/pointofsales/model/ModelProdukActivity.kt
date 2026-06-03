@@ -9,5 +9,6 @@ data class ModelProdukActivity(
     var profit: Int? = 0,
     var hargaJual: Int? = 0,
     var stok: Int? = 0,
-    var productImageUrl: String? = ""
+    var productImageUrl: String? = "",
+    var statusProduk: String? = "ACTIVE" // Added statusProduk with default value
 )

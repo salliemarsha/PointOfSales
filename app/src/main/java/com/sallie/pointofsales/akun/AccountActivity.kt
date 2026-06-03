@@ -2,6 +2,7 @@ package com.sallie.pointofsales.akun
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -78,36 +79,55 @@ class AccountActivity : AppCompatActivity() {
 
     private fun loadUserData() {
         val user = auth.currentUser ?: return
-
         val uid = user.uid
+        
+        Log.d("PROFILE", "Current UID: $uid")
 
         FirebaseDatabase.getInstance()
             .getReference("users")
             .child(uid)
             .get()
             .addOnSuccessListener { snapshot ->
-
-                val nama =
-                    snapshot.child("nama").getValue(String::class.java)
+                if (snapshot.exists()) {
+                    // Try to retrieve name from multiple possible field names
+                    val name = snapshot.child("name").getValue(String::class.java)
+                        ?: snapshot.child("nama").getValue(String::class.java)
                         ?: user.displayName
-                        ?: user.email
+                        ?: user.email?.substringBefore("@")
                         ?: "User"
 
-                val jabatan =
-                    snapshot.child("jabatan").getValue(String::class.java)
-                        ?: "Staff"
+                    // Retrieve role/jabatan. EditProfileActivity uses "role".
+                    val role = snapshot.child("role").getValue(String::class.java)
+                    val jabatan = snapshot.child("jabatan").getValue(String::class.java)
 
-                tvAccountName.text = nama
-                tvUserRole.text = jabatan
+                    Log.d("PROFILE", "Firebase Name: $name")
+                    Log.d("PROFILE", "Firebase Role: $role")
+                    Log.d("PROFILE", "Firebase Jabatan: $jabatan")
 
-                val initials = nama
-                    .split(" ")
-                    .mapNotNull { it.firstOrNull()?.toString() }
-                    .take(2)
-                    .joinToString("")
-                    .uppercase()
+                    // Display actual role from database, prioritize 'role' then 'jabatan', fallback to "Staff"
+                    val finalRole = role ?: jabatan ?: "Staff"
 
-                tvAvatarInitials.text = initials
+                    tvAccountName.text = name
+                    tvUserRole.text = finalRole
+
+                    val initials = name
+                        .split(" ")
+                        .filter { it.isNotBlank() }
+                        .mapNotNull { it.firstOrNull()?.toString() }
+                        .take(2)
+                        .joinToString("")
+                        .uppercase()
+
+                    tvAvatarInitials.text = initials
+                } else {
+                    Log.d("PROFILE", "Snapshot does not exist for UID: $uid")
+                    tvAccountName.text = user.displayName ?: user.email?.substringBefore("@") ?: "User"
+                    tvUserRole.text = "Staff"
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("PROFILE", "Error loading profile data", e)
+                tvUserRole.text = "Staff"
             }
     }
 }

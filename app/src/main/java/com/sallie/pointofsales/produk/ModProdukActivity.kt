@@ -3,6 +3,7 @@ package com.sallie.pointofsales.produk
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.activity.enableEdgeToEdge
@@ -33,6 +34,7 @@ class ModProdukActivity : AppCompatActivity() {
     private lateinit var toolbar: MaterialToolbar
     private lateinit var etNamaProduk: TextInputEditText
     private lateinit var etProductImageUrl: TextInputEditText
+    private lateinit var spStatusProduk: AutoCompleteTextView
     private lateinit var spKategori: AutoCompleteTextView
     private lateinit var spCabang: AutoCompleteTextView
     private lateinit var etHargaBeli: TextInputEditText
@@ -51,6 +53,7 @@ class ModProdukActivity : AppCompatActivity() {
     private val listCabang = ArrayList<String>()
     private lateinit var kategoriAdapter: ArrayAdapter<String>
     private lateinit var cabangAdapter: ArrayAdapter<String>
+    private lateinit var statusAdapter: ArrayAdapter<String>
 
     private val galleryLauncher =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
@@ -91,9 +94,14 @@ class ModProdukActivity : AppCompatActivity() {
 
         kategoriAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, listKategori)
         cabangAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, listCabang)
+        
+        // Use consistent status options from strings.xml
+        val statusOptions = resources.getStringArray(R.array.status)
+        statusAdapter = ArrayAdapter(this, R.layout.dropdown_item, statusOptions)
 
         spKategori.setAdapter(kategoriAdapter)
         spCabang.setAdapter(cabangAdapter)
+        spStatusProduk.setAdapter(statusAdapter)
 
         loadKategori()
         loadCabang()
@@ -107,6 +115,10 @@ class ModProdukActivity : AppCompatActivity() {
         val profitProduk = intent.getIntExtra("PROFIT_PRODUK", 0)
         val hargaJual = intent.getIntExtra("HARGA_JUAL", 0)
         val stokProduk = intent.getIntExtra("STOK_PRODUK", 0)
+        
+        // Standardize input status to match dropdown options
+        val statusProdukRaw = intent.getStringExtra("STATUS_PRODUK") ?: "ACTIVE"
+        val statusProduk = if (statusProdukRaw.equals("ACTIVE", true) || statusProdukRaw.equals("Aktif", true)) statusOptions[0] else statusOptions[1]
 
         if (idProduk != null) {
             val titleToolbar = toolbar.findViewById<TextView>(R.id.tvToolbarTitle)
@@ -115,6 +127,7 @@ class ModProdukActivity : AppCompatActivity() {
             etProductImageUrl.setText(productImageUrl)
             spKategori.setText(kategoriProduk, false)
             spCabang.setText(cabangProduk, false)
+            spStatusProduk.setText(statusProduk, false)
             etHargaBeli.setText(hargaBeli.toString())
             etNilaiProfit.setText(profitProduk.toString())
             etHargaJual.setText(hargaJual.toString())
@@ -127,6 +140,8 @@ class ModProdukActivity : AppCompatActivity() {
             }
             btnSimpan.text = "Simpan Perubahan"
             tvPlaceholderFoto.visibility = View.GONE
+        } else {
+            spStatusProduk.setText(statusOptions[0], false) // Default to "Aktif"
         }
 
         val btnGaleri = findViewById<Button>(R.id.btnGaleri)
@@ -150,10 +165,14 @@ class ModProdukActivity : AppCompatActivity() {
                 for (dataSnapshot in snapshot.children) {
                     val nameKategori = dataSnapshot.child("namaKategori").getValue(String::class.java)
                         ?: dataSnapshot.child("nameKategori").getValue(String::class.java)
+                    
+                    // Requirement: Category Management screen (including product edit) should show all categories.
+                    // Only filter in Transaction/Selection dropdowns where strictly necessary.
                     if (nameKategori != null) {
                         listKategori.add(nameKategori)
                     }
                 }
+                Log.d("ModProduk", "Loaded ${listKategori.size} categories for selection.")
                 kategoriAdapter.notifyDataSetChanged()
             }
             override fun onCancelled(error: DatabaseError) {}
@@ -180,6 +199,7 @@ class ModProdukActivity : AppCompatActivity() {
         toolbar = findViewById(R.id.toolbar)
         etNamaProduk = findViewById(R.id.etNamaProduk)
         etProductImageUrl = findViewById(R.id.etProductImageUrl)
+        spStatusProduk = findViewById(R.id.spStatusProduk)
         spKategori = findViewById(R.id.spKategori)
         spCabang = findViewById(R.id.spCabang)
         etHargaBeli = findViewById(R.id.etHargaBeli)
@@ -202,10 +222,16 @@ class ModProdukActivity : AppCompatActivity() {
         val profit = etNilaiProfit.text.toString().trim()
         val hargaJual = etHargaJual.text.toString().trim()
         val stok = etStok.text.toString().trim()
+        val status = spStatusProduk.text.toString().trim()
 
         if (nama.isEmpty()) {
             etNamaProduk.error = "Nama produk tidak boleh kosong"
             etNamaProduk.requestFocus()
+            return
+        }
+        if (status.isEmpty()) {
+            spStatusProduk.error = "Status produk tidak boleh kosong"
+            spStatusProduk.requestFocus()
             return
         }
         if (kategori.isEmpty()) {
@@ -286,13 +312,14 @@ class ModProdukActivity : AppCompatActivity() {
         val produk = ModelProdukActivity(
             idProduk = id,
             namaProduk = etNamaProduk.text.toString().trim(),
+            statusProduk = spStatusProduk.text.toString().trim(),
             kategori = spKategori.text.toString().trim(),
             cabang = spCabang.text.toString().trim(),
             hargaBeli = etHargaBeli.text.toString().toIntOrNull() ?: 0,
             profit = etNilaiProfit.text.toString().toIntOrNull() ?: 0,
             hargaJual = etHargaJual.text.toString().toIntOrNull() ?: 0,
             stok = if (cbUnlimited.isChecked) -1 else (etStok.text.toString().toIntOrNull() ?: 0),
-            productImageUrl = if (fotoUrl.isNotEmpty()) fotoUrl else etProductImageUrl.text.toString().trim()
+            productImageUrl = fotoUrl.ifEmpty { etProductImageUrl.text.toString().trim() }
         )
 
         myRef.child(id).setValue(produk)
