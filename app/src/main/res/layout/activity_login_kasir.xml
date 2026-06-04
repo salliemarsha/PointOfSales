@@ -87,7 +87,16 @@
         <Button style="@style/Widget.Material3.Button.TextButton" android:id="@+id/btn9" android:layout_width="80dp" android:layout_height="80dp" android:text="9" android:textSize="24sp" android:textColor="@color/color2" />
         <View android:layout_width="80dp" android:layout_height="80dp" />
         <Button style="@style/Widget.Material3.Button.TextButton" android:id="@+id/btn0" android:layout_width="80dp" android:layout_height="80dp" android:text="0" android:textSize="24sp" android:textColor="@color/color2" />
-        <ImageButton style="@style/Widget.Material3.Button.TextButton" android:id="@+id/btnDelete" android:layout_width="80dp" android:layout_height="80dp" android:src="@drawable/hapus" app:tint="@color/button2" />
+        <ImageButton
+            style="@style/Widget.Material3.Button.TextButton"
+            android:id="@+id/btnDelete"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_gravity="center"
+            android:padding="12dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/hapus"
+            app:tint="@color/button2" />
 
     </GridLayout>
 

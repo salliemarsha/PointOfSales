@@ -1,5 +1,6 @@
 package com.sallie.pointofsales.akun
 
+import android.content.Context
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -23,7 +24,7 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var btnSave: MaterialButton
 
     private val auth = FirebaseAuth.getInstance()
-    private val database = FirebaseDatabase.getInstance().getReference("users")
+    private val database = FirebaseDatabase.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,10 +53,7 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun setupDropdownRole() {
-        val roles = listOf(
-            "Admin",
-            "Kasir"
-        )
+        val roles = listOf("Admin", "Kasir")
         val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, roles)
         spRole.setAdapter(adapter)
     }
@@ -63,16 +61,35 @@ class EditProfileActivity : AppCompatActivity() {
     private fun loadUserData() {
         val user = auth.currentUser
         if (user != null) {
+            // Mode Admin (Logged in via Auth)
             etName.setText(user.displayName)
             etUsername.setText(user.email?.substringBefore("@"))
             
-            // Load additional data from Realtime Database
-            database.child(user.uid).get().addOnSuccessListener { snapshot ->
+            database.getReference("users").child(user.uid).get().addOnSuccessListener { snapshot ->
                 if (snapshot.exists()) {
                     etPhone.setText(snapshot.child("phone").value?.toString())
                     val role = snapshot.child("role").value?.toString()
                     if (role != null) {
                         spRole.setText(role, false)
+                    }
+                }
+            }
+        } else {
+            // Mode Kasir (Logged in via PIN/Session)
+            val sharedPref = getSharedPreferences("KASIR_SESSION", Context.MODE_PRIVATE)
+            val idKasir = sharedPref.getString("KASIR_ID", null)
+            
+            if (idKasir != null) {
+                database.getReference("pegawai").child(idKasir).get().addOnSuccessListener { snapshot ->
+                    if (snapshot.exists()) {
+                        val nama = snapshot.child("namaPegawai").value?.toString() ?: ""
+                        val phone = snapshot.child("phonePegawai").value?.toString() ?: ""
+                        val jabatan = snapshot.child("jabatan").value?.toString() ?: "Kasir"
+                        
+                        etName.setText(nama)
+                        etPhone.setText(phone)
+                        spRole.setText(jabatan, false)
+                        etUsername.setText(nama.lowercase().replace(" ", ""))
                     }
                 }
             }
@@ -87,39 +104,53 @@ class EditProfileActivity : AppCompatActivity() {
             val role = spRole.text.toString().trim()
 
             if (name.isEmpty() || username.isEmpty() || phone.isEmpty() || role.isEmpty()) {
-                Toast.makeText(this, "Semua field wajib diisi", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            if (phone.length < 10) {
-                Toast.makeText(this, "Nomor telepon tidak valid", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Nama, No. Telp, dan Jabatan wajib diisi", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             val user = auth.currentUser
             if (user != null) {
-                // Update Firebase Auth Profile
+                // Update Admin Profile
                 val profileUpdates = UserProfileChangeRequest.Builder()
                     .setDisplayName(name)
                     .build()
 
                 user.updateProfile(profileUpdates).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        // Update Realtime Database
                         val userData = mapOf(
                             "name" to name,
                             "username" to username,
                             "phone" to phone,
                             "role" to role
                         )
-                        database.child(user.uid).setValue(userData).addOnSuccessListener {
-                            Toast.makeText(this, "Profil berhasil disimpan", Toast.LENGTH_SHORT).show()
+                        database.getReference("users").child(user.uid).updateChildren(userData).addOnSuccessListener {
+                            Toast.makeText(this, "Profil Admin berhasil diperbarui", Toast.LENGTH_SHORT).show()
                             finish()
-                        }.addOnFailureListener {
-                            Toast.makeText(this, "Gagal menyimpan ke database", Toast.LENGTH_SHORT).show()
                         }
-                    } else {
-                        Toast.makeText(this, "Gagal memperbarui profil auth", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } else {
+                // Update Kasir Profile
+                val sharedPref = getSharedPreferences("KASIR_SESSION", Context.MODE_PRIVATE)
+                val idKasir = sharedPref.getString("KASIR_ID", null)
+
+                if (idKasir != null) {
+                    val updateData = mapOf(
+                        "namaPegawai" to name,
+                        "phonePegawai" to phone,
+                        "jabatan" to role
+                    )
+                    database.getReference("pegawai").child(idKasir).updateChildren(updateData).addOnSuccessListener {
+                        // SINKRONISASI SESSION: Update Shared Preferences instan
+                        sharedPref.edit().apply {
+                            putString("KASIR_NAMA", name)
+                            putString("KASIR_ROLE", role)
+                            apply()
+                        }
+                        Toast.makeText(this, "Profil Kasir berhasil diperbarui", Toast.LENGTH_SHORT).show()
+                        finish()
+                    }.addOnFailureListener {
+                        Toast.makeText(this, "Gagal sinkronisasi data", Toast.LENGTH_SHORT).show()
                     }
                 }
             }

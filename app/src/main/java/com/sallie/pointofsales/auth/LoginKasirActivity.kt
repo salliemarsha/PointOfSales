@@ -46,6 +46,7 @@ class LoginKasirActivity : AppCompatActivity() {
     }
 
     private fun loadPegawai() {
+        // FILTER: Hanya ambil data pegawai dengan role 'Kasir'
         pegawaiRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (!snapshot.exists()) return
@@ -57,7 +58,8 @@ class LoginKasirActivity : AppCompatActivity() {
                         val p = ds.getValue(ModelPegawaiActivity::class.java)
                         p?.let {
                             val role = it.jabatan ?: ""
-                            if (role.equals("Kasir", true) || role.equals("Admin", true)) {
+                            // FILTER KETAT: Admin tidak boleh muncul di list login kasir
+                            if (role.equals("Kasir", true)) {
                                 listPegawai.add(it)
                                 listNamaPegawai.add(it.namaPegawai ?: "Tanpa Nama")
                             }
@@ -119,8 +121,17 @@ class LoginKasirActivity : AppCompatActivity() {
 
     private fun checkPin() {
         val pegawai = selectedPegawai ?: return
-        val correctPin = pegawai.pinPegawai ?: ""
+        
+        // VALIDASI ROLE: Proteksi jika data admin masuk ke tabel pegawai
+        val role = pegawai.jabatan ?: ""
+        if (!role.equals("Kasir", true)) {
+            Toast.makeText(this, "Akses Ditolak: Admin tidak bisa login sebagai Kasir!", Toast.LENGTH_LONG).show()
+            inputPin = ""
+            updateDots()
+            return
+        }
 
+        val correctPin = pegawai.pinPegawai ?: ""
         if (correctPin.isNotEmpty() && correctPin == inputPin) {
             saveSessionAndNavigate(pegawai)
         } else {
@@ -136,7 +147,7 @@ class LoginKasirActivity : AppCompatActivity() {
             sharedPref.edit().apply {
                 putString("KASIR_ID", pegawai.idPegawai ?: "unknown_id")
                 putString("KASIR_NAMA", pegawai.namaPegawai ?: "Kasir")
-                putString("KASIR_ROLE", pegawai.jabatan ?: "Kasir")
+                putString("KASIR_ROLE", "Kasir")
                 apply()
             }
 
