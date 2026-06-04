@@ -134,11 +134,10 @@ Ikuti langkah-langkah berikut untuk menjalankan proyek aplikasi ini di komputer/
 
 ### 1. Prasyarat (Prerequisites)
 Sebelum memulai, pastikan Anda telah memasang perangkat lunak berikut:
-* **Android Studio** (Versi Dolphin / Flamingo / versi terbaru sangat disarankan).
-* **Java Development Kit (JDK)** versi 11 atau yang lebih baru.
+* **Android Studio** (Versi terbaru sangat disarankan).
 * Perangkat Android fisik dengan fitur Bluetooth aktif (untuk uji coba cetak struk) atau **Emulator Android**.
 
 ### 2. Kloning Repositori (Clone Repository)
 Unduh kode sumber proyek ini menggunakan Git melalui Terminal atau Command Prompt:
 ```bash
-git clone [https://github.com/username/pointofsales.git](https://github.com/username/pointofsales.git)
+git clone [https://github.com/salliemarsha/pointofsales.git](https://github.com/salliemarsha/pointofsales.git)
