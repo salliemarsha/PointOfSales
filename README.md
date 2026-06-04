@@ -65,7 +65,7 @@ Berikut adalah tampilan antarmuka dari aplikasi Sallie's Point of Sales yang tel
 
 | Pegawai | Tambah Pegawai | Pelanggan | Tambah Pelanggan |
 | :---: | :---: | :---: | :---: |
-| <img src="screenshot/pegawai.jpeg" width="180"> | <img src="screenshot/modpegawai.jpeg" width="180"> | <img src="screenshot/pelanggan.jpeg" width="180"> | <img src="screenshot/modpelanggan.jpeg" width="180"> |
+| <img src="screenshot/datapegawai.jpeg" width="180"> | <img src="screenshot/modpegawai.jpeg" width="180"> | <img src="screenshot/pelanggan.jpeg" width="180"> | <img src="screenshot/modpelanggan.jpeg" width="180"> |
 
 ### 3. Produk & Transaksi Penjualan
 | Produk | Tambah Produk | Transaksi | Pembayaran |
