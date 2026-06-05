@@ -14,20 +14,17 @@ Sallie's Point of Sales merupakan aplikasi Android yang dirancang untuk membantu
 ## Fitur Utama
 
 ### Manajemen Produk
-
 * Tambah produk
 * Edit produk
 * Hapus produk
 * Kelola stok produk
 
 ### Manajemen Cabang
-
 * Tambah cabang
 * Edit cabang
 * Hapus cabang
 
 ### Transaksi Penjualan
-
 * Pilih cabang
 * Pilih produk
 * Tambah ke keranjang
@@ -35,160 +32,112 @@ Sallie's Point of Sales merupakan aplikasi Android yang dirancang untuk membantu
 * Simpan transaksi
 
 ### Pembayaran
-
 * Input nominal pembayaran
 * Hitung kembalian
 * Simpan data transaksi
 
 ### Laporan
-
 * Riwayat transaksi
 * Detail transaksi
 * Rekap penjualan
 
 ### Akun
-
 * Edit profil
 * Ubah PIN
 
 ### Printer
-
 * Pengaturan printer Bluetooth
 * Cetak struk transaksi
 
 ## Screenshot Aplikasi
 
-### Register
+Berikut adalah tampilan antarmuka dari aplikasi Sallie's Point of Sales yang telah disusun secara rapi:
 
-![Register](screenshot/register.jpeg)
+### 1. Autentikasi & Dashboard
+| Register | Login | Dashboard |
+| :---: | :---: | :---: |
+| <img src="screenshot/register.jpeg" width="200"> | <img src="screenshot/login.jpeg" width="200"> | <img src="screenshot/dashboard.jpeg" width="200"> |
 
-### Login
+### 2. Manajemen Data Master
+| Kategori | Tambah Kategori | Cabang | Tambah Cabang |
+| :---: | :---: | :---: | :---: |
+| <img src="screenshot/datakategori.jpeg" width="180"> | <img src="screenshot/modkategori.jpeg" width="180"> | <img src="screenshot/datacabang.jpeg" width="180"> | <img src="screenshot/modcabang.jpeg" width="180"> |
 
-![Login](screenshot/login.jpeg)
+| Pegawai | Tambah Pegawai | Pelanggan | Tambah Pelanggan |
+| :---: | :---: | :---: | :---: |
+| <img src="screenshot/datapegawai.jpeg" width="180"> | <img src="screenshot/modpegawai.jpeg" width="180"> | <img src="screenshot/datapelanggan.jpeg" width="180"> | <img src="screenshot/modpelanggan.jpeg" width="180"> |
 
-### Dashboard
+### 3. Produk & Transaksi Penjualan
+| Produk | Tambah Produk | Transaksi | Pembayaran |
+| :---: | :---: | :---: | :---: |
+| <img src="screenshot/dataproduk.jpeg" width="180"> | <img src="screenshot/modproduk.jpeg" width="180"> | <img src="screenshot/transaksi.jpeg" width="180"> | <img src="screenshot/pembayaran.jpeg" width="180"> |
 
-![Dashboard](screenshot/dashboard.jpeg)
-
-### Kategori
-
-![Kategori](screenshot/datakategori.jpeg)
-
-### Tambah Kategori
-
-![Tambah Kategori](screenshot/modkategori.jpeg)
-
-### Cabang
-
-![Cabang](screenshot/datacabang.jpeg)
-
-### Tambah Cabang
-
-![Tambah Cabang](screenshot/modcabang.jpeg)
-
-### Pegawai
-
-![Pegawai](screenshot/pegawai.jpeg)
-
-### Tambah Pegawai
-
-![Tambah Pegawai](screenshot/modpegawai.jpeg)
-
-### Pelanggan
-
-![Pelanggan](screenshot/pelanggan.jpeg)
-
-### Tambah Pelanggan
-
-![Tambah Pelanggan](screenshot/modpelanggan.jpeg)
-
-### Produk
-
-![Produk](screenshot/dataproduk.jpeg)
-
-### Tambah Produk
-
-![Tambah Produk](screenshot/modproduk.jpeg)
-
-### Transaksi
-
-![Transaksi](screenshot/transaksi.jpeg)
-
-### Pembayaran
-
-![Pembayaran](screenshot/pembayaran.jpeg)
-
-### Struk Nota
-
-![Struk](screenshot/struk.jpeg)
-
-### Laporan
-
-![Laporan](screenshot/riwayat.jpeg)
-
-### Akun
-
-![Akun](screenshot/profil.jpeg)
-
-### Pengaturan Printer
-
-![Printer](screenshot/printer.jpeg)
+### 4. Fitur Pendukung & Laporan
+| Struk Nota | Laporan | Akun | Pengaturan Printer |
+| :---: | :---: | :---: | :---: |
+| <img src="screenshot/struk.jpeg" width="180"> | <img src="screenshot/riwayat.jpeg" width="180"> | <img src="screenshot/profil.jpeg" width="180"> | <img src="screenshot/printer.jpeg" width="180"> |
 
 ## Struktur Database Firebase
 
-### Produk
+Berikut adalah tabel pemetaan data yang digunakan di dalam Firebase Realtime Database:
 
-| Field       | Tipe   |
-| ----------- | ------ |
-| idProduk    | String |
-| namaProduk  | String |
-| hargaProduk | Int    |
-| stokProduk  | Int    |
-| cabang      | String |
+### 1. User / Pegawai
+| Field | Tipe | Keterangan |
+| :--- | :--- | :--- |
+| uid | String | ID Unik User (dari Firebase Auth) |
+| nama | String | Nama lengkap pengguna |
+| email | String | Alamat email |
+| role | String | Tingkatan hak akses (Admin/Pegawai) |
 
-### Cabang
+### 2. Cabang
+| Field | Tipe | Keterangan |
+| :--- | :--- | :--- |
+| idCabang | String | ID Unik Cabang |
+| namaCabang | String | Nama cabang toko |
 
-| Field      | Tipe   |
-| ---------- | ------ |
-| idCabang   | String |
-| namaCabang | String |
+### 3. Kategori
+| Field | Tipe | Keterangan |
+| :--- | :--- | :--- |
+| idKategori | String | ID Unik Kategori |
+| namaKategori | String | Nama kategori produk |
 
-### Transaksi
+### 4. Pelanggan
+| Field | Tipe | Keterangan |
+| :--- | :--- | :--- |
+| idPelanggan | String | ID Unik Pelanggan |
+| namaPelanggan | String | Nama lengkap pelanggan |
+| noTelepon | String | Nomor telepon aktif |
 
-| Field       | Tipe   |
-| ----------- | ------ |
-| idTransaksi | String |
-| tanggal     | String |
-| namaCabang  | String |
-| totalBayar  | Int    |
+### 5. Produk
+| Field | Tipe | Keterangan |
+| :--- | :--- | :--- |
+| idProduk | String | ID Unik Produk |
+| namaProduk | String | Nama barang / produk |
+| hargaProduk | Int | Harga jual produk |
+| stokProduk | Int | Sisa stok yang tersedia |
+| idCabang | String | Relasi ke ID Cabang tempat produk berada |
+| idKategori | String | Relasi ke ID Kategori produk |
 
-### User
-
-| Field | Tipe   |
-| ----- | ------ |
-| uid   | String |
-| nama  | String |
-| email | String |
-| role  | String |
+### 6. Transaksi
+| Field | Tipe | Keterangan |
+| :--- | :--- | :--- |
+| idTransaksi | String | ID Unik Transaksi |
+| tanggal | String | Waktu transaksi dilakukan |
+| idCabang | String | ID Cabang tempat transaksi |
+| namaCabang | String | Nama cabang saat transaksi |
+| totalBayar | Int | Total belanja keseluruhan |
+| itemDibeli | Map / List | Daftar ID produk beserta jumlah yang dibeli |
 
 ## Cara Menjalankan
 
-1. Clone repository
+Ikuti langkah-langkah berikut untuk menjalankan proyek aplikasi ini di komputer/perangkat lokal Anda:
 
+### 1. Prasyarat (Prerequisites)
+Sebelum memulai, pastikan Anda telah memasang perangkat lunak berikut:
+* **Android Studio** (Versi terbaru sangat disarankan).
+* Perangkat Android fisik dengan fitur Bluetooth aktif (untuk uji coba cetak struk) atau **Emulator Android**.
+
+### 2. Kloning Repositori (Clone Repository)
+Unduh kode sumber proyek ini menggunakan Git melalui Terminal atau Command Prompt:
 ```bash
-git clone https://github.com/username/pointofsales.git
-```
-
-2. Buka project menggunakan Android Studio.
-
-3. Sinkronisasi Gradle.
-
-4. Tambahkan file google-services.json.
-
-5. Jalankan aplikasi pada emulator atau perangkat Android.
-
-## Author
-
-Sallie Marsha
-
-Project Android Point of Sales untuk tugas akhir sekolah.
+git clone [https://github.com/salliemarsha/pointofsales.git](https://github.com/salliemarsha/pointofsales.git)
