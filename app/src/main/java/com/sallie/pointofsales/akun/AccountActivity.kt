@@ -3,7 +3,7 @@ package com.sallie.pointofsales.akun
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.appbar.MaterialToolbar
@@ -20,6 +20,7 @@ class AccountActivity : AppCompatActivity() {
     private lateinit var tvAccountName: TextView
     private lateinit var tvAvatarInitials: TextView
     private lateinit var tvUserRole: TextView
+    private lateinit var cvChangePin: MaterialCardView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,10 +35,17 @@ class AccountActivity : AppCompatActivity() {
         tvAccountName = findViewById(R.id.tvAccountName)
         tvAvatarInitials = findViewById(R.id.tvAvatarInitials)
         tvUserRole = findViewById(R.id.tvAccountRole)
+        cvChangePin = findViewById(R.id.cvChangePin)
 
         findViewById<MaterialButton>(R.id.btnLogout).setOnClickListener { logout() }
+        
         findViewById<MaterialCardView>(R.id.cvEditProfile).setOnClickListener {
             startActivity(Intent(this, EditProfileActivity::class.java))
+        }
+
+        // Enable Change PIN for Admin
+        cvChangePin.setOnClickListener {
+            startActivity(Intent(this, ChangePinActivity::class.java))
         }
 
         toolbar.setNavigationOnClickListener { finish() }
@@ -53,6 +61,9 @@ class AccountActivity : AppCompatActivity() {
         
         if (user != null) {
             // LOGIKA ADMIN (Firebase Auth)
+            // Show Change PIN button for Admin
+            cvChangePin.visibility = View.VISIBLE
+            
             val uid = user.uid
             FirebaseDatabase.getInstance().getReference("users").child(uid).get()
                 .addOnSuccessListener { snapshot ->
@@ -62,6 +73,9 @@ class AccountActivity : AppCompatActivity() {
                 }
         } else {
             // LOGIKA KASIR (SharedPreferences + Realtime DB)
+            // Hide Change PIN button for Cashier
+            cvChangePin.visibility = View.GONE
+
             val sharedPref = getSharedPreferences("KASIR_SESSION", Context.MODE_PRIVATE)
             val idKasir = sharedPref.getString("KASIR_ID", "") ?: ""
             val localName = sharedPref.getString("KASIR_NAMA", "Kasir") ?: "Kasir"
