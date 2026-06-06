@@ -140,4 +140,4 @@ Sebelum memulai, pastikan Anda telah memasang perangkat lunak berikut:
 ### 2. Kloning Repositori (Clone Repository)
 Unduh kode sumber proyek ini menggunakan Git melalui Terminal atau Command Prompt:
 ```bash
-git clone [https://github.com/salliemarsha/pointofsales.git](https://github.com/salliemarsha/pointofsales.git)
+git clone https://github.com/salliemarsha/pointofsales.git
